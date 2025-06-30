@@ -1,0 +1,24 @@
+/* Set base styles for the page */
+body {
+    background-color: white;       /* White background */
+    color: black;                  /* Black text */
+    font-family: sans-serif;       /* Simple clean font */
+    text-align: center;            /* Center all text */
+    margin: 50px;                  /* Add space around the content */
+  }
+  
+  /* Style for the button */
+  button {
+    background-color: black;       /* Black button */
+    color: white;                  /* White text */
+    border: none;                  /* No border */
+    padding: 10px 20px;            /* Space inside button */
+    font-size: 16px;               /* Text size */
+    cursor: pointer;               /* Cursor changes on hover */
+    transition: background 0.3s;   /* Smooth hover effect */
+  }
+  
+  /* Change button color on hover */
+  button:hover {
+    background-color: #333;        /* Slightly lighter black */
+  }
