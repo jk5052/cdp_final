@@ -66,11 +66,12 @@
             font-family: 'Special Elite', 'Courier New', monospace;
             font-size: 1rem;
             transition: all 0.3s ease;
-            cursor: pointer;
+            cursor: grab;
             animation: float 6s ease-in-out infinite;
             max-width: 250px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            user-select: none;
         }
 
         .floating-link:hover {
@@ -79,6 +80,14 @@
             border-color: rgba(255, 255, 255, 0.6);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .floating-link.dragging {
+            animation: none;
+            cursor: grabbing;
+            transform: scale(1.1);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+            z-index: 1000;
         }
 
         .floating-link h3 {
@@ -138,12 +147,12 @@
             75% { transform: translateY(-15px) rotate(0.5deg); }
         }
 
-        .floating-link:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
-        .floating-link:nth-child(2) { top: 25%; right: 15%; animation-delay: 1s; }
-        .floating-link:nth-child(3) { top: 60%; left: 20%; animation-delay: 2s; }
-        .floating-link:nth-child(4) { top: 70%; right: 25%; animation-delay: 3s; }
-        .floating-link:nth-child(5) { top: 40%; left: 60%; animation-delay: 4s; }
-        .floating-link:nth-child(6) { top: 80%; left: 45%; animation-delay: 5s; }
+        .floating-link:nth-of-type(1) { top: 15%; left: 10%; animation-delay: 0s; }
+        .floating-link:nth-of-type(2) { top: 25%; right: 15%; animation-delay: 1s; }
+        .floating-link:nth-of-type(3) { top: 60%; left: 20%; animation-delay: 2s; }
+        .floating-link:nth-of-type(4) { top: 70%; right: 25%; animation-delay: 3s; }
+        .floating-link:nth-of-type(5) { top: 40%; left: 60%; animation-delay: 4s; }
+        .floating-link:nth-of-type(6) { top: 80%; left: 45%; animation-delay: 5s; }
 
         @media (max-width: 768px) {
             .main-title {
@@ -177,46 +186,49 @@
             <h1 class="main-title">Data Sheet</h1>
             <p class="subtitle">Cleansing Emotional Data - Research & Documentation</p>
         </div>
-
-        <a href="https://starts-prize.aec.at/en/cleaning-emotional-data/" target="_blank" class="floating-link">
-            <h3>STARTS Prize Documentation</h3>
-            <p>Official documentation from the STARTS Prize</p>
-            <p class="source">Source: Ars Electronica</p>
-        </a>
-
-        <a href="https://noorderlicht.com/en/whats-on/pixel-perceptions/cleaning-emotional-data" target="_blank" class="floating-link">
-            <h3>Noorderlicht Exhibition</h3>
-            <p>Pixel Perceptions showcase</p>
-            <p class="source">Source: Noorderlicht</p>
-        </a>
-
-        <a href="https://www.youtube.com/watch?v=O8MZo2SMK6o" target="_blank" class="floating-link">
-            <h3>Video Documentation</h3>
-            <p>Visual documentation and artist presentation</p>
-            <p class="source">Source: YouTube</p>
-        </a>
-
-        <a href="https://tanjawagner.com/works/elisa-giardina-papa-cleaning-emotional-data-2020/" target="_blank" class="floating-link">
-            <h3>Gallery Representation</h3>
-            <p>Professional gallery documentation</p>
-            <p class="source">Source: Tanja Wagner Gallery</p>
-        </a>
-
-        <a href="https://www.elisagiardinapapa.org/" target="_blank" class="floating-link">
-            <h3>Artist's Official Website</h3>
-            <p>Comprehensive portfolio and documentation</p>
-            <p class="source">Source: Artist's Website</p>
-        </a>
-
-        <a href="https://www.researchgate.net/figure/Elisa-Giardina-Papa-Technologies-of-Care-2016-Installation-view-XVI-Quadriennale_fig2_340067837" target="_blank" class="floating-link">
-            <h3>Academic Research</h3>
-            <p>Academic documentation and analysis</p>
-            <p class="source">Source: ResearchGate</p>
-        </a>
     </div>
 
+    <a href="https://starts-prize.aec.at/en/cleaning-emotional-data/" target="_blank" class="floating-link">
+        <h3>STARTS Prize Documentation</h3>
+        <p>Official documentation from the STARTS Prize</p>
+        <p class="source">Source: Ars Electronica</p>
+    </a>
+
+    <a href="https://noorderlicht.com/en/whats-on/pixel-perceptions/cleaning-emotional-data" target="_blank" class="floating-link">
+        <h3>Noorderlicht Exhibition</h3>
+        <p>Pixel Perceptions showcase</p>
+        <p class="source">Source: Noorderlicht</p>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=O8MZo2SMK6o" target="_blank" class="floating-link">
+        <h3>Video Documentation</h3>
+        <p>Visual documentation and artist presentation</p>
+        <p class="source">Source: YouTube</p>
+    </a>
+
+    <a href="https://tanjawagner.com/works/elisa-giardina-papa-cleaning-emotional-data-2020/" target="_blank" class="floating-link">
+        <h3>Gallery Representation</h3>
+        <p>Professional gallery documentation</p>
+        <p class="source">Source: Tanja Wagner Gallery</p>
+    </a>
+
+    <a href="https://www.elisagiardinapapa.org/" target="_blank" class="floating-link">
+        <h3>Artist's Official Website</h3>
+        <p>Comprehensive portfolio and documentation</p>
+        <p class="source">Source: Artist's Website</p>
+    </a>
+
+    <a href="https://www.researchgate.net/figure/Elisa-Giardina-Papa-Technologies-of-Care-2016-Installation-view-XVI-Quadriennale_fig2_340067837" target="_blank" class="floating-link">
+        <h3>Academic Research</h3>
+        <p>Academic documentation and analysis</p>
+        <p class="source">Source: ResearchGate</p>
+    </a>
+
     <script>
-        // Add entrance animations for floating links
+        let isDragging = false;
+        let dragStartTime = 0;
+
+        // Add entrance animations and drag functionality for floating links
         document.addEventListener('DOMContentLoaded', function() {
             const links = document.querySelectorAll('.floating-link');
 
@@ -231,7 +243,134 @@
                     link.style.opacity = '1';
                     link.style.transform = 'translateY(0) scale(1)';
                 }, index * 200);
+
+                // Add drag functionality
+                setupDragFunctionality(link);
             });
+        });
+
+        function setupDragFunctionality(link) {
+            let dragData = {
+                isDragging: false,
+                startX: 0,
+                startY: 0,
+                offsetX: 0,
+                offsetY: 0
+            };
+
+            // Mouse events
+            link.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                dragStartTime = Date.now();
+                dragData.isDragging = true;
+                dragData.startX = e.clientX;
+                dragData.startY = e.clientY;
+                dragData.offsetX = e.clientX - this.offsetLeft;
+                dragData.offsetY = e.clientY - this.offsetTop;
+                this.classList.add('dragging');
+                isDragging = true;
+            });
+
+            // Touch events for mobile
+            link.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                dragStartTime = Date.now();
+                const touch = e.touches[0];
+                dragData.isDragging = true;
+                dragData.startX = touch.clientX;
+                dragData.startY = touch.clientY;
+                dragData.offsetX = touch.clientX - this.offsetLeft;
+                dragData.offsetY = touch.clientY - this.offsetTop;
+                this.classList.add('dragging');
+                isDragging = true;
+            });
+
+            // Global mouse move
+            document.addEventListener('mousemove', function(e) {
+                if (dragData.isDragging) {
+                    e.preventDefault();
+                    const newX = e.clientX - dragData.offsetX;
+                    const newY = e.clientY - dragData.offsetY;
+
+                    // Keep within bounds
+                    const boundedX = Math.max(0, Math.min(window.innerWidth - 250, newX));
+                    const boundedY = Math.max(0, Math.min(window.innerHeight - 150, newY));
+
+                    link.style.left = boundedX + 'px';
+                    link.style.top = boundedY + 'px';
+                }
+            });
+
+            // Global touch move
+            document.addEventListener('touchmove', function(e) {
+                if (dragData.isDragging) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const newX = touch.clientX - dragData.offsetX;
+                    const newY = touch.clientY - dragData.offsetY;
+
+                    // Keep within bounds
+                    const boundedX = Math.max(0, Math.min(window.innerWidth - 250, newX));
+                    const boundedY = Math.max(0, Math.min(window.innerHeight - 150, newY));
+
+                    link.style.left = boundedX + 'px';
+                    link.style.top = boundedY + 'px';
+                }
+            });
+
+            // Global mouse up
+            document.addEventListener('mouseup', function(e) {
+                if (dragData.isDragging) {
+                    dragData.isDragging = false;
+                    link.classList.remove('dragging');
+
+                    // Check if it was a click (short duration, minimal movement)
+                    const dragDuration = Date.now() - dragStartTime;
+                    const dragDistance = Math.sqrt(
+                        Math.pow(e.clientX - dragData.startX, 2) +
+                        Math.pow(e.clientY - dragData.startY, 2)
+                    );
+
+                    if (dragDuration < 200 && dragDistance < 10) {
+                        // It was a click, not a drag - open the link
+                        window.open(link.href, '_blank');
+                    }
+
+                    isDragging = false;
+                }
+            });
+
+            // Global touch end
+            document.addEventListener('touchend', function(e) {
+                if (dragData.isDragging) {
+                    dragData.isDragging = false;
+                    link.classList.remove('dragging');
+
+                    // Check if it was a tap
+                    const dragDuration = Date.now() - dragStartTime;
+                    if (dragDuration < 200) {
+                        window.open(link.href, '_blank');
+                    }
+
+                    isDragging = false;
+                }
+            });
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const links = document.querySelectorAll('.floating-link');
+            links.forEach(link => {
+                const x = Math.min(parseFloat(link.style.left), window.innerWidth - 250);
+                const y = Math.min(parseFloat(link.style.top), window.innerHeight - 150);
+                link.style.left = Math.max(0, x) + 'px';
+                link.style.top = Math.max(0, y) + 'px';
+            });
+        });
+
+        // Prevent context menu on right click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
         });
     </script>
 </body>
