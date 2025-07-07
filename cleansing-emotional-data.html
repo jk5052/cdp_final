@@ -56,9 +56,9 @@
 
         .floating-link {
             position: absolute;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.5);
             border-radius: 10px;
             padding: 15px 20px;
             color: white;
@@ -70,8 +70,12 @@
             animation: float 6s ease-in-out infinite;
             max-width: 250px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             user-select: none;
+            pointer-events: all;
+            display: block;
+            opacity: 1;
+            z-index: 50;
         }
 
         .floating-link:hover {
@@ -147,12 +151,12 @@
             75% { transform: translateY(-15px) rotate(0.5deg); }
         }
 
-        .floating-link:nth-of-type(1) { top: 15%; left: 10%; animation-delay: 0s; }
-        .floating-link:nth-of-type(2) { top: 25%; right: 15%; animation-delay: 1s; }
-        .floating-link:nth-of-type(3) { top: 60%; left: 20%; animation-delay: 2s; }
-        .floating-link:nth-of-type(4) { top: 70%; right: 25%; animation-delay: 3s; }
-        .floating-link:nth-of-type(5) { top: 40%; left: 60%; animation-delay: 4s; }
-        .floating-link:nth-of-type(6) { top: 80%; left: 45%; animation-delay: 5s; }
+        .floating-link:nth-of-type(1) { top: 15%; left: 10%; animation-delay: 0s; z-index: 50; }
+        .floating-link:nth-of-type(2) { top: 25%; right: 15%; left: auto; animation-delay: 1s; z-index: 50; }
+        .floating-link:nth-of-type(3) { top: 60%; left: 20%; animation-delay: 2s; z-index: 50; }
+        .floating-link:nth-of-type(4) { top: 70%; right: 25%; left: auto; animation-delay: 3s; z-index: 50; }
+        .floating-link:nth-of-type(5) { top: 40%; left: 60%; animation-delay: 4s; z-index: 50; }
+        .floating-link:nth-of-type(6) { top: 80%; left: 45%; animation-delay: 5s; z-index: 50; }
 
         @media (max-width: 768px) {
             .main-title {
@@ -232,17 +236,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             const links = document.querySelectorAll('.floating-link');
 
-            links.forEach((link, index) => {
-                // Start invisible
-                link.style.opacity = '0';
-                link.style.transform = 'translateY(50px) scale(0.8)';
+            console.log('Found', links.length, 'floating links'); // Debug log
 
-                // Stagger the entrance animation
-                setTimeout(() => {
-                    link.style.transition = 'all 0.8s ease';
-                    link.style.opacity = '1';
-                    link.style.transform = 'translateY(0) scale(1)';
-                }, index * 200);
+            links.forEach((link, index) => {
+                // Make sure they're visible
+                link.style.opacity = '1';
+                link.style.display = 'block';
+                link.style.pointerEvents = 'all';
+
+                console.log('Setting up link', index, link.href); // Debug log
 
                 // Add drag functionality
                 setupDragFunctionality(link);
@@ -331,8 +333,11 @@
                         Math.pow(e.clientY - dragData.startY, 2)
                     );
 
-                    if (dragDuration < 200 && dragDistance < 10) {
+                    console.log('Mouse up - duration:', dragDuration, 'distance:', dragDistance); // Debug
+
+                    if (dragDuration < 300 && dragDistance < 15) {
                         // It was a click, not a drag - open the link
+                        console.log('Opening link:', link.href); // Debug
                         window.open(link.href, '_blank');
                     }
 
