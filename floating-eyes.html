@@ -596,23 +596,32 @@
             if (!eye.classList.contains('closing')) {
                 eye.classList.add('closing');
                 eye.querySelector('img').src = closedEyeImage;
-                
+
                 currentEyeIndex = parseInt(eye.dataset.eyeIndex);
                 const imageSrc = eye.dataset.imageSrc;
                 const eyeLabel = eyeLabels[currentEyeIndex];
-                
-                // Set up the info page
+
+                // Check if this is "Cleansing Emotional Data" (index 0)
+                if (currentEyeIndex === 0) {
+                    // Redirect to the data sheet page
+                    setTimeout(() => {
+                        window.location.href = 'cleansing-emotional-data.html';
+                    }, 300);
+                    return;
+                }
+
+                // Set up the info page for other eyes
                 document.getElementById('previewImg').src = imageSrc;
                 document.getElementById('pageTitle').textContent = eyeLabel;
                 document.getElementById('eyeInfo').textContent = `You've seen through "${eyeLabel}". Add your insights below:`;
-                
+
                 // Load saved data if exists
                 loadSavedVision(currentEyeIndex);
-                
+
                 // Set current timestamp
                 const now = new Date();
                 document.getElementById('timestamp').value = now.toISOString().slice(0, 16);
-                
+
                 // Transition to info page
                 setTimeout(transitionToInfoPage, 300);
             }

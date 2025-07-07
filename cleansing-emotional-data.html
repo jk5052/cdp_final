@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleansing Emotional Data - Data Sheet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('assets/images/background.jpg') center center/cover no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: white;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .data-sheet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .data-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .data-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .data-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .data-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .data-card .source {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            font-style: italic;
+            color: #cccccc;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .artist-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .artist-info h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .artist-info p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 30px 15px;
+            }
+            
+            .data-sheet-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .back-button {
+                top: 20px;
+                left: 20px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="floating-eyes.html" class="back-button">← Back to Eyes</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">Data Sheet</h1>
+            <p class="subtitle">Cleansing Emotional Data - Research & Documentation</p>
+        </div>
+
+        <div class="artist-info">
+            <h2>Elisa Giardina Papa</h2>
+            <p>Cleansing Emotional Data explores the intersection of artificial intelligence, emotional labor, and data processing. This work examines how human emotions are commodified and processed through digital platforms and AI systems.</p>
+        </div>
+
+        <div class="data-sheet-grid">
+            <div class="data-card" onclick="openLink('https://starts-prize.aec.at/en/cleaning-emotional-data/')">
+                <h3>STARTS Prize Documentation</h3>
+                <p>Official documentation from the STARTS Prize, showcasing the project's recognition in the intersection of science, technology, and arts.</p>
+                <p class="source">Source: Ars Electronica</p>
+            </div>
+
+            <div class="data-card" onclick="openLink('https://noorderlicht.com/en/whats-on/pixel-perceptions/cleaning-emotional-data')">
+                <h3>Noorderlicht Exhibition</h3>
+                <p>Exhibition details from Noorderlicht's "Pixel Perceptions" showcase, exploring digital representation and emotional data processing.</p>
+                <p class="source">Source: Noorderlicht</p>
+            </div>
+
+            <div class="data-card" onclick="openLink('https://www.youtube.com/watch?v=O8MZo2SMK6o')">
+                <h3>Video Documentation</h3>
+                <p>Visual documentation and artist presentation of the Cleansing Emotional Data project, providing insights into the creative process.</p>
+                <p class="source">Source: YouTube</p>
+            </div>
+
+            <div class="data-card" onclick="openLink('https://tanjawagner.com/works/elisa-giardina-papa-cleaning-emotional-data-2020/')">
+                <h3>Gallery Representation</h3>
+                <p>Professional gallery documentation of the work, including detailed project description and artistic context.</p>
+                <p class="source">Source: Tanja Wagner Gallery</p>
+            </div>
+
+            <div class="data-card" onclick="openLink('https://www.elisagiardinapapa.org/')">
+                <h3>Artist's Official Website</h3>
+                <p>Comprehensive portfolio and documentation of Elisa Giardina Papa's work, including Cleansing Emotional Data and related projects.</p>
+                <p class="source">Source: Artist's Website</p>
+            </div>
+
+            <div class="data-card" onclick="openLink('https://www.researchgate.net/figure/Elisa-Giardina-Papa-Technologies-of-Care-2016-Installation-view-XVI-Quadriennale_fig2_340067837')">
+                <h3>Academic Research</h3>
+                <p>Academic documentation and analysis of the artist's work within the context of care technologies and digital labor studies.</p>
+                <p class="source">Source: ResearchGate</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openLink(url) {
+            window.open(url, '_blank');
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.data-card');
+            
+            cards.forEach((card, index) => {
+                // Stagger the animation
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
