@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Projects Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            background: #000000;
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-top: 30px;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .project-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .project-container:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .canvas-container {
+            width: 100%;
+            height: 300px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .canvas-container canvas {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-family: 'Special Elite', 'Courier New', monospace;
+        }
+
+        .back-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .canvas-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back to Eyes</a>
+    
+    <div class="header">
+        <h1 class="main-title">2D Projects</h1>
+        <p class="subtitle">Interactive 2D Explorations & Visualizations</p>
+    </div>
+
+    <div class="projects-grid">
+        <div class="project-container">
+            <h3 class="project-title">Project 01: 2D Drawing</h3>
+            <div class="canvas-container" id="canvas-container-1"></div>
+        </div>
+
+        <div class="project-container">
+            <h3 class="project-title">Project 02: Bouncing Ball</h3>
+            <div class="canvas-container" id="canvas-container-2"></div>
+        </div>
+
+        <div class="project-container">
+            <h3 class="project-title">Project 03: Zoom Fan</h3>
+            <div class="canvas-container" id="canvas-container-3"></div>
+        </div>
+    </div>
+
+    <!-- Load p5.js sketches -->
+    <script>
+        // Project 1: 2D Drawing (adapted from projects/p5_01/2d-drawing.js)
+        var sketch1 = function(p) {
+            var canvasWidth = 480;
+            var canvasHeight = 280;
+            var gridSpacing = 30;
+            var canvas;
+
+            p.setup = function() {
+                canvas = p.createCanvas(canvasWidth, canvasHeight);
+                canvas.parent('canvas-container-1');
+            };
+
+            p.draw = function() {
+                p.background(250);
+                drawGrid();
+                drawPrimitives();
+            };
+
+            function drawGrid() {
+                p.stroke(200);
+                p.strokeWeight(1);
+                for (var x = 0; x <= p.width; x += gridSpacing) {
+                    p.line(x, 0, x, p.height);
+                }
+                for (var y = 0; y <= p.height; y += gridSpacing) {
+                    p.line(0, y, p.width, y);
+                }
+            }
+
+            function drawPrimitives() {
+                // Rectangle
+                p.fill(255, 100, 100);
+                p.rect(60, 40, 60, 40);
+
+                // Ellipse
+                p.fill(100, 180, 255);
+                p.ellipse(200, 120, 50, 50);
+
+                // Line
+                p.stroke(80, 200, 120);
+                p.strokeWeight(3);
+                p.line(280, 60, 400, 180);
+
+                // Triangle
+                p.noStroke();
+                p.fill(255, 220, 80);
+                p.triangle(350, 40, 430, 30, 400, 120);
+
+                // Pentagon
+                p.fill(150, 100, 255);
+                p.stroke(50, 50, 200);
+                p.strokeWeight(2);
+                p.beginShape();
+                for (var i = 0; i < 5; i++) {
+                    var angle = p.TWO_PI * i / 5 - p.HALF_PI;
+                    var x = 120 + p.cos(angle) * 25;
+                    var y = 200 + p.sin(angle) * 25;
+                    p.vertex(x, y);
+                }
+                p.endShape(p.CLOSE);
+
+                // Arc
+                p.noStroke();
+                p.fill(0, 200, 200);
+                p.arc(250, 200, 60, 60, p.PI, p.TWO_PI, p.PIE);
+            }
+        };
+
+        // Project 2: Bouncing Ball (adapted from projects/p5_02/bouncing-ball.js)
+        var sketch2 = function(p) {
+            let x, y;
+            let dx, dy;
+            let baseRadius = 20;
+            let radius;
+            let radiusSpeed = 0.05;
+            let t = 0;
+
+            p.setup = function() {
+                p.createCanvas(480, 280).parent('canvas-container-2');
+                x = p.width / 2;
+                y = p.height / 2;
+                dx = 3;
+                dy = 2;
+            };
+
+            p.draw = function() {
+                p.background(240);
+
+                radius = baseRadius + p.sin(t) * 8;
+                t += radiusSpeed;
+
+                p.fill(100, 180, 255);
+                p.noStroke();
+                p.ellipse(x, y, radius * 2);
+
+                x += dx;
+                y += dy;
+
+                if (x - radius <= 0 || x + radius >= p.width) {
+                    dx = -dx;
+                }
+                if (y - radius <= 0 || y + radius >= p.height) {
+                    dy = -dy;
+                }
+            };
+        };
+
+        // Project 3: Zoom Fan (adapted from projects/p5_03/zoom-fan.js)
+        var sketch3 = function(p) {
+            let angle = 0;
+            let zoom = 1;
+            let zoomDirection = 1;
+
+            p.setup = function() {
+                p.createCanvas(480, 280).parent('canvas-container-3');
+            };
+
+            p.draw = function() {
+                p.background(20);
+                p.translate(p.width/2, p.height/2);
+                p.scale(zoom);
+
+                // Create fan pattern
+                for (let i = 0; i < 12; i++) {
+                    p.push();
+                    p.rotate(angle + i * p.TWO_PI / 12);
+                    p.stroke(255, 150 + i * 8, 100 + i * 10);
+                    p.strokeWeight(2);
+                    p.line(0, 0, 80, 0);
+
+                    p.fill(255, 100 + i * 12, 150 + i * 8, 150);
+                    p.noStroke();
+                    p.ellipse(60, 0, 20, 20);
+                    p.pop();
+                }
+
+                angle += 0.02;
+                zoom += zoomDirection * 0.01;
+
+                if (zoom > 1.5 || zoom < 0.8) {
+                    zoomDirection *= -1;
+                }
+            };
+        };
+
+        // Create instances
+        var myp5_1 = new p5(sketch1);
+        var myp5_2 = new p5(sketch2);
+        var myp5_3 = new p5(sketch3);
+
+        // Add entrance animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const containers = document.querySelectorAll('.project-container');
+
+            containers.forEach((container, index) => {
+                container.style.opacity = '0';
+                container.style.transform = 'translateY(30px)';
+
+                setTimeout(() => {
+                    container.style.transition = 'all 0.6s ease';
+                    container.style.opacity = '1';
+                    container.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>

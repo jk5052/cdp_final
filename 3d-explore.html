@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Projects Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            background: #000000;
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-top: 30px;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .project-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .project-container:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .canvas-container {
+            width: 100%;
+            height: 300px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .canvas-container canvas {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-family: 'Special Elite', 'Courier New', monospace;
+        }
+
+        .back-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .canvas-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back to Eyes</a>
+    
+    <div class="header">
+        <h1 class="main-title">3D Projects</h1>
+        <p class="subtitle">Interactive 3D Explorations & Visualizations</p>
+    </div>
+
+    <div class="projects-grid">
+        <div class="project-container">
+            <h3 class="project-title">Project 04: 3D Primitives</h3>
+            <div class="canvas-container" id="threejs-container-1"></div>
+        </div>
+
+        <div class="project-container">
+            <h3 class="project-title">Project 05: Rotating Primitives</h3>
+            <div class="canvas-container" id="canvas-container-5"></div>
+        </div>
+
+        <div class="project-container">
+            <h3 class="project-title">Project 06: Spatial Canvas</h3>
+            <div class="canvas-container" id="canvas-container-6"></div>
+        </div>
+    </div>
+
+    <script>
+        // Project 4: 3D Primitives (adapted from projects/p5_04/3d_pri.js)
+        (function () {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, 480 / 280, 0.1, 100);
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(480, 280);
+            renderer.setClearColor(0xe6f3ff);
+            document.getElementById('threejs-container-1').appendChild(renderer.domElement);
+
+            scene.fog = new THREE.Fog(0xe6f3ff, 5, 25);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+            dirLight.position.set(5, 10, 5);
+            scene.add(dirLight);
+
+            const colors = [0xff99cc, 0xcc99ff, 0x99ffcc];
+
+            const cube = new THREE.Mesh(
+                new THREE.BoxGeometry(2, 2, 2),
+                new THREE.MeshPhongMaterial({ color: colors[0], shininess: 80 })
+            );
+            cube.position.set(-3, 0, 0);
+            scene.add(cube);
+
+            const sphere = new THREE.Mesh(
+                new THREE.SphereGeometry(1.2, 16, 16),
+                new THREE.MeshPhongMaterial({ color: colors[1], shininess: 80 })
+            );
+            sphere.position.set(0, 0, 0);
+            scene.add(sphere);
+
+            const cylinder = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.8, 0.8, 2.5, 12),
+                new THREE.MeshPhongMaterial({ color: colors[2], shininess: 80 })
+            );
+            cylinder.position.set(3, 0, 0);
+            scene.add(cylinder);
+
+            camera.position.set(0, 3, 8);
+            camera.lookAt(0, 0, 0);
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+
+                sphere.rotation.x += 0.005;
+                sphere.rotation.y += 0.01;
+
+                cylinder.rotation.x += 0.01;
+                cylinder.rotation.z += 0.005;
+
+                renderer.render(scene, camera);
+            }
+            animate();
+        })();
+
+        // Project 5: Rotating Primitives (p5.js WebGL)
+        var sketch5 = function(p) {
+            let rotationX = 0;
+            let rotationY = 0;
+
+            p.setup = function() {
+                p.createCanvas(480, 280, p.WEBGL).parent('canvas-container-5');
+            };
+
+            p.draw = function() {
+                p.background(230, 243, 255);
+
+                p.ambientLight(100);
+                p.directionalLight(255, 255, 255, -1, 0.5, -1);
+
+                p.push();
+                p.translate(-120, 0, 0);
+                p.rotateX(rotationX);
+                p.rotateY(rotationY);
+                p.fill(255, 153, 204);
+                p.box(60);
+                p.pop();
+
+                p.push();
+                p.translate(0, 0, 0);
+                p.rotateX(rotationX * 0.7);
+                p.rotateZ(rotationY * 0.8);
+                p.fill(204, 153, 255);
+                p.sphere(40);
+                p.pop();
+
+                p.push();
+                p.translate(120, 0, 0);
+                p.rotateX(rotationY);
+                p.rotateY(rotationX * 1.2);
+                p.fill(153, 255, 204);
+                p.cylinder(30, 80);
+                p.pop();
+
+                rotationX += 0.01;
+                rotationY += 0.008;
+            };
+        };
+
+        // Project 6: Spatial Canvas (Three.js with grid)
+        (function () {
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0xcce0ff, 5, 25);
+            const camera = new THREE.PerspectiveCamera(60, 480 / 280, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(480, 280);
+            renderer.setClearColor(0xcce0ff);
+            document.getElementById('canvas-container-6').appendChild(renderer.domElement);
+
+            const grid = new THREE.GridHelper(15, 30, 0x999999, 0xcccccc);
+            scene.add(grid);
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+            dirLight.position.set(5, 10, 7);
+            scene.add(dirLight);
+
+            const box = new THREE.Mesh(
+                new THREE.BoxGeometry(1.5, 1.5, 1.5),
+                new THREE.MeshPhongMaterial({ color: 0xff6b6b })
+            );
+            box.position.set(-3, 2, 0);
+            scene.add(box);
+
+            const sphere = new THREE.Mesh(
+                new THREE.SphereGeometry(0.8, 16, 16),
+                new THREE.MeshPhongMaterial({ color: 0x4ecdc4 })
+            );
+            sphere.position.set(0, 3, 2);
+            scene.add(sphere);
+
+            const cone = new THREE.Mesh(
+                new THREE.ConeGeometry(0.7, 2, 8),
+                new THREE.MeshPhongMaterial({ color: 0xffe66d })
+            );
+            cone.position.set(3, 1.5, -1);
+            scene.add(cone);
+
+            camera.position.set(5, 8, 10);
+            camera.lookAt(0, 0, 0);
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                box.rotation.x += 0.01;
+                box.rotation.y += 0.01;
+                box.position.y = 2 + Math.sin(Date.now() * 0.001) * 0.5;
+
+                sphere.rotation.y += 0.02;
+                sphere.position.y = 3 + Math.cos(Date.now() * 0.0015) * 0.3;
+
+                cone.rotation.z += 0.015;
+                cone.position.y = 1.5 + Math.sin(Date.now() * 0.002) * 0.4;
+
+                renderer.render(scene, camera);
+            }
+            animate();
+        })();
+
+        // Create p5.js instance
+        var myp5_5 = new p5(sketch5);
+
+        // Add entrance animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const containers = document.querySelectorAll('.project-container');
+
+            containers.forEach((container, index) => {
+                container.style.opacity = '0';
+                container.style.transform = 'translateY(30px)';
+
+                setTimeout(() => {
+                    container.style.transition = 'all 0.6s ease';
+                    container.style.opacity = '1';
+                    container.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>

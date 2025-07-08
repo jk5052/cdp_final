@@ -137,7 +137,7 @@
 
         .drag-hint {
             position: absolute;
-            bottom: 30px;
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
             color: rgba(255, 255, 255, 0.6);
@@ -145,6 +145,45 @@
             font-size: 1.2rem;
             z-index: 5;
             pointer-events: none;
+        }
+
+        .explore-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .explore-btn {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 12px 24px;
+            color: white;
+            text-decoration: none;
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .explore-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .explore-btn:active {
+            transform: translateY(0);
         }
 
         .page-transition {
@@ -352,8 +391,13 @@
         <div class="drag-hint">
             Drag eyes around • Hover to reveal • Click to see through
         </div>
-        
+
         <div id="eyeContainer"></div>
+    </div>
+
+    <div class="explore-buttons">
+        <a href="2d-explore.html" class="explore-btn">2D Explore</a>
+        <a href="3d-explore.html" class="explore-btn">3D Explore</a>
     </div>
 
     <div class="page-transition" id="transition"></div>
