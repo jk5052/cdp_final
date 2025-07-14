@@ -1,0 +1,30 @@
+era,era_name,period,movie_title,genre,director,actor,box_office_millions,rating
+0,Golden Age,1950s,Sunset Boulevard,Drama,Billy Wilder,Gloria Swanson,25,8.5
+0,Golden Age,1950s,Singin' in the Rain,Musical,Gene Kelly,Gene Kelly,45,8.3
+0,Golden Age,1950s,Casablanca,Romance,Michael Curtiz,Humphrey Bogart,35,8.5
+0,Golden Age,1950s,Roman Holiday,Romance,William Wyler,Audrey Hepburn,40,8.0
+1,New Hollywood,1970s,The Godfather,Crime,Francis Ford Coppola,Al Pacino,134,9.2
+1,New Hollywood,1970s,Taxi Driver,Thriller,Martin Scorsese,Robert De Niro,28,8.2
+1,New Hollywood,1970s,Jaws,Action,Steven Spielberg,Roy Scheider,470,8.0
+1,New Hollywood,1970s,Star Wars,Sci-Fi,George Lucas,Harrison Ford,775,8.6
+1,New Hollywood,1970s,Apocalypse Now,War,Francis Ford Coppola,Marlon Brando,150,8.4
+2,Blockbuster Era,1980s,E.T.,Sci-Fi,Steven Spielberg,Henry Thomas,792,7.8
+2,Blockbuster Era,1980s,Back to the Future,Time Travel,Robert Zemeckis,Michael J. Fox,381,8.5
+2,Blockbuster Era,1980s,Raiders of the Lost Ark,Adventure,Steven Spielberg,Harrison Ford,389,8.5
+2,Blockbuster Era,1980s,The Terminator,Action,James Cameron,Arnold Schwarzenegger,78,8.0
+2,Blockbuster Era,1980s,Blade Runner,Sci-Fi,Ridley Scott,Harrison Ford,33,8.1
+3,Independent Revolution,1990s,Pulp Fiction,Crime,Quentin Tarantino,John Travolta,214,8.9
+3,Independent Revolution,1990s,Reservoir Dogs,Crime,Quentin Tarantino,Harvey Keitel,2,8.3
+3,Independent Revolution,1990s,The Shawshank Redemption,Drama,Frank Darabont,Morgan Freeman,16,9.3
+3,Independent Revolution,1990s,Goodfellas,Crime,Martin Scorsese,Robert De Niro,46,8.7
+3,Independent Revolution,1990s,Fargo,Dark Comedy,Coen Brothers,Frances McDormand,60,8.1
+4,Digital Revolution,2000s,The Matrix,Sci-Fi,The Wachowskis,Keanu Reeves,467,8.7
+4,Digital Revolution,2000s,Lord of the Rings,Fantasy,Peter Jackson,Elijah Wood,2917,8.8
+4,Digital Revolution,2000s,Pirates of the Caribbean,Adventure,Gore Verbinski,Johnny Depp,654,8.0
+4,Digital Revolution,2000s,Finding Nemo,Animation,Andrew Stanton,Albert Brooks,936,8.2
+4,Digital Revolution,2000s,The Dark Knight,Superhero,Christopher Nolan,Christian Bale,1005,9.0
+5,Superhero Dominance,2010s,Avengers,Superhero,Joss Whedon,Robert Downey Jr.,1518,8.0
+5,Superhero Dominance,2010s,Black Panther,Superhero,Ryan Coogler,Chadwick Boseman,1347,7.3
+5,Superhero Dominance,2010s,Wonder Woman,Superhero,Patty Jenkins,Gal Gadot,822,7.4
+5,Superhero Dominance,2010s,Guardians of the Galaxy,Superhero,James Gunn,Chris Pratt,773,8.0
+5,Superhero Dominance,2010s,Inception,Sci-Fi,Christopher Nolan,Leonardo DiCaprio,836,8.8

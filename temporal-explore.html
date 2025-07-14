@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporal Explore - Movie Network Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .main-content {
+            margin-top: 100px;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .intro-section h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .intro-section p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .visualization-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .viz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .viz-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #4ecdc4;
+        }
+
+        .viz-description {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-bottom: 30px;
+        }
+
+        .movie-network-frame {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .feature-card h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .data-info {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 4px solid #4ecdc4;
+        }
+
+        .controls-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            margin: 0 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .intro-section h1 {
+                font-size: 2rem;
+            }
+            
+            .movie-network-frame {
+                height: 400px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="nav-container">
+            <a href="index.html" class="back-btn">← Back to Main</a>
+            <div class="title">Temporal Exploration</div>
+            <div></div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="intro-section">
+            <h1>Movie Network Visualization</h1>
+            <p>Explore temporal relationships and connections in cinema through interactive network visualization. This D3.js powered interface reveals hidden patterns in movie data across time and genres.</p>
+        </div>
+
+        <div class="visualization-container">
+            <div class="viz-header">
+                <h2>Interactive Movie Network</h2>
+                <p class="viz-description">Navigate through the network to discover connections between movies, actors, directors, and genres. Each node represents a unique entity, while edges show relationships and collaborations.</p>
+            </div>
+
+            <iframe src="projects/d3_01/movie_network_html.html" class="movie-network-frame" title="Movie Network Visualization"></iframe>
+
+            <div class="data-info">
+                <h3>📊 Dataset Information</h3>
+                <p>This visualization is powered by curated movie data including cast information, release dates, genres, and collaboration networks. The temporal aspect allows you to see how the film industry has evolved over time.</p>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>🎬 Movie Connections</h3>
+                <p>Discover how movies are connected through shared cast members, directors, and production teams. The network reveals unexpected relationships in cinema history.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>⏰ Temporal Analysis</h3>
+                <p>Explore how movie networks have evolved over different time periods. See the emergence of new genres and the evolution of collaboration patterns.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🔍 Interactive Exploration</h3>
+                <p>Click, drag, and zoom to navigate the network. Hover over nodes to see detailed information and highlight connected elements.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>📈 Data Insights</h3>
+                <p>Uncover insights about the film industry through network analysis, including influential actors, prolific directors, and genre evolution.</p>
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <button class="control-btn" onclick="refreshVisualization()">🔄 Refresh</button>
+            <button class="control-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <button class="control-btn" onclick="showDataInfo()">📊 Data Info</button>
+        </div>
+    </div>
+
+    <script>
+        function refreshVisualization() {
+            const iframe = document.querySelector('.movie-network-frame');
+            iframe.src = iframe.src;
+        }
+
+        function toggleFullscreen() {
+            const iframe = document.querySelector('.movie-network-frame');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen();
+            }
+        }
+
+        function showDataInfo() {
+            alert('Movie Network Data:\n\n• Dataset: Curated movie information\n• Nodes: Movies, Actors, Directors\n• Edges: Collaborations and relationships\n• Time Range: Multiple decades of cinema\n• Interactive Features: Zoom, pan, hover details');
+        }
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

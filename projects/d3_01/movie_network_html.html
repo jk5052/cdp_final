@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Genre Network Evolution</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="movie_network_css.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 Movie Genre Network Evolution</h1>
+            <p>Explore how movie genres, directors, and actors connect through cinematic history</p>
+        </div>
+
+        <div class="info-panel">
+            <div class="info-section">
+                <h3>Network Stats</h3>
+                <div class="info-item">
+                    <span class="info-label">Movies:</span>
+                    <span class="info-value" id="movie-count">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Genres:</span>
+                    <span class="info-value" id="genre-count">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Directors:</span>
+                    <span class="info-value" id="director-count">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Connections:</span>
+                    <span class="info-value" id="connection-count">0</span>
+                </div>
+            </div>
+            <div class="info-section">
+                <h3>Current Era</h3>
+                <div class="era-display" id="era-display">Golden Age</div>
+                <div class="year-display" id="year-display">1950s</div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-title">Node Types</div>
+            <div class="legend-item">
+                <div class="legend-color movie"></div>
+                <span>Movies</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color genre"></div>
+                <span>Genres</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color director"></div>
+                <span>Directors</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color actor"></div>
+                <span>Actors</span>
+            </div>
+        </div>
+
+        <div id="network-container"></div>
+
+        <div class="controls">
+            <button class="control-btn" id="prev-btn">⏮ Previous</button>
+            <button class="play-button" id="play-btn">▶ Play</button>
+            <button class="control-btn" id="next-btn">Next ⏭</button>
+            <div class="time-controls">
+                <span>Speed:</span>
+                <input type="range" class="speed-slider" id="speed-slider" min="500" max="3000" value="1500">
+                <span id="speed-display">1.5s</span>
+            </div>
+        </div>
+
+        <div class="era-timeline">
+            <div class="timeline-track">
+                <div class="timeline-progress" id="timeline-progress"></div>
+                <div class="timeline-marker" id="timeline-marker"></div>
+            </div>
+            <div class="era-labels">
+                <span>1950s Golden Age</span>
+                <span>1970s New Hollywood</span>
+                <span>1980s Blockbuster</span>
+                <span>1990s Independent</span>
+                <span>2000s Digital</span>
+                <span>2010s Superhero</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="movie_network_js.js"></script>
+</body>
+</html>
