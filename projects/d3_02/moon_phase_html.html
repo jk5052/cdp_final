@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phases of Academic Relationships</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="moon.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Phases of Academic Relationships</h1>
+            <p class="subtitle">For the year 2025, in the style of lunar phases</p>
+        </header>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="year-input">Year:</label>
+                <input type="number" id="year-input" class="year-input" value="2025" min="2020" max="2030">
+            </div>
+            
+            <div class="control-group">
+                <label>Filter:</label>
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="friends">Friends</button>
+                <button class="filter-btn" data-filter="colleagues">Colleagues</button>
+                <button class="filter-btn" data-filter="student-teacher">Student-Teacher</button>
+                <button class="filter-btn" data-filter="birthdays">Birthdays</button>
+            </div>
+        </div>
+        
+        <div class="timeline-container">
+            <div id="calendar"></div>
+        </div>
+        
+        <div class="legends">
+            <div class="legend-section">
+                <h3>Relationship Types</h3>
+                <div class="legend-item">
+                    <div class="legend-dot relationship-friends"></div>
+                    <span>Friends</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot relationship-colleagues"></div>
+                    <span>Colleagues</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot relationship-student-teacher"></div>
+                    <span>Student-Teacher</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot relationship-study-partners"></div>
+                    <span>Study Partners</span>
+                </div>
+            </div>
+            
+            <div class="legend-section">
+                <h3>Moon Phases</h3>
+                <div class="legend-item">
+                    <div class="moon-phase"><div class="moon-lit new-moon"></div></div>
+                    <span>New Moon - No Events</span>
+                </div>
+                <div class="legend-item">
+                    <div class="moon-phase"><div class="moon-lit first-quarter"></div></div>
+                    <span>First Quarter - New Relationships</span>
+                </div>
+                <div class="legend-item">
+                    <div class="moon-phase"><div class="moon-lit full-moon"></div></div>
+                    <span>Full Moon - Strong Connections</span>
+                </div>
+                <div class="legend-item">
+                    <div class="moon-phase has-birthday"></div>
+                    <span>Golden Moon - Birthday</span>
+                </div>
+            </div>
+            
+            <div class="legend-section">
+                <h3>Zodiac Signs</h3>
+                <div class="legend-grid">
+                    <div class="legend-item"><span>♈ Aries</span></div>
+                    <div class="legend-item"><span>♉ Taurus</span></div>
+                    <div class="legend-item"><span>♊ Gemini</span></div>
+                    <div class="legend-item"><span>♋ Cancer</span></div>
+                    <div class="legend-item"><span>♌ Leo</span></div>
+                    <div class="legend-item"><span>♍ Virgo</span></div>
+                    <div class="legend-item"><span>♎ Libra</span></div>
+                    <div class="legend-item"><span>♏ Scorpio</span></div>
+                    <div class="legend-item"><span>♐ Sagittarius</span></div>
+                    <div class="legend-item"><span>♑ Capricorn</span></div>
+                    <div class="legend-item"><span>♒ Aquarius</span></div>
+                    <div class="legend-item"><span>♓ Pisces</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalConnections">0</div>
+                <div class="stat-label">Total Connections</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="birthdayCount">0</div>
+                <div class="stat-label">Birthday Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="strongestMonth">-</div>
+                <div class="stat-label">Most Active Month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="zodiacMatches">0</div>
+                <div class="stat-label">Zodiac Matches</div>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h3>Person Details</h3>
+            <div id="personInfo">
+                <p>Click on a moon phase to see details about relationships and birthdays</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+    
+    <script src="moon_phase_js.js"></script>
+</body>
+</html>

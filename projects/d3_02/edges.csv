@@ -1,0 +1,37 @@
+source,target,relationship,course,since,strength,type,department,formation_month,formation_day,zodiac_compatibility
+Alice,Bob,student-teacher,CS101,2023,0.8,directed,Computer Science,1,15,incompatible
+Alice,Carol,friends,,2022,0.9,bidirectional,,2,3,incompatible
+Bob,David,colleagues,,2020,0.7,bidirectional,Computer Science,3,12,incompatible
+Carol,David,student-teacher,CS201,2023,0.6,directed,Computer Science,4,8,compatible
+Eve,Bob,student-teacher,MATH101,2023,0.8,directed,Mathematics,5,22,incompatible
+Alice,Eve,friends,,2021,0.7,bidirectional,,6,7,incompatible
+Frank,Alice,study-partners,,2023,0.6,bidirectional,,7,14,compatible
+Grace,Carol,friends,,2022,0.8,bidirectional,,8,28,incompatible
+Henry,Bob,colleagues,,2021,0.7,bidirectional,,9,5,incompatible
+Ivy,David,student-teacher,ART150,2023,0.9,directed,Art,10,18,compatible
+Jack,Grace,student-teacher,ART200,2023,0.8,directed,Art,11,2,compatible
+Kate,Luke,student-teacher,PSY101,2023,0.7,directed,Psychology,12,15,compatible
+Alice,Frank,friends,,2023,0.5,bidirectional,,1,28,compatible
+Bob,Henry,colleagues,,2023,0.6,bidirectional,,2,14,incompatible
+Carol,Ivy,friends,,2023,0.9,bidirectional,,3,21,incompatible
+David,Jack,colleagues,,2023,0.8,bidirectional,,4,10,incompatible
+Eve,Kate,friends,,2023,0.7,bidirectional,,5,16,compatible
+Frank,Grace,study-partners,,2023,0.6,bidirectional,,6,30,compatible
+Henry,Ivy,colleagues,,2023,0.8,bidirectional,,7,4,incompatible
+Jack,Kate,friends,,2023,0.9,bidirectional,,8,12,incompatible
+Alice,Henry,study-partners,,2023,0.5,bidirectional,,9,25,incompatible
+Bob,Jack,colleagues,,2023,0.7,bidirectional,,10,8,compatible
+Carol,Kate,friends,,2023,0.8,bidirectional,,11,19,incompatible
+David,Luke,colleagues,,2023,0.9,bidirectional,,12,6,incompatible
+Eve,Frank,study-partners,,2023,0.6,bidirectional,,1,12,incompatible
+Grace,Henry,student-teacher,LIT300,2023,0.8,directed,Literature,2,18,incompatible
+Ivy,Jack,student-teacher,ART250,2023,0.7,directed,Art,3,25,compatible
+Kate,Alice,friends,,2023,0.6,bidirectional,,4,22,compatible
+Luke,Bob,colleagues,,2023,0.5,bidirectional,,5,30,incompatible
+Frank,Carol,study-partners,,2023,0.7,bidirectional,,6,8,incompatible
+Grace,David,friends,,2023,0.8,bidirectional,,7,15,incompatible
+Henry,Eve,colleagues,,2023,0.9,bidirectional,,8,20,incompatible
+Ivy,Kate,friends,,2023,0.7,bidirectional,,9,12,compatible
+Jack,Luke,colleagues,,2023,0.6,bidirectional,,10,25,compatible
+Alice,Luke,study-partners,,2023,0.5,bidirectional,,11,30,incompatible
+Bob,Ivy,student-teacher,MATH150,2023,0.8,directed,Mathematics,12,10,incompatible

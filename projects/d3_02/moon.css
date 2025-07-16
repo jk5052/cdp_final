@@ -1,0 +1,530 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Main Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1em;
+    color: #aaa;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-group label {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.year-input {
+    padding: 8px 12px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 14px;
+    width: 80px;
+}
+
+.year-input:focus {
+    outline: none;
+    border-color: #666;
+}
+
+.filter-btn {
+    padding: 6px 12px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background: #1a1a1a;
+    color: #bbb;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: #333;
+    color: #fff;
+}
+
+.filter-btn.active {
+    background: #555;
+    color: #fff;
+    border-color: #777;
+}
+
+/* Timeline Container */
+.timeline-container {
+    background: #1a1a1a;
+    border-radius: 8px;
+    padding: 40px;
+    margin-bottom: 40px;
+    border: 1px solid #333;
+}
+
+/* Month Rows */
+.month-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    min-height: 40px;
+}
+
+.month-label {
+    width: 120px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.days-container {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+/* Moon Phase Styles */
+.moon-phase-container {
+    position: relative;
+    display: inline-block;
+}
+
+.moon-phase {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #333;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.moon-phase:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.moon-phase.has-birthday {
+    background: #ffd700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.moon-phase.has-birthday:hover {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
+/* Moon Lit Portion - Creates the actual moon phase effect */
+.moon-lit {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 50%;
+}
+
+/* Different Moon Phases */
+.moon-lit.new-moon {
+    width: 0%;
+}
+
+.moon-lit.waxing-crescent {
+    width: 25%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.moon-lit.first-quarter {
+    width: 50%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.moon-lit.waxing-gibbous {
+    width: 75%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.moon-lit.full-moon {
+    width: 100%;
+}
+
+.moon-lit.waning-gibbous {
+    width: 75%;
+    right: 0;
+    left: auto;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.moon-lit.last-quarter {
+    width: 50%;
+    right: 0;
+    left: auto;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.moon-lit.waning-crescent {
+    width: 25%;
+    right: 0;
+    left: auto;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Relationship Indicators */
+.relationship-indicator {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    z-index: 10;
+}
+
+.relationship-friends {
+    background: #ff6b6b;
+}
+
+.relationship-colleagues {
+    background: #4ecdc4;
+}
+
+.relationship-student-teacher {
+    background: #45b7d1;
+}
+
+.relationship-study-partners {
+    background: #f39c12;
+}
+
+/* Zodiac Symbol */
+.zodiac-symbol {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: #000;
+    font-weight: bold;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+    z-index: 5;
+}
+
+.moon-phase.has-birthday .zodiac-symbol {
+    color: #000;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Day Numbers */
+.day-number {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: #666;
+    font-weight: 300;
+}
+
+/* Show day numbers on 1st, 5th, 10th, 15th, 20th, 25th, 30th */
+.moon-phase-container:nth-child(1) .day-number,
+.moon-phase-container:nth-child(5) .day-number,
+.moon-phase-container:nth-child(10) .day-number,
+.moon-phase-container:nth-child(15) .day-number,
+.moon-phase-container:nth-child(20) .day-number,
+.moon-phase-container:nth-child(25) .day-number,
+.moon-phase-container:nth-child(30) .day-number {
+    display: block;
+}
+
+.day-number {
+    display: none;
+}
+
+/* Legends */
+.legends {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.legend-section {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    flex: 1;
+    min-width: 250px;
+}
+
+.legend-section h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #ccc;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.legend-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.legend-grid .legend-item {
+    margin-bottom: 4px;
+}
+
+/* Stats */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    background: #222;
+    border-color: #555;
+}
+
+.stat-number {
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+/* Info Panel */
+.info-panel {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin-bottom: 20px;
+}
+
+.info-panel h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.info-panel p {
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.person-name {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.zodiac-info {
+    background: rgba(255, 215, 0, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    border-left: 4px solid #ffd700;
+}
+
+.zodiac-traits {
+    font-size: 0.9em;
+    color: #ddd;
+    margin-top: 8px;
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+    border: 1px solid #444;
+    max-width: 250px;
+    line-height: 1.4;
+}
+
+.tooltip-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffd700;
+}
+
+.tooltip-content {
+    color: #ccc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 10px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    .controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .days-container {
+        gap: 4px;
+    }
+    
+    .moon-phase {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .month-label {
+        width: 100px;
+        font-size: 12px;
+    }
+    
+    .legends {
+        flex-direction: column;
+    }
+    
+    .legend-section {
+        min-width: auto;
+    }
+    
+    .stats {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .timeline-container {
+        padding: 20px;
+    }
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.month-row {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Hover effects for better interactivity */
+.moon-phase-container:hover .day-number {
+    color: #fff;
+    display: block;
+}
+
+/* Special styling for current day (if needed) */
+.moon-phase.today {
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+/* Loading state */
+.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
