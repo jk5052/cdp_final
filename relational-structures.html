@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relational Structures - Interactive Data Visualizations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .main-content {
+            margin-top: 100px;
+            padding: 40px 20px;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .intro-section h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .intro-section p {
+            font-size: 1.3rem;
+            opacity: 0.8;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .visualization-container {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 25px;
+            padding: 50px;
+            margin: 60px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .visualization-container:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .viz-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .viz-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+
+        .viz-description {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .viz-frame {
+            width: 100%;
+            height: 700px;
+            border: none;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .viz-info {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .viz-info h3 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-card h3 {
+            color: #96ceb4;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .controls-section {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            margin: 0 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .intro-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .viz-frame {
+                height: 500px;
+            }
+            
+            .visualization-container {
+                padding: 30px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="nav-container">
+            <a href="index.html" class="back-btn">← Back to Main</a>
+            <div class="title">Relational Structures</div>
+            <div></div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="intro-section">
+            <h1>Relational Structures</h1>
+            <p>Explore complex relationships and lunar connections through interactive data visualizations. This D3.js powered interface reveals hidden patterns in academic relationships through the metaphor of moon phases.</p>
+        </div>
+
+        <!-- Single Moon Phase Visualization -->
+        <div class="visualization-container">
+            <div class="viz-header">
+                <h2>🌙 Phases of Academic Relationships</h2>
+                <p class="viz-description">Discover relationship patterns and academic connections through interactive lunar phase visualization. This unique interface maps academic relationships using the cyclical nature of moon phases as a metaphor for relationship dynamics.</p>
+            </div>
+
+            <iframe src="projects/d3_02/single_moon.html" class="viz-frame" title="Phases of Academic Relationships"></iframe>
+
+            <div class="viz-info">
+                <h3>🌕 Lunar Relationship Insights</h3>
+                <p>Interactive visualization mapping academic relationships through lunar phases for 2025. Navigate through different moon phases to explore how academic connections evolve and transform over time, mirroring the cyclical nature of lunar cycles.</p>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>🌙 Lunar Metaphor</h3>
+                <p>Experience relationship dynamics through the beautiful metaphor of moon phases. Each phase represents different stages and intensities of academic connections.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>📊 Academic Networks</h3>
+                <p>Uncover meaningful patterns in academic relationships through sophisticated data visualization techniques powered by real relationship data.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>⚡ Interactive Exploration</h3>
+                <p>Click, hover, and navigate through dynamic lunar visualizations. Each moon phase is interactive, providing detailed relationship information.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎨 Temporal Storytelling</h3>
+                <p>Experience relationship evolution through compelling visual narratives that transform complex academic data into engaging lunar stories.</p>
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <button class="control-btn" onclick="refreshVisualization()">🔄 Refresh</button>
+            <button class="control-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <button class="control-btn" onclick="showDataInfo()">📊 Data Sources</button>
+        </div>
+    </div>
+
+    <script>
+        function refreshVisualization() {
+            const iframe = document.querySelector('.viz-frame');
+            iframe.src = iframe.src;
+        }
+
+        function toggleFullscreen() {
+            const iframe = document.querySelector('.viz-frame');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen();
+            }
+        }
+
+        function showDataInfo() {
+            alert('Relational Structures Data Sources:\n\n🌙 Phases of Academic Relationships:\n• Academic relationship data for 2025\n• Lunar phase metaphor mapping\n• Temporal relationship patterns\n• Interactive phase transitions\n\nFeatures:\n• Interactive moon phase exploration\n• Dynamic relationship mapping\n• Temporal pattern analysis\n• Real-time phase transitions');
+        }
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.6s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

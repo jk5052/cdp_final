@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunar Relationships</title>
+    <link rel="stylesheet" href="single_moon_css.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Lunar Relationships</h1>
+            <p class="subtitle">Navigate through academic connections guided by the moon</p>
+        </header>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label>Year:</label>
+                <select id="year-select">
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025" selected>2025</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>View Mode:</label>
+                <button class="mode-btn active" data-mode="relationships">Relationships</button>
+                <button class="mode-btn" data-mode="birthdays">Birthdays</button>
+                <button class="mode-btn" data-mode="timeline">Timeline</button>
+            </div>
+        </div>
+        
+        <div class="moon-section">
+            <div class="moon-container">
+                <div id="main-moon" class="main-moon">
+                    <div class="moon-surface"></div>
+                    <div class="moon-glow"></div>
+                    <div class="zodiac-symbol" id="moon-zodiac">🌙</div>
+                </div>
+                
+                <div class="orbit-container">
+                    <!-- Relationship/Birthday indicators will be placed here -->
+                </div>
+                
+                <div class="moon-info">
+                    <div class="phase-indicator" id="phase-indicator">Full Moon</div>
+                    <div class="current-focus" id="current-focus">Hover over connections to explore</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation-panel">
+            <h3>Navigate Connections</h3>
+            <div class="person-grid" id="person-grid">
+                <!-- Person cards will be dynamically generated -->
+            </div>
+        </div>
+        
+        <div class="details-panel">
+            <div class="person-details" id="person-details">
+                <h3>Person Details</h3>
+                <p class="placeholder">Select a person or relationship to see details</p>
+            </div>
+            
+            <div class="relationship-details" id="relationship-details">
+                <h3>Relationship Details</h3>
+                <div class="relationship-list" id="relationship-list">
+                    <!-- Relationship cards will be shown here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline-panel" id="timeline-panel" style="display: none;">
+            <h3>Relationship Timeline</h3>
+            <div class="timeline-track">
+                <div class="timeline-months" id="timeline-months">
+                    <!-- Month markers will be placed here -->
+                </div>
+                <div class="timeline-events" id="timeline-events">
+                    <!-- Timeline events will be placed here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="legend-panel">
+            <div class="legend-section">
+                <h4>Moon Phases</h4>
+                <div class="legend-item">
+                    <div class="mini-moon new-moon"></div>
+                    <span>New Moon - Potential</span>
+                </div>
+                <div class="legend-item">
+                    <div class="mini-moon crescent-moon"></div>
+                    <span>Crescent - Growing</span>
+                </div>
+                <div class="legend-item">
+                    <div class="mini-moon full-moon"></div>
+                    <span>Full Moon - Strong Bond</span>
+                </div>
+            </div>
+            
+            <div class="legend-section">
+                <h4>Relationship Types</h4>
+                <div class="legend-item">
+                    <div class="color-dot friends"></div>
+                    <span>Friends</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-dot colleagues"></div>
+                    <span>Colleagues</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-dot student-teacher"></div>
+                    <span>Student-Teacher</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-dot study-partners"></div>
+                    <span>Study Partners</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="single_moon_js.js"></script>
+</body>
+</html>
