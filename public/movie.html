@@ -161,8 +161,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
-    
-    <script>
+
+    <script type="module">
+        // Import API keys from private folder (commented out for now)
+        // import { API_KEYS } from '../private/api-keys.js';
         // 글로벌 변수
         let camera, scene, renderer, controls;
         let mouseX = 0, mouseY = 0;
@@ -231,10 +233,14 @@
         async function loadMovieData() {
             try {
                 console.log('📁 Loading movie emotion data...');
-                const response = await fetch('./message_based_emotion_data_2025-08-04.json');
+                const response = await fetch('../message_based_emotion_data_2025-08-04.json');
+                console.log('📡 Response status:', response.status);
+
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                
+
                 const data = await response.json();
+                console.log('📊 Raw data loaded, first item:', data[0]);
+
                 const processedData = data.map(movie => ({
                     title: movie.basic_info.title,
                     country: movie.basic_info.country,
@@ -244,10 +250,11 @@
                     core_message: movie.basic_info.core_message,
                     textures: movie.emotion_layers.layer1_message_based
                 }));
-                
+
                 console.log(`✅ Loaded ${processedData.length} movies`);
+                console.log('🎬 First processed movie:', processedData[0]);
                 return processedData;
-                
+
             } catch (error) {
                 console.error('❌ Failed to load movie data:', error);
                 console.log('📝 Using sample data instead');
@@ -485,8 +492,18 @@
 
         // 영화 파티클 생성
         function createMovieParticles() {
+            console.log(`🎭 Creating particles for ${movieData.length} movies`);
+
             movieData.forEach((movie, index) => {
+                console.log(`🎬 Processing movie ${index + 1}: ${movie.title}`);
+                console.log('📊 Textures:', movie.textures);
+
                 const t = movie.textures;
+                if (!t) {
+                    console.error(`❌ No textures found for movie: ${movie.title}`);
+                    return;
+                }
+
                 const x = (t.warmth - 0.5) * 3000;
                 const y = (t.heaviness - 0.5) * 3000;
                 const z = (t.darkness - 0.5) * 3000;
@@ -494,8 +511,10 @@
                 const color = getMovieColor(t);
                 const size = 8 + t.chaos * 20;
 
+                console.log(`🎨 Position: (${x.toFixed(1)}, ${y.toFixed(1)}, ${z.toFixed(1)}), Size: ${size.toFixed(1)}`);
+
                 const geometry = new THREE.SphereGeometry(size, 8, 6);
-                const material = new THREE.MeshBasicMaterial({ 
+                const material = new THREE.MeshBasicMaterial({
                     color: color,
                     transparent: true,
                     opacity: 0.7 + t.luminosity * 0.3
@@ -503,7 +522,7 @@
 
                 const particle = new THREE.Mesh(geometry, material);
                 particle.position.set(x, y, z);
-                
+
                 particle.userData = {
                     movie: movie,
                     rotationSpeed: {
@@ -518,6 +537,8 @@
                 scene.add(particle);
                 movieParticles.push(particle);
             });
+
+            console.log(`✅ Created ${movieParticles.length} movie particles`);
         }
 
         // 감정 기반 색상 결정

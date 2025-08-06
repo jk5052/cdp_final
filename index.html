@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Floating Eyes Interactive</title>
+    <title>See Through - JK5052</title>
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         * {
@@ -121,7 +121,7 @@
 
         .see-through-text {
             position: absolute;
-            top: 50%;
+            top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
@@ -133,6 +133,22 @@
             pointer-events: none;
             opacity: 0.7;
             letter-spacing: 3px;
+        }
+
+        .author-text {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 300;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+            z-index: 5;
+            pointer-events: none;
+            letter-spacing: 2px;
+            font-family: 'Special Elite', cursive;
         }
 
         .drag-hint {
@@ -190,15 +206,15 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.8);
+            background: linear-gradient(45deg, rgba(50, 205, 50, 0.8), rgba(0, 191, 255, 0.8));
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.4);
             border-radius: 25px;
-            padding: 12px 24px;
+            padding: 15px 25px;
             color: white;
             text-decoration: none;
-            font-family: 'Special Elite', 'Courier New', monospace;
-            font-size: 0.9rem;
+            font-family: 'Special Elite', cursive;
+            font-size: 14px;
             font-weight: bold;
             transition: all 0.3s ease;
             cursor: pointer;
@@ -208,46 +224,47 @@
         }
 
         .final-presentation-btn:hover {
-            background: rgba(0, 0, 0, 0.9);
-            border-color: rgba(255, 255, 255, 0.7);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(45deg, rgba(50, 205, 50, 1), rgba(0, 191, 255, 1));
+            border-color: rgba(255, 255, 255, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(50, 205, 50, 0.4);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
         }
 
         .final-presentation-btn:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
 
         .play-btn {
             position: fixed;
             top: 20px;
             left: 20px;
-            background: rgba(0, 0, 0, 0.8);
+            background: linear-gradient(45deg, rgba(255, 0, 150, 0.8), rgba(0, 150, 255, 0.8));
             backdrop-filter: blur(10px);
             color: white;
             text-decoration: none;
             padding: 15px 25px;
-            border-radius: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
             font-weight: bold;
             font-size: 14px;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
             z-index: 200;
+            font-family: 'Special Elite', cursive;
         }
 
         .play-btn:hover {
-            background: rgba(0, 0, 0, 0.9);
-            border-color: rgba(255, 255, 255, 0.7);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(45deg, rgba(255, 0, 150, 1), rgba(0, 150, 255, 1));
+            border-color: rgba(255, 255, 255, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 0, 150, 0.4);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
         }
 
         .play-btn:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
 
         .page-transition {
@@ -447,14 +464,18 @@
     </style>
 </head>
 <body>
-    <a href="threejs_movie_emotions.html" class="play-btn">Play</a>
-    <a href="final_presentation/index.html" class="final-presentation-btn">Final Presentation</a>
+    <a href="public/movie.html" class="play-btn">🎬 Play</a>
+    <a href="final_presentation/final_presentation.html" class="final-presentation-btn">📊 Final Presentation</a>
 
     <div class="container" id="mainPage">
         <div class="see-through-text">
             See Through
         </div>
-        
+
+        <div class="author-text">
+            by JK5052
+        </div>
+
         <div class="drag-hint">
             Drag eyes around • Hover to reveal • Click to see through
         </div>

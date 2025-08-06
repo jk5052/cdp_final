@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
     overflow: hidden;
     background: #000;
     color: #fff;
@@ -24,23 +24,17 @@ body {
     background: #111;
 }
 
-/* Background world container */
+/* Background world - 단순화 (줌 효과 없이) */
 .world {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 4000px;
-    height: 4000px;
-    transform-origin: center center;
-    transform: translate(-50%, -50%) scale(0.1);
-    transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    background:
-        radial-gradient(circle at 30% 40%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 70% 60%, rgba(78, 205, 196, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(100, 100, 100, 0.1) 0%, transparent 70%);
-    background-size: 100% 100%, 100% 100%, 100% 100%;
-    background-position: center;
-    filter: blur(20px) saturate(1.2) brightness(0.5);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    transform: none !important;
+    transition: none !important;
+    filter: none !important;
 }
 
 /* Blur overlay for out-of-focus state */
@@ -52,95 +46,280 @@ body {
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
-    opacity: 1;
+    opacity: 0;
     transition: all 2s ease;
 }
 
-/* Section containers positioned in the world */
+/* Section containers positioned in the world - 풀스크린 */
 .section {
-    position: absolute;
-    width: 800px;
-    height: 600px;
-    border: 3px solid rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(2px);
-    opacity: 0.3;
-    transition: all 1.5s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    border-radius: 0;
+    background: #111;
+    backdrop-filter: none;
+    opacity: 0;
+    transition: all 0.8s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow:
-        0 0 0 5000px rgba(0, 0, 0, 0.3),
-        inset 0 0 60px rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    z-index: 10;
 }
 
 .section.active {
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 1);
-    box-shadow:
-        0 0 0 5000px rgba(0, 0, 0, 0.9),
-        inset 0 0 60px rgba(255, 255, 255, 0.3),
-        0 20px 60px rgba(0, 0, 0, 0.7);
+    opacity: 1 !important;
+    background: rgba(0, 0, 0, 0.95) !important;
+    border-color: rgba(255, 255, 255, 1) !important;
+    transform: scale(1.02) !important;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8) !important;
+    z-index: 1000 !important;
 }
 
-/* Section positioning - 17 sections */
-.section-1 { top: 1700px; left: 1600px; }
-.section-2 { top: 800px; left: 800px; }
-.section-3 { top: 2400px; left: 2800px; }
-.section-4 { top: 1200px; left: 2600px; }
-.section-5 { top: 2800px; left: 1000px; }
-.section-6 { top: 500px; left: 1800px; }
-.section-7 { top: 3000px; left: 2200px; }
-.section-8 { top: 1500px; left: 500px; }
-.section-9 { top: 2000px; left: 3200px; }
-.section-10 { top: 3200px; left: 1600px; }
-.section-11 { top: 600px; left: 3000px; }
-.section-12 { top: 1800px; left: 200px; }
-.section-13 { top: 400px; left: 2400px; }
-.section-14 { top: 2600px; left: 600px; }
-.section-15 { top: 1000px; left: 3400px; }
-.section-16 { top: 3400px; left: 2800px; }
-.section-17 { top: 2200px; left: 1000px; }
+/* 모든 섹션은 이미 풀스크린으로 설정됨 - 추가 위치 조정 불필요 */
 
 /* Section content */
 .section-content {
     text-align: center;
-    padding: 60px;
-    max-width: 600px;
+    padding: 80px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
     transform: scale(1);
     opacity: 1;
-    transition: all 1s ease 0.5s;
+    transition: all 0.5s ease;
     z-index: 1000;
     position: relative;
 }
 
 .section.active .section-content {
-    transform: scale(1);
-    opacity: 1;
-    z-index: 1001;
+    transform: scale(1) !important;
+    opacity: 1 !important;
+    z-index: 1001 !important;
 }
 
 .section-content h1 {
-    font-size: 3.5rem;
-    font-weight: 200;
-    margin-bottom: 30px;
-    letter-spacing: 3px;
-    color: #fff;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
-    text-align: center;
+    font-family: 'Nanum Gothic', sans-serif !important;
+    font-size: 6rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 60px !important;
+    letter-spacing: 4px !important;
+    color: #ffffff !important;
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 1) !important;
+    text-align: center !important;
+    line-height: 1.1 !important;
 }
 
-.section-content p {
-    font-size: 1.6rem;
-    line-height: 1.6;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.95);
-    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
+.section-content .content {
+    font-family: 'Nanum Gothic', sans-serif !important;
+    font-size: 2.8rem !important;
+    line-height: 1.6 !important;
+    font-weight: 400 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: 0 3px 15px rgba(0, 0, 0, 0.9) !important;
+    text-align: center !important;
+    max-width: 85% !important;
+    margin: 0 auto !important;
+}
+
+.section-content img {
+    width: 100vw !important;
+    height: 100vh !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    z-index: 1000 !important;
+}
+
+.section-content iframe {
+    width: 90%;
+    height: 70vh;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: block;
+}
+
+/* 섹션 6 수직 중앙 정렬 */
+.section-6 .section-content {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100vh !important;
+    text-align: center !important;
+}
+
+/* 섹션 8, 9, 17, 18, 19 풀프레임 iframe */
+.section-8, .section-9, .section-17, .section-18, .section-19 {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* 섹션 7 텍스트 중앙 정렬 */
+.section-7 .section-content {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100vh !important;
+    text-align: center !important;
+    padding: 60px !important;
+}
+
+.section-8 .section-content, .section-9 .section-content, .section-17 .section-content, .section-18 .section-content, .section-19 .section-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: block !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+}
+
+.section-8 .section-content .content, .section-9 .section-content .content, .section-17 .section-content .content, .section-18 .section-content .content, .section-19 .section-content .content {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+}
+
+.section-8 .section-content iframe, .section-9 .section-content iframe, .section-17 .section-content iframe, .section-18 .section-content iframe, .section-19 .section-content iframe {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    z-index: 1000 !important;
+}
+
+/* 배경 이미지가 있는 섹션 스타일 */
+.section.has-background {
+    position: relative;
+}
+
+.section.has-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.section.has-background .section-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.section.has-background h1 {
+    color: white;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+    font-weight: bold;
+}
+
+.section.has-background .content {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 섹션 2 (Keywords)의 이미지는 더 크게 */
+.section-2 .section-content img {
+    max-width: 95%;
+    max-height: 85vh;
+    object-fit: contain;
+    margin: 10px auto;
+}
+
+/* 이미지만 있는 섹션의 제목 스타일 조정 */
+.section-2 .section-content h1 {
+    font-size: 4rem !important;
+    margin-bottom: 40px !important;
+}
+
+/* 비디오 배경 스타일 */
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+/* 비디오 배경이 있는 섹션의 콘텐츠 */
+.section:has(.video-background) .section-content {
+    position: relative;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 40px;
+}
+
+.section:has(.video-background) .section-content h1 {
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+    color: #ffffff !important;
+}
+
+.section:has(.video-background) .section-content .content {
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8) !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* 섹션 3 전용 폰트 크기 */
+.section-3 .section-content .content {
+    font-family: 'Nanum Gothic', sans-serif !important;
+    font-size: 2.2rem !important;
+    font-weight: 400 !important;
+}
+
+.section-3 .section-content h1 {
+    font-family: 'Nanum Gothic', sans-serif !important;
+    font-size: 4.5rem !important;
+    font-weight: 800 !important;
 }
 
 .section-content strong {
@@ -153,24 +332,44 @@ body {
     font-style: italic;
 }
 
-/* World zoom states - 17 sections with closer zoom */
-.world.zoomed-1 { transform: translate(-50%, -50%) translate(-1600px, -1700px) scale(0.4); filter: blur(0px) saturate(1.2) brightness(1); }
-.world.zoomed-2 { transform: translate(-50%, -50%) translate(-800px, -800px) scale(0.42); filter: blur(0px) saturate(1.3) brightness(1.1); }
-.world.zoomed-3 { transform: translate(-50%, -50%) translate(-2800px, -2400px) scale(0.38); filter: blur(0px) saturate(1.1) brightness(0.9); }
-.world.zoomed-4 { transform: translate(-50%, -50%) translate(-2600px, -1200px) scale(0.44); filter: blur(0px) saturate(1.4) brightness(1.2); }
-.world.zoomed-5 { transform: translate(-50%, -50%) translate(-1000px, -2800px) scale(0.41); filter: blur(0px) saturate(1.2) brightness(1); }
-.world.zoomed-6 { transform: translate(-50%, -50%) translate(-1800px, -500px) scale(0.43); filter: blur(0px) saturate(1.3) brightness(1.1); }
-.world.zoomed-7 { transform: translate(-50%, -50%) translate(-2200px, -3000px) scale(0.39); filter: blur(0px) saturate(1.1) brightness(0.9); }
-.world.zoomed-8 { transform: translate(-50%, -50%) translate(-500px, -1500px) scale(0.45); filter: blur(0px) saturate(1.4) brightness(1.2); }
-.world.zoomed-9 { transform: translate(-50%, -50%) translate(-3200px, -2000px) scale(0.37); filter: blur(0px) saturate(1.2) brightness(1); }
-.world.zoomed-10 { transform: translate(-50%, -50%) translate(-1600px, -3200px) scale(0.46); filter: blur(0px) saturate(1.3) brightness(1.1); }
-.world.zoomed-11 { transform: translate(-50%, -50%) translate(-3000px, -600px) scale(0.40); filter: blur(0px) saturate(1.1) brightness(0.9); }
-.world.zoomed-12 { transform: translate(-50%, -50%) translate(-200px, -1800px) scale(0.47); filter: blur(0px) saturate(1.4) brightness(1.2); }
-.world.zoomed-13 { transform: translate(-50%, -50%) translate(-2400px, -400px) scale(0.36); filter: blur(0px) saturate(1.2) brightness(1); }
-.world.zoomed-14 { transform: translate(-50%, -50%) translate(-600px, -2600px) scale(0.48); filter: blur(0px) saturate(1.3) brightness(1.1); }
-.world.zoomed-15 { transform: translate(-50%, -50%) translate(-3400px, -1000px) scale(0.38); filter: blur(0px) saturate(1.1) brightness(0.9); }
-.world.zoomed-16 { transform: translate(-50%, -50%) translate(-2800px, -3400px) scale(0.44); filter: blur(0px) saturate(1.4) brightness(1.2); }
-.world.zoomed-17 { transform: translate(-50%, -50%) translate(-1000px, -2200px) scale(0.35); filter: blur(0px) saturate(1.2) brightness(1); }
+.section-content img {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* World zoom states - 각 섹션을 화면 정중앙으로 가져오기 */
+.world.zoomed-1 { transform: translate(-50%, -50%) translate(-2000px, -2000px) scale(0.5); filter: blur(0px); }
+.world.zoomed-2 { transform: translate(-50%, -50%) translate(-1500px, -1500px) scale(0.5); filter: blur(0px); }
+.world.zoomed-3 { transform: translate(-50%, -50%) translate(-2500px, -2500px) scale(0.5); filter: blur(0px); }
+.world.zoomed-4 { transform: translate(-50%, -50%) translate(-2200px, -1800px) scale(0.5); filter: blur(0px); }
+.world.zoomed-5 { transform: translate(-50%, -50%) translate(-1800px, -2200px) scale(0.5); filter: blur(0px); }
+.world.zoomed-6 { transform: translate(-50%, -50%) translate(-2000px, -1200px) scale(0.5); filter: blur(0px); }
+.world.zoomed-7 { transform: translate(-50%, -50%) translate(-2400px, -2800px) scale(0.5); filter: blur(0px); }
+.world.zoomed-8 { transform: translate(-50%, -50%) translate(-1200px, -1600px) scale(0.5); filter: blur(0px); }
+.world.zoomed-9 { transform: translate(-50%, -50%) translate(-2800px, -2400px) scale(0.5); filter: blur(0px); }
+.world.zoomed-10 { transform: translate(-50%, -50%) translate(-1700px, -2700px) scale(0.5); filter: blur(0px); }
+.world.zoomed-11 { transform: translate(-50%, -50%) translate(-2700px, -1300px) scale(0.5); filter: blur(0px); }
+.world.zoomed-12 { transform: translate(-50%, -50%) translate(-1300px, -1700px) scale(0.5); filter: blur(0px); }
+.world.zoomed-13 { transform: translate(-50%, -50%) translate(-2300px, -1100px) scale(0.5); filter: blur(0px); }
+.world.zoomed-14 { transform: translate(-50%, -50%) translate(-1400px, -2600px) scale(0.5); filter: blur(0px); }
+.world.zoomed-15 { transform: translate(-50%, -50%) translate(-2600px, -1400px) scale(0.5); filter: blur(0px); }
+.world.zoomed-16 { transform: translate(-50%, -50%) translate(-2100px, -2900px) scale(0.5); filter: blur(0px); }
+.world.zoomed-17 { transform: translate(-50%, -50%) translate(-1600px, -2100px) scale(0.5); filter: blur(0px); }
+.world.zoomed-18 { transform: translate(-50%, -50%) translate(-2900px, -1900px) scale(0.5); filter: blur(0px); }
+.world.zoomed-19 { transform: translate(-50%, -50%) translate(-1500px, -2800px) scale(0.5); filter: blur(0px); }
+.world.zoomed-20 { transform: translate(-50%, -50%) translate(-2800px, -1600px) scale(0.5); filter: blur(0px); }
+.world.zoomed-21 { transform: translate(-50%, -50%) translate(-1800px, -1400px) scale(0.5); filter: blur(0px); }
+.world.zoomed-22 { transform: translate(-50%, -50%) translate(-2400px, -2600px) scale(0.5); filter: blur(0px); }
+.world.zoomed-23 { transform: translate(-50%, -50%) translate(-1600px, -1800px) scale(0.5); filter: blur(0px); }
+.world.zoomed-24 { transform: translate(-50%, -50%) translate(-2600px, -2200px) scale(0.5); filter: blur(0px); }
+.world.zoomed-25 { transform: translate(-50%, -50%) translate(-1400px, -2400px) scale(0.5); filter: blur(0px); }
+.world.zoomed-26 { transform: translate(-50%, -50%) translate(-2200px, -1600px) scale(0.5); filter: blur(0px); }
+.world.zoomed-27 { transform: translate(-50%, -50%) translate(-1700px, -2500px) scale(0.5); filter: blur(0px); }
+.world.zoomed-28 { transform: translate(-50%, -50%) translate(-2500px, -1700px) scale(0.5); filter: blur(0px); }
 
 /* Blur overlay states */
 .blur-overlay.focused {
@@ -187,12 +386,14 @@ body {
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .indicator {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     border: 2px solid rgba(255, 255, 255, 0.5);
     background: transparent;
