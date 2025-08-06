@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Development of Emotion Recognition Technology</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        .tooltip {
+            position: absolute;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 6px;
+            pointer-events: none;
+            font-size: 12px;
+            max-width: 300px;
+            line-height: 1.4;
+            z-index: 1000;
+        }
+        .legend {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Historical Development of Emotion Recognition Technology in Computer Science & AI</h1>
+        <div id="chart"></div>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #e74c3c;"></div>
+                <span>Theoretical Foundations</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #3498db;"></div>
+                <span>Datasets & Benchmarks</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #2ecc71;"></div>
+                <span>Technical Breakthroughs</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #f39c12;"></div>
+                <span>Commercialization</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #9b59b6;"></div>
+                <span>Tools & Frameworks</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Historical development data for emotion recognition technology
+        const data = [
+            // 1970s-1980s: Theoretical Foundations
+            {date: new Date(1972, 0, 1), value: 1, category: "theory", title: "Ekman's Cross-Cultural Research", description: "Paul Ekman began cross-cultural emotion expression research"},
+            {date: new Date(1978, 0, 1), value: 2, category: "theory", title: "FACS Published", description: "Ekman & Friesen published Facial Action Coding System with 46 Action Units"},
+            {date: new Date(1980, 0, 1), value: 2, category: "theory", title: "Russell's Circumplex Model", description: "James Russell's 2D emotion model with valence and arousal dimensions"},
+            {date: new Date(1984, 0, 1), value: 1, category: "theory", title: "Early Speech Emotion Research", description: "Van Bezooijen's acoustic feature-based emotion recognition study"},
+            {date: new Date(1988, 0, 1), value: 3, category: "theory", title: "OCC Model", description: "Ortony, Clore & Collins' 22 emotion types cognitive appraisal model"},
+            
+            // 1990s: Birth of Affective Computing
+            {date: new Date(1995, 0, 1), value: 4, category: "theory", title: "Affective Computing Paper", description: "Rosalind Picard pioneered affective computing field at MIT"},
+            {date: new Date(1991, 0, 1), value: 2, category: "tech", title: "Eigenfaces & Optical Flow", description: "MIT Turk & Pentland's real-time face recognition, Mase's optical flow expression"},
+            {date: new Date(1993, 0, 1), value: 2, category: "dataset", title: "FERET Program", description: "DARPA & NIST's Face Recognition Technology program launched"},
+            {date: new Date(1997, 0, 1), value: 3, category: "theory", title: "Affective Computing Book", description: "Picard's seminal book officially established the field"},
+            
+            // 2000s: Machine Learning & Datasets Era
+            {date: new Date(2000, 0, 1), value: 2, category: "dataset", title: "JAFFE Dataset", description: "Japanese Female Facial Expressions - 213 images"},
+            {date: new Date(2000, 0, 1), value: 2, category: "dataset", title: "CK Dataset", description: "Carnegie Mellon's Cohn-Kanade facial expression dataset"},
+            {date: new Date(2005, 0, 1), value: 3, category: "dataset", title: "Berlin EMO-DB", description: "535 German emotional speech recordings by 10 professional actors"},
+            {date: new Date(2008, 0, 1), value: 3, category: "dataset", title: "IEMOCAP Dataset", description: "10,039 utterances of dyadic interaction multimodal data"},
+            {date: new Date(2009, 0, 1), value: 3, category: "commercial", title: "Affectiva Founded", description: "MIT Media Lab spinoff by Rana el Kaliouby & Rosalind Picard"},
+            
+            // 2010s: Deep Learning Revolution
+            {date: new Date(2012, 0, 1), value: 4, category: "tech", title: "AlexNet & CNN Revolution", description: "ImageNet breakthrough revolutionizes emotion recognition"},
+            {date: new Date(2012, 0, 1), value: 3, category: "commercial", title: "Emotient Founded", description: "Real-time facial expression analysis (acquired by Apple 2016)"},
+            {date: new Date(2012, 0, 1), value: 3, category: "dataset", title: "DEAP & MAHNOB-HCI", description: "First major multimodal emotion datasets"},
+            {date: new Date(2013, 0, 1), value: 3, category: "dataset", title: "FER2013", description: "~30,000 facial images in real-world conditions"},
+            {date: new Date(2014, 0, 1), value: 4, category: "tech", title: "Facebook DeepFace", description: "97% accuracy in face recognition approaching human-level"},
+            {date: new Date(2014, 0, 1), value: 3, category: "tech", title: "LSTM Emotion Recognition", description: "RNN and time-series modeling applied to emotion recognition"},
+            {date: new Date(2017, 0, 1), value: 4, category: "dataset", title: "AffectNet", description: "400,000+ images collected from 90 countries"},
+            
+            // 2020s: Transformers & LLM Era
+            {date: new Date(2018, 0, 1), value: 4, category: "tech", title: "BERT", description: "Fine-tuning for emotion tasks achieves 90-95%+ accuracy"},
+            {date: new Date(2020, 0, 1), value: 4, category: "tech", title: "Wav2vec 2.0", description: "Self-supervised pretraining revolutionizes speech emotion recognition"},
+            {date: new Date(2020, 0, 1), value: 3, category: "dataset", title: "XED Dataset", description: "Finnish (25k) and English (30k) sentences, projected to 30+ languages"},
+            {date: new Date(2021, 0, 1), value: 4, category: "tech", title: "Vision Transformers", description: "ViT models achieve 95%+ accuracy in facial expression recognition"},
+            {date: new Date(2023, 0, 1), value: 4, category: "tech", title: "GPT-4", description: "Achieves human-level performance in emotion understanding tasks"},
+            {date: new Date(2024, 0, 1), value: 4, category: "tech", title: "GPT-4o", description: "Multimodal capabilities including audio emotion detection"},
+            {date: new Date(2025, 0, 1), value: 3, category: "dataset", title: "INTERSPEECH Challenge", description: "Speech emotion recognition challenge in naturalistic conditions"}
+        ];
+
+        // Category color mapping
+        const categoryColors = {
+            theory: "#e74c3c",      // Red - Theoretical Foundations
+            dataset: "#3498db",     // Blue - Datasets & Benchmarks  
+            tech: "#2ecc71",        // Green - Technical Breakthroughs
+            commercial: "#f39c12",  // Orange - Commercialization
+            tool: "#9b59b6"         // Purple - Tools & Frameworks
+        };
+
+        const chart = (() => {
+            const width = 928;
+            const height = 600;
+            const marginTop = 20;
+            const marginRight = 30;
+            const marginBottom = 60;
+            const marginLeft = 40;
+            
+            const x = d3.scaleTime()
+                .domain(d3.extent(data, d => d.date))
+                .range([marginLeft, width - marginRight]);
+            
+            const y = d3.scaleLinear()
+                .domain([0, 5])
+                .range([height - marginBottom, marginTop]);
+
+            const svg = d3.create("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("viewBox", [0, 0, width, height])
+                .attr("style", "max-width: 100%; height: auto;");
+
+            // X축 (시간)
+            svg.append("g")
+                .attr("transform", `translate(0,${height - marginBottom})`)
+                .call(d3.axisBottom(x)
+                    .ticks(d3.timeYear.every(5))
+                    .tickFormat(d3.timeFormat("%Y")))
+                .call(g => g.select(".domain").remove());
+
+            // Y-axis (Importance)
+            svg.append("g")
+                .attr("transform", `translate(${marginLeft},0)`)
+                .call(d3.axisLeft(y).ticks(5))
+                .call(g => g.select(".domain").remove())
+                .call(g => g.selectAll(".tick line")
+                    .clone()
+                    .attr("x2", width - marginRight - marginLeft)
+                    .attr("stroke-opacity", 0.1))
+                .call(g => g.append("text")
+                    .attr("fill", "#000")
+                    .attr("x", 5)
+                    .attr("y", marginTop)
+                    .attr("dy", "0.32em")
+                    .attr("text-anchor", "start")
+                    .attr("font-weight", "bold")
+                    .text("Technical Importance"));
+
+            // Create tooltip
+            const tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
+            // 데이터 포인트
+            svg.append("g")
+                .selectAll("circle")
+                .data(data)
+                .join("circle")
+                .attr("cx", d => x(d.date))
+                .attr("cy", d => y(d.value))
+                .attr("r", 6)
+                .attr("fill", d => categoryColors[d.category])
+                .attr("stroke", "#fff")
+                .attr("stroke-width", 2)
+                .style("cursor", "pointer")
+                .on("mouseover", function(event, d) {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr("r", 8);
+                    
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    
+                    tooltip.html(`
+                        <strong>${d.title}</strong><br/>
+                        <em>${d.date.getFullYear()}</em><br/>
+                        ${d.description}
+                    `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", function(d) {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr("r", 6);
+                    
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+
+            // Connection lines for events in the same year
+            const groupedByYear = d3.group(data, d => d.date.getFullYear());
+            
+            groupedByYear.forEach((events, year) => {
+                if (events.length > 1) {
+                    events.sort((a, b) => a.value - b.value);
+                    for (let i = 0; i < events.length - 1; i++) {
+                        svg.append("line")
+                            .attr("x1", x(events[i].date))
+                            .attr("y1", y(events[i].value))
+                            .attr("x2", x(events[i + 1].date))
+                            .attr("y2", y(events[i + 1].value))
+                            .attr("stroke", "#bdc3c7")
+                            .attr("stroke-width", 1)
+                            .attr("stroke-dasharray", "3,3")
+                            .attr("opacity", 0.5);
+                    }
+                }
+            });
+
+            return svg.node();
+        })();
+
+        document.getElementById("chart").appendChild(chart);
+    </script>
+</body>
+</html>

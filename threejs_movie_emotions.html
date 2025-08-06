@@ -1,0 +1,949 @@
+        // Tone.js 초기화
+        async function initAudio() {
+            if (audioInitialized) return;
+            
+            await Tone.start();
+            createTextureSynths();
+            audioInitialized = true;
+            console.log('🎵 30-Layer Audio System Initialized');
+        }
+
+        // 영화 감정을 30개 레이어로 변환
+        async function playMovieEmotion(movie) {
+            if (!audioInitialized) {
+                await initAudio();
+            }
+            
+            // 이전 사운드 정리
+            if (activeSounds.length > 0) {
+                activeSounds.forEach(sound => {
+                    if (sound.dispose) sound.dispose();
+                });
+                activeSounds = [];
+            }
+            
+            const textures = movie.textures;
+            const now = Tone.now();
+            const duration = 4; // 4초 재생
+            
+            console.log(`🎵 Playing ${movie.title} with 30 texture layers:`);
+            
+            // 30개 텍스처를 각각 분석하여 재생
+            Object.entries(textures).forEach(([textureName, intensity], index) => {
+                if (intensity > 0.1 && textureSynths[textureName]) { // 임계값 이상만 재생
+                    playTextureLayer(textureName, intensity, now, duration, index);
+                }
+            });
+        }
+
+        // 개별 텍스처 레이어 재생
+        function playTextureLayer(textureName, intensity, startTime, duration, index) {
+            const synth = textureSynths[textureName];
+            if (!synth) return;
+            
+            // 볼륨 설정 (intensity에 따라)
+            const volume = -50 + (intensity * 35); // -50dB ~ -15dB
+            if (synth.volume) synth.volume.value = volume;
+            
+            // 딜레이 추가 (레이어가 순차적으로 들어오게)
+            const delay = (index * 0.1) % 1.5; // 최대 1.5초 딜레이
+            const actualStart = startTime + delay;
+            
+            // 텍스처별 주파수 및 패턴 설정
+            const textureConfig = getTextureConfig(textureName, intensity);
+            
+            try {
+                if (textureName === 'density' || textureName === <!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>3D Movie Emotion Universe</title>
+    <meta charset="utf-8">
+    <style>
+        body {
+            background: radial-gradient(ellipse at center, #0f0f23 0%, #000000 100%);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+        
+        .ui-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            max-width: 320px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .movie-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            max-width: 400px;
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+        
+        .movie-info.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .controls button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #666;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .speed-control {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+        
+        .speed-slider {
+            width: 150px;
+            margin: 0 10px;
+        }
+        
+        .legend {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            font-size: 12px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <div class="ui-panel">
+        <h2>🌌 3D Movie Emotion Universe</h2>
+        <p><strong>Navigation:</strong></p>
+        <p>🖱️ Mouse: Look around</p>
+        <p>🎯 Click: Play emotion sound</p>
+        <p>📱 Touch: Navigate (mobile)</p>
+        <p><strong>3D Mapping:</strong></p>
+        <p>X: Warmth | Y: Weight | Z: Darkness</p>
+    </div>
+    
+    <div class="controls">
+        <button onclick="resetCamera()">🎯 Reset View</button>
+        <button onclick="randomFocus()">🚀 Random Movie</button>
+        <button onclick="toggleAnimation()">⏸️ Animation</button>
+        <button onclick="toggleAutoRotate()">🔄 Auto Rotate</button>
+    </div>
+    
+    <div class="movie-info" id="movieInfo">
+        <h3 id="movieTitle"></h3>
+        <p id="movieDetails"></p>
+        <p id="movieMessage"></p>
+        <div id="emotionProfile"></div>
+    </div>
+    
+    <div class="speed-control">
+        <label>Speed: </label>
+        <input type="range" class="speed-slider" min="0" max="20" value="5" 
+               oninput="updateSpeed(this.value)">
+        <span id="speedValue">5</span>
+    </div>
+    
+    <div class="legend">
+        <h4>Color Coding</h4>
+        <div style="color: #ff6b35;">🔥 Warm Movies</div>
+        <div style="color: #4a90e2;">❄️ Cold Movies</div>
+        <div style="color: #9b59b6;">🌑 Dark Movies</div>
+        <div style="color: #f1c40f;">✨ Bright Movies</div>
+        <div style="color: #95a5a6;">⚪ Neutral Movies</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    
+    <script>
+        // 글로벌 변수
+        let camera, scene, renderer, controls;
+        let mouseX = 0, mouseY = 0;
+        let particles = [];
+        let movieParticles = [];
+        let isAnimating = true;
+        let autoRotate = false;
+        let speed = 5;
+        let time = 0;
+        
+        // 클릭 관련 변수
+        let clickTimeout = null;
+        let clickCount = 0;
+        let lastClickedParticle = null;
+        
+        // Tone.js 설정
+        let audioInitialized = false;
+        let textureSynths = {}; // 30개 독립 레이어
+        let currentlyPlaying = null;
+        let activeSounds = []; // 현재 재생 중인 사운드들
+
+        // 30개 텍스처 신스 생성
+        function createTextureSynths() {
+            textureSynths = {
+                // 존재감/무게 (8개)
+                heaviness: new Tone.MonoSynth({
+                    oscillator: { type: "sawtooth" },
+                    envelope: { attack: 0.1, sustain: 0.8, release: 2.0 }
+                }).toDestination(),
+                
+                lightness: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 0.01, decay: 0.2, release: 0.5 }
+                }).toDestination(),
+                
+                density: new Tone.PolySynth(Tone.Synth, {
+                    maxPolyphony: 8,
+                    oscillator: { type: "triangle" }
+                }).toDestination(),
+                
+                emptiness: new Tone.Reverb({ roomSize: 0.8, decay: 4 }).toDestination(),
+                
+                solidity: new Tone.MonoSynth({
+                    oscillator: { type: "square" },
+                    envelope: { attack: 0.01, sustain: 0.9, release: 1.5 }
+                }).toDestination(),
+                
+                fragility: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 0.3, decay: 0.1, release: 0.3 }
+                }).toDestination(),
+                
+                weight: new Tone.FMSynth({
+                    envelope: { attack: 0.2, sustain: 0.8, release: 3.0 }
+                }).toDestination(),
+                
+                buoyancy: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 0.01, decay: 0.1, release: 0.2 }
+                }).toDestination(),
+
+                // 온도/촉감 (8개)
+                warmth: new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 0.5, release: 1.0 }
+                }).toDestination(),
+                
+                coldness: new Tone.MonoSynth({
+                    oscillator: { type: "triangle" },
+                    envelope: { attack: 0.1, release: 0.8 }
+                }).toDestination(),
+                
+                burning: new Tone.MonoSynth({
+                    oscillator: { type: "sawtooth" },
+                    envelope: { attack: 0.01, decay: 0.1 }
+                }).connect(new Tone.Distortion(0.4).toDestination()),
+                
+                freezing: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 1.0, sustain: 0.9, release: 2.0 }
+                }).connect(new Tone.Reverb({ roomSize: 0.8, decay: 6 }).toDestination()),
+                
+                tenderness: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 0.8, release: 1.5 }
+                }).connect(new Tone.Filter({ frequency: 2000, type: "lowpass" }).toDestination()),
+                
+                harshness: new Tone.MonoSynth({
+                    oscillator: { type: "square" },
+                    envelope: { attack: 0.005, decay: 0.1, release: 0.2 }
+                }).connect(new Tone.Distortion(0.6).toDestination()),
+                
+                smoothness: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 0.3, release: 1.0 }
+                }).connect(new Tone.Filter({ frequency: 1500, type: "lowpass" }).toDestination()),
+                
+                roughness: new Tone.MonoSynth({
+                    oscillator: { type: "sawtooth" },
+                    envelope: { attack: 0.01, decay: 0.2 }
+                }).connect(new Tone.Filter({ frequency: 3000, type: "highpass" }).toDestination()),
+
+                // 움직임/리듬 (8개)
+                flowing: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 0.2, sustain: 0.7, release: 1.0 }
+                }).toDestination(),
+                
+                stagnation: new Tone.MonoSynth({
+                    oscillator: { type: "square" },
+                    envelope: { attack: 0.1, sustain: 0.9, release: 0.1 }
+                }).toDestination(),
+                
+                pulsing: new Tone.Synth({
+                    oscillator: { type: "sine" }
+                }).toDestination(),
+                
+                stillness: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 2.0, sustain: 0.9, release: 3.0 }
+                }).toDestination(),
+                
+                acceleration: new Tone.Synth({
+                    oscillator: { type: "triangle" },
+                    envelope: { attack: 0.1, decay: 0.2 }
+                }).toDestination(),
+                
+                deceleration: new Tone.Synth({
+                    oscillator: { type: "triangle" },
+                    envelope: { attack: 0.1, release: 2.0 }
+                }).toDestination(),
+                
+                rhythm: new Tone.MembraneSynth().toDestination(),
+                
+                chaos: new Tone.NoiseSynth({
+                    noise: { type: "brown" },
+                    envelope: { attack: 0.005, decay: 0.1, release: 0.3 }
+                }).connect(new Tone.Filter({ frequency: 1000 }).toDestination()),
+
+                // 빛/어둠/투명도 (6개)
+                luminosity: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 0.1, decay: 0.2, sustain: 0.6 }
+                }).connect(new Tone.Filter({ frequency: 6000, type: "highpass" }).toDestination()),
+                
+                darkness: new Tone.MonoSynth({
+                    oscillator: { type: "sawtooth" },
+                    envelope: { attack: 0.2, sustain: 0.8, release: 2.0 }
+                }).connect(new Tone.Filter({ frequency: 300, type: "lowpass" }).toDestination()),
+                
+                transparency: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 0.5, sustain: 0.3, release: 1.5 }
+                }).connect(new Tone.Reverb({ wet: 0.6 }).toDestination()),
+                
+                opacity: new Tone.PolySynth(Tone.Synth, {
+                    maxPolyphony: 6,
+                    oscillator: { type: "triangle" }
+                }).toDestination(),
+                
+                clarity: new Tone.Synth({
+                    oscillator: { type: "sine" },
+                    envelope: { attack: 0.01, decay: 0.1, sustain: 0.8, release: 0.3 }
+                }).toDestination(),
+                
+                murkiness: new Tone.FMSynth({
+                    oscillator: { type: "sawtooth" }
+                }).connect(new Tone.Filter({ frequency: 400 }).toDestination())
+            };
+            
+            // 모든 신스 볼륨 초기 설정
+            Object.values(textureSynths).forEach(synth => {
+                if (synth.volume) synth.volume.value = -20;
+            });
+        }
+
+        // 영화 데이터 (샘플)
+        const movieData = [
+            {
+                title: "GoodFellas", country: "US", year: 1990,
+                director: "Martin Scorsese", genres: ["Drama", "Crime"],
+                core_message: "The allure and disillusionment of criminal lifestyle",
+                textures: { warmth: 0.3, heaviness: 0.7, chaos: 0.8, tenderness: 0.2, darkness: 0.7, luminosity: 0.3 }
+            },
+            {
+                title: "Edward Scissorhands", country: "US", year: 1990,
+                director: "Tim Burton", genres: ["Fantasy", "Drama"],
+                core_message: "Acceptance and beauty of individuality",
+                textures: { warmth: 0.7, heaviness: 0.4, chaos: 0.3, tenderness: 0.8, darkness: 0.3, luminosity: 0.7 }
+            },
+            {
+                title: "The Silence of the Lambs", country: "US", year: 1991,
+                director: "Jonathan Demme", genres: ["Crime", "Thriller"],
+                core_message: "The thin line between civilization and savagery",
+                textures: { warmth: 0.2, heaviness: 0.8, chaos: 0.6, tenderness: 0.1, darkness: 0.9, luminosity: 0.2 }
+            },
+            {
+                title: "Beauty and the Beast", country: "US", year: 1991,
+                director: "Gary Trousdale", genres: ["Animation", "Family"],
+                core_message: "True beauty lies within",
+                textures: { warmth: 0.8, heaviness: 0.3, chaos: 0.2, tenderness: 0.9, darkness: 0.2, luminosity: 0.8 }
+            },
+            {
+                title: "Terminator 2", country: "US", year: 1991,
+                director: "James Cameron", genres: ["Action", "Sci-Fi"],
+                core_message: "Human connection vs technological threat",
+                textures: { warmth: 0.5, heaviness: 0.6, chaos: 0.7, tenderness: 0.4, darkness: 0.6, luminosity: 0.4 }
+            }
+        ];
+
+        // 데이터 로드 (JSON 파일에서)
+        async function loadMovieData() {
+            try {
+                console.log('📁 Loading movie emotion data...');
+                const response = await fetch('./message_based_emotion_data_2025-08-04.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                // 데이터 구조 확인 및 변환
+                const processedData = data.map(movie => ({
+                    title: movie.basic_info.title,
+                    country: movie.basic_info.country,
+                    year: movie.basic_info.year,
+                    director: movie.basic_info.director,
+                    genres: movie.basic_info.genres,
+                    core_message: movie.basic_info.core_message,
+                    textures: movie.emotion_layers.layer1_message_based
+                }));
+                
+                console.log(`✅ Loaded ${processedData.length} movies`);
+                return processedData;
+                
+            } catch (error) {
+                console.error('❌ Failed to load movie data:', error);
+                console.log('📝 Using sample data instead');
+                return movieData; // 기존 샘플 데이터 사용
+            }
+        }
+
+        // 초기화
+        function init() {
+            // 카메라 설정
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.set(0, 0, 1000);
+
+            // 씬 생성
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0x000000, 1, 10000);
+
+            // 렌더러 설정
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000);
+            document.body.appendChild(renderer.domElement);
+
+            // 컨트롤 설정 (줌, 회전, 팬)
+            setupControls();
+
+            // 배경 별들 생성
+            createStars();
+            
+            // 영화 파티클 생성
+            createMovieParticles();
+
+            // 이벤트 리스너
+            document.addEventListener('click', onMouseClick, false);
+            window.addEventListener('resize', onWindowResize, false);
+
+            // 애니메이션 시작
+            animate();
+        }
+
+        // 컨트롤 설정 (수동 구현)
+        function setupControls() {
+            let isMouseDown = false;
+            let mouseDownPosition = { x: 0, y: 0 };
+            let cameraTarget = new THREE.Vector3(0, 0, 0);
+            
+            // 마우스 이벤트
+            renderer.domElement.addEventListener('mousedown', (event) => {
+                isMouseDown = true;
+                mouseDownPosition.x = event.clientX;
+                mouseDownPosition.y = event.clientY;
+            });
+
+            renderer.domElement.addEventListener('mouseup', () => {
+                isMouseDown = false;
+            });
+
+            renderer.domElement.addEventListener('mousemove', (event) => {
+                if (isMouseDown && !autoRotate) {
+                    const deltaX = event.clientX - mouseDownPosition.x;
+                    const deltaY = event.clientY - mouseDownPosition.y;
+                    
+                    // 카메라 회전
+                    const spherical = new THREE.Spherical();
+                    spherical.setFromVector3(camera.position.clone().sub(cameraTarget));
+                    
+                    spherical.theta -= deltaX * 0.01;
+                    spherical.phi += deltaY * 0.01;
+                    spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, spherical.phi));
+                    
+                    camera.position.setFromSpherical(spherical).add(cameraTarget);
+                    camera.lookAt(cameraTarget);
+                    
+                    mouseDownPosition.x = event.clientX;
+                    mouseDownPosition.y = event.clientY;
+                }
+            });
+
+            // 휠 줌
+            renderer.domElement.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                
+                const zoomSpeed = 0.1;
+                const direction = camera.position.clone().sub(cameraTarget).normalize();
+                
+                if (event.deltaY > 0) {
+                    // 줌 아웃
+                    camera.position.add(direction.multiplyScalar(100 * zoomSpeed));
+                } else {
+                    // 줌 인
+                    camera.position.sub(direction.multiplyScalar(100 * zoomSpeed));
+                }
+                
+                // 최소/최대 거리 제한
+                const distance = camera.position.distanceTo(cameraTarget);
+                if (distance < 50) {
+                    camera.position.copy(cameraTarget).add(direction.normalize().multiplyScalar(50));
+                } else if (distance > 5000) {
+                    camera.position.copy(cameraTarget).add(direction.normalize().multiplyScalar(5000));
+                }
+            });
+        }
+
+        // 배경 별들 생성
+        function createStars() {
+            const starGeometry = new THREE.BufferGeometry();
+            const starMaterial = new THREE.PointsMaterial({ 
+                color: 0xffffff, 
+                size: 2,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const starVertices = [];
+            for (let i = 0; i < 2000; i++) {
+                const x = (Math.random() - 0.5) * 20000;
+                const y = (Math.random() - 0.5) * 20000;
+                const z = (Math.random() - 0.5) * 20000;
+                starVertices.push(x, y, z);
+            }
+
+            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+            const stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+        }
+
+        // 영화 파티클 생성
+        function createMovieParticles() {
+            movieData.forEach((movie, index) => {
+                const t = movie.textures;
+                
+                // 감정 질감을 3D 좌표로 매핑
+                const x = (t.warmth - 0.5) * 3000;      // -1500 ~ 1500
+                const y = (t.heaviness - 0.5) * 3000;   // -1500 ~ 1500  
+                const z = (t.darkness - 0.5) * 3000;    // -1500 ~ 1500
+
+                // 색상 결정
+                const color = getMovieColor(t);
+                
+                // 파티클 크기
+                const size = 8 + t.chaos * 20;
+
+                // 기하학적 형태 생성
+                const geometry = new THREE.SphereGeometry(size, 8, 6);
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: color,
+                    transparent: true,
+                    opacity: 0.7 + t.luminosity * 0.3
+                });
+
+                const particle = new THREE.Mesh(geometry, material);
+                particle.position.set(x, y, z);
+                
+                // 회전 애니메이션용 랜덤 속도
+                particle.userData = {
+                    movie: movie,
+                    rotationSpeed: {
+                        x: (Math.random() - 0.5) * 0.02,
+                        y: (Math.random() - 0.5) * 0.02,
+                        z: (Math.random() - 0.5) * 0.02
+                    },
+                    floatOffset: Math.random() * Math.PI * 2,
+                    originalPosition: { x, y, z }
+                };
+
+                scene.add(particle);
+                movieParticles.push(particle);
+            });
+        }
+
+        // 감정 기반 색상 결정
+        function getMovieColor(textures) {
+            const { warmth, darkness, luminosity, chaos } = textures;
+            
+            if (darkness > 0.7) {
+                return new THREE.Color(0x2c3e50); // 어두운 블루그레이
+            } else if (warmth > 0.7) {
+                return new THREE.Color(0xff6b35); // 따뜻한 오렌지
+            } else if (warmth < 0.3) {
+                return new THREE.Color(0x4a90e2); // 차가운 블루
+            } else if (luminosity > 0.7) {
+                return new THREE.Color(0xf1c40f); // 밝은 노랑
+            } else if (chaos > 0.7) {
+                return new THREE.Color(0x9b59b6); // 혼돈의 퍼플
+            } else {
+                return new THREE.Color(0x95a5a6); // 중성 그레이
+            }
+        }
+
+        // 마우스 움직임 핸들러
+        function onMouseMove(event) {
+            mouseX = (event.clientX - window.innerWidth / 2) * 0.0005;
+            mouseY = (event.clientY - window.innerHeight / 2) * 0.0005;
+        }
+
+        // 클릭 핸들러 (싱글/더블클릭 구분)
+        function onMouseClick(event) {
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+            
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(movieParticles);
+            
+            if (intersects.length > 0) {
+                const particle = intersects[0].object;
+                
+                clickCount++;
+                
+                if (clickTimeout) {
+                    clearTimeout(clickTimeout);
+                }
+                
+                clickTimeout = setTimeout(() => {
+                    if (clickCount === 1) {
+                        // 싱글 클릭: 소리 재생만
+                        handleSingleClick(particle);
+                    } else if (clickCount === 2) {
+                        // 더블 클릭: 줌 + 영화 정보
+                        handleDoubleClick(particle);
+                    }
+                    clickCount = 0;
+                }, 300); // 300ms 내에 더블클릭 감지
+            }
+        }
+        
+        // 싱글 클릭: 소리 재생
+        function handleSingleClick(particle) {
+            const movie = particle.userData.movie;
+            
+            // 소리 재생
+            playMovieEmotion(movie);
+            
+            // 파티클 하이라이트
+            highlightParticle(particle);
+            
+            console.log(`🎵 Playing: ${movie.title}`);
+        }
+        
+        // 더블 클릭: 줌 + 영화 정보
+        function handleDoubleClick(particle) {
+            const movie = particle.userData.movie;
+            const pos = particle.position;
+            
+            // 영화 정보 표시
+            showMovieInfo(movie);
+            
+            // 파티클로 줌인
+            zoomToParticle(particle);
+            
+            console.log(`🎯 Focusing on: ${movie.title}`);
+        }
+        
+        // 파티클로 줌인하는 함수
+        function zoomToParticle(particle) {
+            const pos = particle.position;
+            const distance = 200; // 줌인 거리
+            
+            // 현재 카메라에서 파티클까지의 방향 벡터
+            const direction = new THREE.Vector3()
+                .subVectors(camera.position, pos)
+                .normalize();
+            
+            // 목표 위치 계산 (파티클에서 distance만큼 떨어진 위치)
+            const targetPosition = new THREE.Vector3()
+                .copy(pos)
+                .add(direction.multiplyScalar(distance));
+            
+            // 부드러운 카메라 이동 애니메이션
+            animateCamera(targetPosition, pos);
+        }
+        
+        // 카메라 애니메이션
+        function animateCamera(targetPosition, lookAtTarget) {
+            const startPosition = camera.position.clone();
+            const startLookAt = new THREE.Vector3(0, 0, 0); // 현재 보고 있는 지점
+            
+            let progress = 0;
+            const duration = 1500; // 1.5초
+            
+            function animate() {
+                progress += 16; // 대략 60fps
+                const t = Math.min(progress / duration, 1);
+                
+                // easeInOutCubic 이징
+                const easeT = t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+                
+                // 카메라 위치 보간
+                camera.position.lerpVectors(startPosition, targetPosition, easeT);
+                
+                // 시선 방향 보간
+                const currentLookAt = new THREE.Vector3().lerpVectors(startLookAt, lookAtTarget, easeT);
+                camera.lookAt(currentLookAt);
+                
+                if (t < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            animate();
+        }
+
+        // 개별 텍스처 레이어 재생
+        function playTextureLayer(textureName, intensity, startTime, duration, index) {
+            const synth = textureSynths[textureName];
+            if (!synth) return;
+            
+            // 볼륨 설정 (intensity에 따라)
+            const volume = -50 + (intensity * 35); // -50dB ~ -15dB
+            if (synth.volume) synth.volume.value = volume;
+            
+            // 딜레이 추가 (레이어가 순차적으로 들어오게)
+            const delay = (index * 0.1) % 1.5; // 최대 1.5초 딜레이
+            const actualStart = startTime + delay;
+            
+            // 텍스처별 주파수 및 패턴 설정
+            const config = getTextureConfig(textureName, intensity);
+            
+            try {
+                // 화음이 필요한 텍스처들
+                if (['density', 'warmth', 'opacity'].includes(textureName)) {
+                    const chord = config.chord || ['C4', 'E4', 'G4'];
+                    synth.triggerAttackRelease(chord, config.duration, actualStart);
+                    
+                // 리듬 텍스처
+                } else if (textureName === 'rhythm') {
+                    // 리듬 패턴 재생
+                    for (let i = 0; i < 8; i++) {
+                        synth.triggerAttackRelease(config.frequency, '8n', actualStart + i * 0.25);
+                    }
+                    
+                // 펄스 텍스처
+                } else if (textureName === 'pulsing') {
+                    for (let i = 0; i < Math.floor(duration * 2); i++) {
+                        synth.triggerAttackRelease(config.frequency, '4n', actualStart + i * 0.5);
+                    }
+                    
+                // 일반 텍스처들
+                } else {
+                    synth.triggerAttackRelease(config.frequency, config.duration, actualStart);
+                }
+                
+                console.log(`  🎶 ${textureName}: ${(intensity * 100).toFixed(0)}% intensity`);
+                
+            } catch (error) {
+                console.warn(`텍스처 ${textureName} 재생 실패:`, error);
+            }
+        }
+
+        // 텍스처별 설정 반환
+        function getTextureConfig(textureName, intensity) {
+            const configs = {
+                // 존재감/무게
+                heaviness: { frequency: 55 + intensity * 55, duration: '2n' },
+                lightness: { frequency: 800 + intensity * 800, duration: '4n' },
+                density: { chord: ['C3', 'E3', 'G3', 'C4'], duration: '2n' },
+                emptiness: { frequency: 'C4', duration: '1n' },
+                solidity: { frequency: 110 + intensity * 110, duration: '2n' },
+                fragility: { frequency: 440 + intensity * 440, duration: '4n' },
+                weight: { frequency: 40 + intensity * 40, duration: '2n' },
+                buoyancy: { frequency: 660 + intensity * 660, duration: '8n' },
+                
+                // 온도/촉감
+                warmth: { chord: ['C4', 'E4', 'G4'], duration: '2n' },
+                coldness: { frequency: 220 + intensity * 110, duration: '2n' },
+                burning: { frequency: 330 + intensity * 330, duration: '4n' },
+                freezing: { frequency: 880 + intensity * 880, duration: '1n' },
+                tenderness: { frequency: 440 + intensity * 220, duration: '2n' },
+                harshness: { frequency: 220 + intensity * 220, duration: '8n' },
+                smoothness: { frequency: 330 + intensity * 220, duration: '2n' },
+                roughness: { frequency: 200 + intensity * 200, duration: '8n' },
+                
+                // 움직임/리듬  
+                flowing: { frequency: 330 + intensity * 165, duration: '2n' },
+                stagnation: { frequency: 220, duration: '1n' },
+                pulsing: { frequency: 440, duration: '4n' },
+                stillness: { frequency: 523, duration: '1n' },
+                acceleration: { frequency: 220 + intensity * 220, duration: '4n' },
+                deceleration: { frequency: 440 - intensity * 220, duration: '2n' },
+                rhythm: { frequency: 80 + intensity * 40, duration: '8n' },
+                chaos: { frequency: 'C4', duration: '4n' },
+                
+                // 빛/어둠/투명도
+                luminosity: { frequency: 880 + intensity * 880, duration: '4n' },
+                darkness: { frequency: 55 + intensity * 110, duration: '2n' },
+                transparency: { frequency: 660 + intensity * 330, duration: '2n' },
+                opacity: { chord: ['C4', 'E4', 'G4', 'C5'], duration: '2n' },
+                clarity: { frequency: 440 + intensity * 440, duration: '4n' },
+                murkiness: { frequency: 110 + intensity * 110, duration: '2n' }
+            };
+            
+            return configs[textureName] || { frequency: 'C4', duration: '4n' };
+        }
+
+        // 영화 정보 표시
+        function showMovieInfo(movie) {
+            const info = document.getElementById("movieInfo");
+            document.getElementById("movieTitle").textContent = movie.title;
+            document.getElementById("movieDetails").textContent = 
+                `${movie.director} | ${movie.country} ${movie.year} | ${movie.genres.join(", ")}`;
+            document.getElementById("movieMessage").textContent = movie.core_message;
+            
+            const t = movie.textures;
+            document.getElementById("emotionProfile").innerHTML = `
+                <div style="margin-top: 10px; font-size: 11px;">
+                    <div>🌡️ Warmth: ${(t.warmth * 100).toFixed(0)}% | ⚖️ Weight: ${(t.heaviness * 100).toFixed(0)}%</div>
+                    <div>🌀 Chaos: ${(t.chaos * 100).toFixed(0)}% | 🌑 Darkness: ${(t.darkness * 100).toFixed(0)}%</div>
+                    <div>✨ Luminosity: ${(t.luminosity * 100).toFixed(0)}% | 💝 Tenderness: ${(t.tenderness * 100).toFixed(0)}%</div>
+                </div>
+            `;
+            
+            info.classList.add("visible");
+            
+            // 8초 후 자동으로 사라짐
+            setTimeout(() => {
+                info.classList.remove("visible");
+            }, 8000);
+        }
+
+        // 파티클 하이라이트
+        function highlightParticle(particle) {
+            if (currentlyPlaying) {
+                currentlyPlaying.material.emissive.setHex(0x000000);
+            }
+            
+            particle.material.emissive.setHex(0x444444);
+            currentlyPlaying = particle;
+            
+            setTimeout(() => {
+                particle.material.emissive.setHex(0x000000);
+                if (currentlyPlaying === particle) currentlyPlaying = null;
+            }, 3000);
+        }
+
+        // 애니메이션 루프
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            time += 0.01;
+            
+            if (isAnimating) {
+                // 자동 회전 모드일 때만 카메라 자동 회전
+                if (autoRotate) {
+                    camera.position.x = Math.cos(time * 0.1) * 1500;
+                    camera.position.z = Math.sin(time * 0.1) * 1500;
+                    camera.lookAt(scene.position);
+                }
+                
+                // 파티클 애니메이션
+                movieParticles.forEach(particle => {
+                    const userData = particle.userData;
+                    
+                    // 회전
+                    particle.rotation.x += userData.rotationSpeed.x;
+                    particle.rotation.y += userData.rotationSpeed.y;
+                    particle.rotation.z += userData.rotationSpeed.z;
+                    
+                    // 부드러운 떠다니기
+                    const floatY = Math.sin(time + userData.floatOffset) * 20;
+                    particle.position.y = userData.originalPosition.y + floatY;
+                });
+            }
+            
+            renderer.render(scene, camera);
+        }
+
+        // 컨트롤 함수들
+        function resetCamera() {
+            camera.position.set(0, 0, 1000);
+            camera.lookAt(new THREE.Vector3(0, 0, 0));
+        }
+
+        function randomFocus() {
+            const randomParticle = movieParticles[Math.floor(Math.random() * movieParticles.length)];
+            const pos = randomParticle.position;
+            camera.position.set(pos.x + 500, pos.y + 300, pos.z + 500);
+            camera.lookAt(pos);
+            
+            showMovieInfo(randomParticle.userData.movie);
+        }
+
+        function toggleAnimation() {
+            isAnimating = !isAnimating;
+            const btn = document.querySelector('.controls button:nth-child(3)');
+            btn.textContent = isAnimating ? '⏸️ Animation' : '▶️ Animation';
+        }
+
+        function toggleAutoRotate() {
+            autoRotate = !autoRotate;
+            const btn = document.querySelector('.controls button:nth-child(4)');
+            btn.textContent = autoRotate ? '⏹️ Auto Rotate' : '🔄 Auto Rotate';
+        }
+
+        function updateSpeed(value) {
+            speed = parseInt(value);
+            document.getElementById('speedValue').textContent = speed;
+        }
+
+        // 윈도우 리사이즈 핸들러
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // 시작!
+        init();
+    </script>
+</body>
+</html>
