@@ -219,6 +219,37 @@
             transform: translateY(0);
         }
 
+        .play-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 200;
+        }
+
+        .play-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: rgba(255, 255, 255, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .play-btn:active {
+            transform: translateY(0);
+        }
+
         .page-transition {
             position: fixed;
             top: 0;
@@ -416,6 +447,7 @@
     </style>
 </head>
 <body>
+    <a href="threejs_movie_emotions.html" class="play-btn">Play</a>
     <a href="final_presentation/index.html" class="final-presentation-btn">Final Presentation</a>
 
     <div class="container" id="mainPage">

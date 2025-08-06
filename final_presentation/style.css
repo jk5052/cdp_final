@@ -34,7 +34,7 @@ body {
     transform-origin: center center;
     transform: translate(-50%, -50%) scale(0.1);
     transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    background: 
+    background:
         radial-gradient(circle at 30% 40%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
         radial-gradient(circle at 70% 60%, rgba(78, 205, 196, 0.2) 0%, transparent 50%),
         url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1600&h=1200&fit=crop&crop=faces');
@@ -56,11 +56,6 @@ body {
     transition: all 2s ease;
 }
 
-.blur-overlay.focused {
-    opacity: 0;
-    backdrop-filter: blur(0px);
-}
-
 /* Section containers positioned in the world */
 .section {
     position: absolute;
@@ -75,7 +70,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 
+    box-shadow:
         0 0 0 5000px rgba(0, 0, 0, 0.3),
         inset 0 0 60px rgba(255, 255, 255, 0.1);
 }
@@ -84,7 +79,7 @@ body {
     opacity: 1;
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(255, 255, 255, 1);
-    box-shadow: 
+    box-shadow:
         0 0 0 5000px rgba(0, 0, 0, 0.8),
         inset 0 0 60px rgba(255, 255, 255, 0.2),
         0 20px 60px rgba(0, 0, 0, 0.5);
@@ -96,18 +91,18 @@ body {
 .section-3 { top: 2400px; left: 2800px; }
 .section-4 { top: 1200px; left: 2600px; }
 .section-5 { top: 2800px; left: 1000px; }
-.section-6 { top: 800px; left: 3200px; }
-.section-7 { top: 3000px; left: 800px; }
-.section-8 { top: 1500px; left: 4800px; }
-.section-9 { top: 4500px; left: 3500px; }
-.section-10 { top: 900px; left: 2000px; }
-.section-11 { top: 3900px; left: 2200px; }
-.section-12 { top: 2100px; left: 1800px; }
-.section-13 { top: 4800px; left: 4000px; }
-.section-14 { top: 1800px; left: 600px; }
-.section-15 { top: 3300px; left: 3000px; }
-.section-16 { top: 2400px; left: 4500px; }
-.section-17 { top: 4200px; left: 900px; }
+.section-6 { top: 500px; left: 1800px; }
+.section-7 { top: 3000px; left: 2200px; }
+.section-8 { top: 1500px; left: 500px; }
+.section-9 { top: 2000px; left: 3200px; }
+.section-10 { top: 3200px; left: 1600px; }
+.section-11 { top: 600px; left: 3000px; }
+.section-12 { top: 1800px; left: 200px; }
+.section-13 { top: 400px; left: 2400px; }
+.section-14 { top: 2600px; left: 600px; }
+.section-15 { top: 1000px; left: 3400px; }
+.section-16 { top: 3400px; left: 2800px; }
+.section-17 { top: 2200px; left: 1000px; }
 
 /* Section content */
 .section-content {
@@ -125,7 +120,7 @@ body {
 }
 
 .section-content h1 {
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: 200;
     margin-bottom: 30px;
     letter-spacing: 3px;
@@ -134,41 +129,31 @@ body {
 }
 
 .section-content p {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     line-height: 1.6;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.95);
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
 }
 
-.section-content strong {
-    color: #4ecdc4;
-    font-weight: bold;
-}
-
-.section-content em {
-    color: #ff6b6b;
-    font-style: italic;
-}
-
-/* World zoom states - 17 sections */
-.world.zoomed-1 { transform: translate(-50%, -50%) translate(-1600px, -1700px) scale(0.8); filter: blur(0px) saturate(1.2) brightness(1); }
-.world.zoomed-2 { transform: translate(-50%, -50%) translate(-800px, -800px) scale(0.85); filter: blur(0px) saturate(1.3) brightness(1.1); }
-.world.zoomed-3 { transform: translate(-50%, -50%) translate(-2800px, -2400px) scale(0.75); filter: blur(0px) saturate(1.1) brightness(0.9); }
-.world.zoomed-4 { transform: translate(-50%, -50%) translate(-2600px, -1200px) scale(0.82); filter: blur(0px) saturate(1.4) brightness(1.2); }
-.world.zoomed-5 { transform: translate(-50%, -50%) translate(-1000px, -2800px) scale(0.78); filter: blur(0px) saturate(1.2) brightness(1); }
-.world.zoomed-6 { transform: translate(-50%, -50%) translate(-3200px, -800px) scale(0.83); filter: blur(0px) saturate(1.3) brightness(1.1); }
-.world.zoomed-7 { transform: translate(-50%, -50%) translate(-800px, -3000px) scale(0.79); filter: blur(0px) saturate(1.1) brightness(0.9); }
-.world.zoomed-8 { transform: translate(-50%, -50%) translate(-4800px, -1500px) scale(0.85); filter: blur(0px) saturate(1.4) brightness(1.2); }
-.world.zoomed-9 { transform: translate(-50%, -50%) translate(-3500px, -4500px) scale(0.77); filter: blur(0px) saturate(1.2) brightness(1); }
-.world.zoomed-10 { transform: translate(-50%, -50%) translate(-2000px, -900px) scale(0.86); filter: blur(0px) saturate(1.3) brightness(1.1); }
-.world.zoomed-11 { transform: translate(-50%, -50%) translate(-2200px, -3900px) scale(0.80); filter: blur(0px) saturate(1.1) brightness(0.9); }
-.world.zoomed-12 { transform: translate(-50%, -50%) translate(-1800px, -2100px) scale(0.87); filter: blur(0px) saturate(1.4) brightness(1.2); }
-.world.zoomed-13 { transform: translate(-50%, -50%) translate(-4000px, -4800px) scale(0.76); filter: blur(0px) saturate(1.2) brightness(1); }
-.world.zoomed-14 { transform: translate(-50%, -50%) translate(-600px, -1800px) scale(0.88); filter: blur(0px) saturate(1.3) brightness(1.1); }
-.world.zoomed-15 { transform: translate(-50%, -50%) translate(-3000px, -3300px) scale(0.78); filter: blur(0px) saturate(1.1) brightness(0.9); }
-.world.zoomed-16 { transform: translate(-50%, -50%) translate(-4500px, -2400px) scale(0.84); filter: blur(0px) saturate(1.4) brightness(1.2); }
-.world.zoomed-17 { transform: translate(-50%, -50%) translate(-900px, -4200px) scale(0.75); filter: blur(0px) saturate(1.2) brightness(1); }
+/* World zoom states - 17 sections with closer zoom */
+.world.zoomed-1 { transform: translate(-50%, -50%) translate(-1600px, -1700px) scale(0.4); filter: blur(0px) saturate(1.2) brightness(1); }
+.world.zoomed-2 { transform: translate(-50%, -50%) translate(-800px, -800px) scale(0.42); filter: blur(0px) saturate(1.3) brightness(1.1); }
+.world.zoomed-3 { transform: translate(-50%, -50%) translate(-2800px, -2400px) scale(0.38); filter: blur(0px) saturate(1.1) brightness(0.9); }
+.world.zoomed-4 { transform: translate(-50%, -50%) translate(-2600px, -1200px) scale(0.44); filter: blur(0px) saturate(1.4) brightness(1.2); }
+.world.zoomed-5 { transform: translate(-50%, -50%) translate(-1000px, -2800px) scale(0.41); filter: blur(0px) saturate(1.2) brightness(1); }
+.world.zoomed-6 { transform: translate(-50%, -50%) translate(-1800px, -500px) scale(0.43); filter: blur(0px) saturate(1.3) brightness(1.1); }
+.world.zoomed-7 { transform: translate(-50%, -50%) translate(-2200px, -3000px) scale(0.39); filter: blur(0px) saturate(1.1) brightness(0.9); }
+.world.zoomed-8 { transform: translate(-50%, -50%) translate(-500px, -1500px) scale(0.45); filter: blur(0px) saturate(1.4) brightness(1.2); }
+.world.zoomed-9 { transform: translate(-50%, -50%) translate(-3200px, -2000px) scale(0.37); filter: blur(0px) saturate(1.2) brightness(1); }
+.world.zoomed-10 { transform: translate(-50%, -50%) translate(-1600px, -3200px) scale(0.46); filter: blur(0px) saturate(1.3) brightness(1.1); }
+.world.zoomed-11 { transform: translate(-50%, -50%) translate(-3000px, -600px) scale(0.40); filter: blur(0px) saturate(1.1) brightness(0.9); }
+.world.zoomed-12 { transform: translate(-50%, -50%) translate(-200px, -1800px) scale(0.47); filter: blur(0px) saturate(1.4) brightness(1.2); }
+.world.zoomed-13 { transform: translate(-50%, -50%) translate(-2400px, -400px) scale(0.36); filter: blur(0px) saturate(1.2) brightness(1); }
+.world.zoomed-14 { transform: translate(-50%, -50%) translate(-600px, -2600px) scale(0.48); filter: blur(0px) saturate(1.3) brightness(1.1); }
+.world.zoomed-15 { transform: translate(-50%, -50%) translate(-3400px, -1000px) scale(0.38); filter: blur(0px) saturate(1.1) brightness(0.9); }
+.world.zoomed-16 { transform: translate(-50%, -50%) translate(-2800px, -3400px) scale(0.44); filter: blur(0px) saturate(1.4) brightness(1.2); }
+.world.zoomed-17 { transform: translate(-50%, -50%) translate(-1000px, -2200px) scale(0.35); filter: blur(0px) saturate(1.2) brightness(1); }
 
 /* Blur overlay states */
 .blur-overlay.focused {
@@ -176,7 +161,7 @@ body {
     backdrop-filter: blur(0px);
 }
 
-/* Navigation indicators */
+/* Navigation UI */
 .nav-indicators {
     position: fixed;
     right: 60px;
@@ -185,9 +170,7 @@ body {
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    max-height: 80vh;
-    overflow-y: auto;
+    gap: 25px;
 }
 
 .indicator {
@@ -260,27 +243,6 @@ body {
     padding: 20px 30px;
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-/* Instructions */
-.instructions {
-    position: fixed;
-    top: 60px;
-    left: 60px;
-    z-index: 1000;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 1rem;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(15px);
-    padding: 15px 25px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    opacity: 1;
-    transition: opacity 1s ease;
-}
-
-.instructions.hidden {
-    opacity: 0;
 }
 
 /* Transition states */
