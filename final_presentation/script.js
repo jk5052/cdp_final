@@ -12,19 +12,40 @@ class ZoomPresentation {
     async init() {
         console.log('ZoomPresentation initializing...');
 
-        // Load content from markdown file
-        await this.loadContent();
+        // Try to load content from markdown file, fallback if fails
+        try {
+            await this.loadContent();
+        } catch (error) {
+            console.error('Failed to load content, using fallback:', error);
+            this.createFallbackContent();
+        }
 
         this.bindEvents();
-        this.showSection(1);
+
+        // Parse content from content.md and show first section
+        setTimeout(() => {
+            console.log('Parsing content from content.md...');
+            this.parseContent();
+            this.showSection(1);
+            this.updateUI();
+        }, 100);
 
         console.log('ZoomPresentation initialized successfully');
     }
 
     async loadContent() {
+        console.log('Loading content.md...');
+
+        // Add timeout to prevent hanging
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
         try {
-            console.log('Loading content.md...');
-            const response = await fetch('content.md');
+            const response = await fetch('content.md', {
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
@@ -33,25 +54,25 @@ class ZoomPresentation {
             document.getElementById('fullContent').textContent = markdown;
             this.parseContent();
         } catch (error) {
+            clearTimeout(timeoutId);
             console.error('Error loading content.md:', error);
-            console.log('Using fallback content...');
-            this.createFallbackContent();
+            throw error; // Re-throw to trigger fallback in init()
         }
     }
 
     parseContent() {
         const fullContent = document.getElementById('fullContent');
-        if (!fullContent) {
-            console.error('Content source not found');
+        if (!fullContent || !fullContent.textContent.trim()) {
+            console.error('Content source not found or empty');
             return;
         }
 
-        const contentText = fullContent.textContent || fullContent.innerText;
-        console.log('Raw content found, parsing...');
+        const contentText = fullContent.textContent;
+        console.log(`Raw content found (${contentText.length} chars), parsing...`);
 
         // Split by === to get sections
         const sections = contentText.split('===').map(s => s.trim()).filter(s => s.length > 0);
-        console.log(`Found ${sections.length} sections`);
+        console.log(`Found ${sections.length} sections from content.md`);
 
         sections.forEach((sectionText, index) => {
             if (index < this.totalSections && sectionText) {
@@ -71,51 +92,22 @@ class ZoomPresentation {
                 const sectionElement = document.querySelector(`.section-${index + 1} .section-content`);
                 if (sectionElement) {
                     sectionElement.innerHTML = `
-                        <h1>${title}</h1>
-                        <p>${content || 'Content loading...'}</p>
+                        <h1 style="color: white !important; font-size: 4rem !important; font-weight: 200 !important; margin-bottom: 30px !important; letter-spacing: 3px !important; z-index: 9999 !important; position: relative !important; text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8) !important; text-align: center !important;">${title}</h1>
+                        <p style="color: rgba(255, 255, 255, 0.95) !important; font-size: 1.8rem !important; line-height: 1.6 !important; font-weight: 300 !important; z-index: 9999 !important; position: relative !important; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6) !important; text-align: center !important; max-width: 800px !important; margin: 0 auto !important;">${content || 'Content from content.md'}</p>
                     `;
-                    console.log(`Updated section ${index + 1}: ${title}`);
+                    console.log(`✅ Updated section ${index + 1}: ${title}`);
                 } else {
-                    console.error(`Section element not found: .section-${index + 1}`);
+                    console.error(`❌ Section element not found: .section-${index + 1}`);
                 }
             }
         });
     }
 
-    createFallbackContent() {
-        const fallbackSections = [
-            { title: 'Vulnerable Connections', content: 'Technology, Emotion, and Collective Experience' },
-            { title: 'Keywords & Intersections', content: 'The convergence of <strong>affective computing</strong>, <strong>emotional AI</strong>, <strong>human-computer interaction</strong>, and <strong>critical technology studies</strong> reveals new territories where vulnerability becomes both strength and risk.' },
-            { title: 'Background Research', content: 'AI and Humanity? <strong>AI\'s Weightless Emotions</strong>. True comfort comes not from understanding, but from <strong>shared vulnerability</strong>. How can technology help us evolve by embracing our emotional flaws and vulnerabilities?' },
-            { title: 'Emotion as Social Construction', content: '<strong>The Constructed Nature of Emotion</strong>. <strong>Immeasurable Complexity</strong>. <strong>AI\'s Role in Emotional Construction</strong>. AI doesn\'t read emotions—it <strong>creates</strong> them. Not neutral. Emotions are transformed into abstracted, quantified, controllable data points.' },
-            { title: 'Situational Technology & Critical Positioning', content: '<strong>Western-Centric Limitations</strong>. <strong>Technology is not neutral</strong>—social, cultural, political contexts matter. <strong>Against Emotional Commodification</strong>. <strong>Accessibility and Equity</strong>. <strong>Privacy and Autonomy</strong>.' },
-            { title: 'Political Dimensions & Power Analysis', content: '<strong>Politics of Emotional Technology</strong>: Who controls emotional data and defines valid emotional categories? How are collective emotions commodified? Does technological empathy democratize understanding or create new forms of <strong>emotional surveillance</strong>?' },
-            { title: 'Critical Issues in Emotional Data', content: 'Key considerations when dealing with emotional data: <strong>authenticity</strong>, <strong>consent</strong>, <strong>representation</strong>, <strong>algorithmic bias</strong>, <strong>cultural sensitivity</strong>, and the <strong>ethics of emotional manipulation</strong>.' },
-            { title: 'Historical Development', content: 'Computer Science/AI emotional recognition technology\'s historical trajectory from <strong>rule-based systems</strong> to <strong>machine learning</strong> to <strong>deep neural networks</strong>—each iteration reshaping how we understand and categorize human emotion.' },
-            { title: 'Global Emotional Bias Map', content: 'Community emotional culture bias worldwide—mapping how different cultures conceptualize, express, and value emotional experiences, revealing the <strong>limitations of universalist AI approaches</strong>.' },
-            { title: 'Community', content: 'Building <strong>inclusive emotional technologies</strong> that honor diverse ways of experiencing and expressing emotion while fostering genuine human connection rather than extractive data collection.' },
-            { title: 'Core Emotional Data Parameters', content: 'Key parameters in emotional data extraction: <strong>facial expressions</strong>, <strong>vocal patterns</strong>, <strong>physiological signals</strong>, <strong>textual sentiment</strong>, <strong>contextual information</strong>, and their <strong>inherent limitations</strong>.' },
-            { title: 'Prior Research - 1', content: 'Ben Grosser\'s <strong>"Computers Watching Movies"</strong>—exploring how machine vision interprets emotional content and the <strong>gap between algorithmic analysis and human emotional experience</strong>.' },
-            { title: 'Prior Research - 2', content: '<strong>"Cleansing Emotional Data"</strong>—examining how emotional datasets are preprocessed, normalized, and <strong>sanitized</strong>, often erasing cultural nuance and individual complexity.' },
-            { title: 'Research Question', content: 'If emotions are no longer passively recorded but actively <strong>shaped by technology</strong>, can we design systems that respect emotional complexity and vulnerability—ensuring that technologically <strong>augmented senses foster meaningful collective emotional experiences</strong>?' },
-            { title: 'Methodology & Approach', content: '1. <strong>Problem identification</strong>: Limitations of emotional datafication 2. <strong>Methodology</strong>: Qualitative/quantitative/multisensory experiments 3. <strong>Core elements</strong>: Space/sound/algorithms/visualization/criticism 4. <strong>Experience design</strong>: Immersion, interaction, temporality 5. <strong>Aesthetic/critical reflection</strong>: Data→sensation→data reduction, emphasizing <strong>gaps</strong>' },
-            { title: 'Design Experiments', content: '<strong>Synesthetic objects</strong> (visual + auditory): <strong>Stickiness</strong> → resistant surfaces & persistent low-frequency tones. <strong>Sharpness</strong> → angular forms & immediate audio feedback. <strong>Weight</strong> → dense materials & full-body low-frequency resonance.' },
-            { title: 'Project Impact & Vision', content: '<strong>This Semester</strong>: Reveal reductive violence of emotional datafication through <strong>experiential critique</strong>. <strong>Long-term</strong>: Develop critical emotional technology design frameworks that <strong>facilitate collective emotional experiences</strong> and <strong>community resonance</strong>.' }
-        ];
 
-        fallbackSections.forEach((section, index) => {
-            if (index < this.totalSections) {
-                const sectionElement = document.querySelector(`.section-${index + 1} .section-content`);
-                if (sectionElement) {
-                    sectionElement.innerHTML = `
-                        <h1>${section.title}</h1>
-                        <p>${section.content}</p>
-                    `;
-                    console.log(`Created fallback section ${index + 1}: ${section.title}`);
-                }
-            }
-        });
-    }
+
+
+
+
 
     bindEvents() {
         // Mouse wheel with smooth zoom transition

@@ -1,5 +1,5 @@
 # Vulnerable Connections
-Technology, Emotion, and Collective Experience
+Vulnerable Connections: Technology, Emotion, and Collective Experience
 
 ===
 
