@@ -1,7 +1,7 @@
 class ZoomPresentation {
     constructor() {
         this.currentSection = 1;
-        this.totalSections = 17;
+        this.totalSections = 18; // 18개로 수정
         this.isTransitioning = false;
         this.world = document.querySelector('.world');
         this.blurOverlay = document.querySelector('.blur-overlay');
@@ -11,53 +11,14 @@ class ZoomPresentation {
 
     async init() {
         console.log('ZoomPresentation initializing...');
-
-        // Try to load content from markdown file, fallback if fails
-        try {
-            await this.loadContent();
-        } catch (error) {
-            console.error('Failed to load content, using fallback:', error);
-            this.createFallbackContent();
-        }
-
+        
+        // Parse content directly from embedded HTML content
+        this.parseContent();
+        
         this.bindEvents();
-
-        // Parse content from content.md and show first section
-        setTimeout(() => {
-            console.log('Parsing content from content.md...');
-            this.parseContent();
-            this.showSection(1);
-            this.updateUI();
-        }, 100);
-
+        this.showSection(1);
+        
         console.log('ZoomPresentation initialized successfully');
-    }
-
-    async loadContent() {
-        console.log('Loading content.md...');
-
-        // Add timeout to prevent hanging
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-
-        try {
-            const response = await fetch('content.md', {
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-            const markdown = await response.text();
-            console.log('Content loaded, length:', markdown.length);
-            document.getElementById('fullContent').textContent = markdown;
-            this.parseContent();
-        } catch (error) {
-            clearTimeout(timeoutId);
-            console.error('Error loading content.md:', error);
-            throw error; // Re-throw to trigger fallback in init()
-        }
     }
 
     parseContent() {
@@ -72,7 +33,7 @@ class ZoomPresentation {
 
         // Split by === to get sections
         const sections = contentText.split('===').map(s => s.trim()).filter(s => s.length > 0);
-        console.log(`Found ${sections.length} sections from content.md`);
+        console.log(`Found ${sections.length} sections from embedded content`);
 
         sections.forEach((sectionText, index) => {
             if (index < this.totalSections && sectionText) {
@@ -92,8 +53,8 @@ class ZoomPresentation {
                 const sectionElement = document.querySelector(`.section-${index + 1} .section-content`);
                 if (sectionElement) {
                     sectionElement.innerHTML = `
-                        <h1 style="color: white !important; font-size: 4rem !important; font-weight: 200 !important; margin-bottom: 30px !important; letter-spacing: 3px !important; z-index: 9999 !important; position: relative !important; text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8) !important; text-align: center !important;">${title}</h1>
-                        <p style="color: rgba(255, 255, 255, 0.95) !important; font-size: 1.8rem !important; line-height: 1.6 !important; font-weight: 300 !important; z-index: 9999 !important; position: relative !important; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6) !important; text-align: center !important; max-width: 800px !important; margin: 0 auto !important;">${content || 'Content from content.md'}</p>
+                        <h1>${title}</h1>
+                        <p>${content || `Content for section ${index + 1}`}</p>
                     `;
                     console.log(`✅ Updated section ${index + 1}: ${title}`);
                 } else {
@@ -102,12 +63,6 @@ class ZoomPresentation {
             }
         });
     }
-
-
-
-
-
-
 
     bindEvents() {
         // Mouse wheel with smooth zoom transition
