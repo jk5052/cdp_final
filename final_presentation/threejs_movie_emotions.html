@@ -5,17 +5,16 @@
     <meta charset="utf-8">
     <style>
         body {
-            background: radial-gradient(ellipse at center, #0f0f23 0%, #000000 100%);
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-            color: white;
-            width: 100vw;
+            background: radial-gradient(ellipse at center, #0f0f23 0%, #000000 100%);
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: white;
+            overflow: hidden;
         }
         
         .ui-panel {
@@ -105,19 +104,21 @@
             backdrop-filter: blur(10px);
         }
 
-        .main-container {
-            width: 95vw;
+        .container {
+            max-width: 1400px;
+            width: 95%;
             height: 90vh;
-            position: relative;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
             overflow: hidden;
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
+    <div class="container">
         <div class="ui-panel">
         <h2>🌌 3D Movie Emotion Universe</h2>
         <p><strong>Navigation:</strong></p>
@@ -227,29 +228,40 @@
             }
         ];
 
-        // 데이터 로드 시도 (실패시 샘플 데이터 사용)
+        // API를 사용한 실시간 영화 데이터 로드
         async function loadMovieData() {
             try {
-                console.log('📁 Loading movie emotion data...');
-                const response = await fetch('./message_based_emotion_data_2025-08-04.json');
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                
+                console.log('🌐 Loading movie data from TMDB API...');
+
+                // TMDB API에서 인기 영화 가져오기
+                const TMDB_API_KEY = '6d6d6694980c6cdc8d74626d8237b0b5';
+                const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=1`);
+
+                if (!response.ok) throw new Error(`TMDB API error! status: ${response.status}`);
+
                 const data = await response.json();
-                const processedData = data.map(movie => ({
-                    title: movie.basic_info.title,
-                    country: movie.basic_info.country,
-                    year: movie.basic_info.year,
-                    director: movie.basic_info.director,
-                    genres: movie.basic_info.genres,
-                    core_message: movie.basic_info.core_message,
-                    textures: movie.emotion_layers.layer1_message_based
+                const processedData = data.results.slice(0, 50).map(movie => ({
+                    title: movie.title,
+                    country: 'Various',
+                    year: movie.release_date ? movie.release_date.split('-')[0] : '2024',
+                    director: 'Various Directors',
+                    genres: movie.genre_ids || [],
+                    core_message: movie.overview || 'No description available',
+                    textures: {
+                        // 영화 데이터를 기반으로 감정적 텍스처 생성
+                        warmth: Math.min(movie.vote_average / 10, 1), // 평점 기반 따뜻함
+                        weight: Math.min(movie.popularity / 1000, 1), // 인기도 기반 무게감
+                        luminosity: Math.random() * 0.5 + 0.3, // 랜덤 밝기
+                        sharpness: movie.vote_count > 1000 ? 0.8 : 0.4, // 투표수 기반 선명도
+                        stickiness: Math.random() * 0.6 + 0.2 // 랜덤 끈적함
+                    }
                 }));
-                
-                console.log(`✅ Loaded ${processedData.length} movies`);
+
+                console.log(`✅ Loaded ${processedData.length} movies from TMDB API`);
                 return processedData;
-                
+
             } catch (error) {
-                console.error('❌ Failed to load movie data:', error);
+                console.error('❌ Failed to load API data:', error);
                 console.log('📝 Using sample data instead');
                 return movieData;
             }
@@ -385,9 +397,10 @@
             scene.fog = new THREE.Fog(0x000000, 1, 10000);
 
             renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            const container = document.querySelector('.container');
+            renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setClearColor(0x000000);
-            document.body.appendChild(renderer.domElement);
+            container.appendChild(renderer.domElement);
 
             const loadedMovieData = await loadMovieData();
             movieData.length = 0;
@@ -483,22 +496,23 @@
             scene.add(stars);
         }
 
-        // 영화 파티클 생성
+        // 영화 파티클 생성 (API 데이터 기반)
         function createMovieParticles() {
             movieData.forEach((movie, index) => {
                 const t = movie.textures;
                 const x = (t.warmth - 0.5) * 3000;
-                const y = (t.heaviness - 0.5) * 3000;
-                const z = (t.darkness - 0.5) * 3000;
+                const y = (t.weight - 0.5) * 3000;
+                const z = (t.luminosity - 0.5) * 3000;
 
                 const color = getMovieColor(t);
-                const size = 8 + t.chaos * 20;
+                const size = 12 + (t.sharpness || 0.5) * 25; // 더 큰 파티클
 
-                const geometry = new THREE.SphereGeometry(size, 8, 6);
-                const material = new THREE.MeshBasicMaterial({ 
+                const geometry = new THREE.SphereGeometry(size, 12, 8); // 더 세밀한 구체
+                const material = new THREE.MeshBasicMaterial({
                     color: color,
                     transparent: true,
-                    opacity: 0.7 + t.luminosity * 0.3
+                    opacity: 0.8 + t.luminosity * 0.2,
+                    wireframe: false
                 });
 
                 const particle = new THREE.Mesh(geometry, material);
@@ -520,15 +534,20 @@
             });
         }
 
-        // 감정 기반 색상 결정
+        // 감정 기반 색상 결정 (API 데이터 기반)
         function getMovieColor(textures) {
-            const { warmth, darkness, luminosity } = textures;
-            
-            if (darkness > 0.7) return new THREE.Color(0x2c3e50);
-            else if (warmth > 0.7) return new THREE.Color(0xff6b35);
-            else if (warmth < 0.3) return new THREE.Color(0x4a90e2);
-            else if (luminosity > 0.7) return new THREE.Color(0xf1c40f);
-            else return new THREE.Color(0x95a5a6);
+            const { warmth, weight, luminosity, sharpness } = textures;
+
+            // 평점이 높은 영화는 따뜻한 색상
+            if (warmth > 0.8) return new THREE.Color(0xff6b35); // 주황색
+            else if (warmth > 0.6) return new THREE.Color(0xf1c40f); // 노란색
+            // 인기도가 높은 영화는 밝은 색상
+            else if (weight > 0.7) return new THREE.Color(0x4ecdc4); // 청록색
+            else if (weight > 0.5) return new THREE.Color(0x4a90e2); // 파란색
+            // 밝기에 따른 색상
+            else if (luminosity > 0.7) return new THREE.Color(0xe74c3c); // 빨간색
+            else if (luminosity > 0.4) return new THREE.Color(0x9b59b6); // 보라색
+            else return new THREE.Color(0x95a5a6); // 회색
         }
 
         // 클릭 핸들러
@@ -686,9 +705,10 @@
         }
 
         function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
+            const container = document.querySelector('.container');
+            camera.aspect = container.clientWidth / container.clientHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(container.clientWidth, container.clientHeight);
         }
 
         // 시작!

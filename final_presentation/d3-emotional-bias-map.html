@@ -1,39 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotional Data Bias World Map</title>
+    <title>Global Emotion AI Bias Map</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+            background: black;
             font-family: Arial, sans-serif;
             color: white;
             overflow: hidden;
             width: 100vw;
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         
         #map-container {
-            width: 95vw;
-            height: 90vh;
-            position: relative;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
-
+        
         svg {
-            width: 100% !important;
-            height: 100% !important;
+            width: 100%;
+            height: 100%;
             background: rgba(255, 255, 255, 0.05);
-            border: none;
         }
         
         .emotion-point {
@@ -45,25 +40,35 @@
             position: absolute;
             background: rgba(0, 0, 0, 0.9);
             color: white;
-            padding: 12px;
+            padding: 20px;
             border-radius: 8px;
-            border: 1px solid #f97316;
+            border: 2px solid #f97316;
             pointer-events: none;
             z-index: 1000;
-            max-width: 300px;
-            font-size: 12px;
+            max-width: 550px;
+            font-size: 13px;
             line-height: 1.4;
             display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .tooltip img {
+            width: 400px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: block;
         }
         
         .controls {
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.7);
             padding: 15px;
             border-radius: 10px;
-            z-index: 1000;
+            z-index: 100;
         }
         
         select {
@@ -101,7 +106,7 @@
     </div>
 
     <div id="map-container">
-        <svg id="world-map" width="100%" height="100%" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg id="world-map"></svg>
     </div>
     
     <div class="tooltip" id="tooltip"></div>
@@ -119,13 +124,22 @@
                 description: "Despite being home to major AI companies, Western-centric bias is most severe here"
             },
             {
+                region: "North America",
+                country: "Canada",
+                coordinates: [-106, 56],
+                biasLevel: 1,
+                cases: 75,
+                issues: ["Indigenous culture overlooked", "Bilingual context challenges"],
+                description: "Better diversity policies but still struggles with indigenous emotional expressions"
+            },
+            {
                 region: "Europe",
                 country: "Germany",
                 coordinates: [10, 51],
                 biasLevel: 1,
                 cases: 95,
-                issues: ["Privacy vs emotion recognition conflict", "Europe-specific emotional expressions"],
-                description: "Relatively less bias due to data collection restrictions like GDPR"
+                issues: ["GDPR data restrictions", "Cultural expression differences"],
+                description: "Relatively less bias due to GDPR regulations but cultural differences still exist"
             },
             {
                 region: "East Asia",
@@ -133,16 +147,16 @@
                 coordinates: [104, 35],
                 biasLevel: 3,
                 cases: 220,
-                issues: ["Collectivist culture ignored", "Western individualism standards applied", "Linguistic context lacking"],
+                issues: ["Collectivist vs individualist expressions", "Contextual emotional meaning", "Language barriers"],
                 description: "Most populous region but extreme bias due to Western-trained AI systems"
             },
             {
                 region: "East Asia",
                 country: "Japan",
                 coordinates: [138, 36],
-                biasLevel: 2,
-                cases: 130,
-                issues: ["Honne-Tatemae cultural context", "Indirect emotional expression"],
+                biasLevel: 3,
+                cases: 165,
+                issues: ["Honne-Tatemae cultural context", "Subtle emotional expressions", "Collectivist culture"],
                 description: "Japanese unique emotional expression often misunderstood by Western AI systems"
             },
             {
@@ -160,7 +174,7 @@
                 coordinates: [45, 24],
                 biasLevel: 3,
                 cases: 160,
-                issues: ["Religious emotional expression", "Gender-separated culture", "Arabic cultural context"],
+                issues: ["Religious emotional expressions", "Gender-separated culture", "Arabic cultural context"],
                 description: "Islamic cultural emotional expressions frequently misinterpreted negatively by Western AI"
             },
             {
@@ -188,11 +202,11 @@
                 biasLevel: 0,
                 cases: 45,
                 issues: ["Indigenous culture consideration lacking"],
-                description: "Western cultural region but Aboriginal indigenous culture still marginalized in AI"
+                description: "Western culture but Aboriginal indigenous culture still marginalized in AI"
             }
         ];
 
-        // 투영법 정의
+        // Projection definitions
         const projections = {
             "Natural Earth": d3.geoNaturalEarth1,
             "Mercator": d3.geoMercator,
@@ -206,11 +220,12 @@
             "Winkel tripel": d3.geoWinkel3
         };
 
-        // 색상 및 크기 스케일
+        // Color and size scales
         const colorScale = d3.scaleOrdinal()
             .domain([0, 1, 2, 3])
             .range(["#38a169", "#d69e2e", "#dd6b20", "#c53030"]);
 
+        // Size scale
         const sizeScale = d3.scaleLinear()
             .domain([0, 250])
             .range([8, 35]);
@@ -222,17 +237,13 @@
         const tooltip = d3.select("#tooltip");
 
         function drawMap() {
-            const container = document.getElementById('map-container');
-            const width = container.clientWidth || window.innerWidth;
-            const height = container.clientHeight || window.innerHeight;
+            const width = window.innerWidth;
+            const height = window.innerHeight;
 
-            // SVG 크기 업데이트
-            svg.attr("width", width).attr("height", height);
-
-            // 기존 요소들 제거
+            // Remove existing elements
             svg.selectAll("*").remove();
 
-            // 투영법 설정
+            // Projection setup
             const ProjectionConstructor = projections[currentProjection];
             let projection = ProjectionConstructor()
                 .scale(Math.min(width, height) * 0.15)
@@ -284,21 +295,32 @@
                 .attr("stroke-width", 1)
                 .style("cursor", "pointer")
                 .on("mouseover", function(event, d) {
-                    // Show tooltip
+                    // Image file mapping
+                    let imagePath = "";
+                    if (d.country === "United States") imagePath = "America.jpeg";
+                    else if (d.country === "Canada") imagePath = "America2.jpeg";
+                    else if (d.country === "Germany") imagePath = "europe.jpg";
+                    else if (d.country === "China") imagePath = "eastasia.jpg";
+                    else if (d.country === "Japan") imagePath = "eastasia2.jpeg";
+                    else if (d.country === "India") imagePath = "eastasia2.jpeg";
+                    
+                    // Tooltip with image (in English)
                     const biasLabels = ["Good", "Moderate", "Severe", "Extreme"];
                     tooltip.style("display", "block")
                         .style("left", (event.pageX + 10) + "px")
                         .style("top", (event.pageY - 10) + "px")
                         .html(`
+                            <div style="text-align: center; margin-bottom: 10px;">
+                                <img src="${imagePath}" style="width: 120px; height: 90px; object-fit: cover; border-radius: 8px; border: 2px solid #f97316;" onerror="this.style.display='none'">
+                            </div>
                             <strong>${d.region} - ${d.country}</strong><br>
                             Bias Level: ${biasLabels[d.biasLevel]}<br>
-                            Cases: ${d.cases} incidents<br>
                             Key Issues: ${d.issues.join(", ")}<br>
                             <br>
                             ${d.description}
                         `);
                     
-                    // 원 크기 증가 및 강조
+                    // Increase circle size and highlight
                     d3.select(this)
                         .attr("stroke-width", 3)
                         .attr("r", sizeScale(d.cases) * 1.2);
@@ -306,14 +328,14 @@
                 .on("mouseout", function(event, d) {
                     // Hide tooltip
                     tooltip.style("display", "none");
-
-                    // Reset circle size
+                    
+                    // Restore original circle size
                     d3.select(this)
                         .attr("stroke-width", 1)
                         .attr("r", sizeScale(d.cases));
                 })
                 .on("click", function(event, d) {
-                    alert(`${d.region} - ${d.country}\n\nDetailed Information:\n${d.description}\n\nKey Issues:\n• ${d.issues.join("\n• ")}`);
+                    alert(`${d.region} - ${d.country}\n\nDetails:\n${d.description}\n\nKey Issues:\n• ${d.issues.join("\n• ")}`);
                 });
         }
 
@@ -323,13 +345,11 @@
             drawMap();
         });
 
-        // Window resize event
-        window.addEventListener('resize', function() {
-            drawMap();
-        });
-
-        // Initial map drawing
+        // 초기 지도 그리기
         drawMap();
+
+        // 윈도우 리사이즈 시 지도 다시 그리기
+        window.addEventListener('resize', drawMap);
     </script>
 </body>
 </html>

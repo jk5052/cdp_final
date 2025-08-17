@@ -1,6 +1,6 @@
-# Vulnerable Connections
-[background:emo.png]
-Vulnerable Connections: Technology, Emotion, and Collective Experience
+# Vulnerable Connections:
+
+Technology, Emotion, and Collective Experience
 
 ===
 
@@ -9,7 +9,7 @@ Vulnerable Connections: Technology, Emotion, and Collective Experience
 
 ===
 
-# Background Research
+# Background 
 [video-bg:1.mp4]
 
 AI and Humanity? **AI's Weightless Emotions**. True comfort comes not from understanding, but from **shared vulnerability**. How can technology help us evolve by embracing our emotional flaws and vulnerabilities?
@@ -21,26 +21,26 @@ AI and Humanity? **AI's Weightless Emotions**. True comfort comes not from under
 ===
 
 # Emotion as Social Construction
-[background:cleansingemotionaldata.png]
+
 **The Constructed Nature of Emotion**. **Immeasurable Complexity**. **AI's Role in Emotional Construction**. AI doesn't read emotions—it **creates** them. Not neutral. Emotions are transformed into abstracted, quantified, controllable data points.
 
 ===
 
 # Situational Technology & Critical Positioning
-[background:ben.png]
+
 **Western-Centric Limitations**. **Technology is not neutral**—social, cultural, political contexts matter. **Against Emotional Commodification**. **Accessibility and Equity**. **Privacy and Autonomy**.
 
 ===
 
 # Political Dimensions & Power Analysis
-[background:flowchart.png]
+
 **Politics of Emotional Technology**: Who controls emotional data and defines valid emotional categories? How are collective emotions commodified? Does technological empathy democratize understanding or create new forms of **emotional surveillance**?
 
 ===
 
 
 # Critical Issues in Emotional Data
-[background:community.png]
+
 Key considerations when dealing with emotional data: **authenticity**, **consent**, **representation**, **algorithmic bias**, **cultural sensitivity**, and the **ethics of emotional manipulation**.
 
 
@@ -63,7 +63,6 @@ Key parameters in emotional data extraction: **facial expressions**, **vocal pat
 
 ===
 
-[background:community.png]
 Building **inclusive emotional technologies** that honor diverse ways of experiencing and expressing emotion while fostering genuine human connection rather than extractive data collection.
 
 ===
@@ -72,7 +71,6 @@ Building **inclusive emotional technologies** that honor diverse ways of experie
 
 ===
 
-[background:emo.png]
 Advanced **emotion recognition systems** that can detect subtle emotional states through multimodal analysis while respecting privacy and cultural differences.
 
 ===
@@ -81,21 +79,7 @@ Advanced **emotion recognition systems** that can detect subtle emotional states
 
 ===
 
-[background:ben.png]
-Exploring the **positive applications** of emotional AI in healthcare, education, accessibility, and human-computer interaction while addressing ethical concerns.
-
-===
-
 ![Data Cleansing](cleansingemotionaldata.png)
-
-===
-
-[background:cleansingemotionaldata.png]
-Critical processes for **cleaning and validating emotional datasets** to remove bias, ensure quality, and maintain ethical standards in AI training.
-
-===
-
-[iframe:threejs_movie_emotions.html]
 
 ===
 
@@ -106,6 +90,15 @@ Ben Grosser's **"Computers Watching Movies"**—exploring how machine vision int
 
 # Prior Research - 2
 **"Cleansing Emotional Data"**—examining how emotional datasets are preprocessed, normalized, and **sanitized**, often erasing cultural nuance and individual complexity.
+
+===
+
+
+Exploring the **positive applications** of emotional AI in healthcare, education, accessibility, and human-computer interaction while addressing ethical concerns.
+
+===
+
+Critical processes for **cleaning and validating emotional datasets** to remove bias, ensure quality, and maintain ethical standards in AI training.
 
 ===
 
@@ -134,6 +127,25 @@ If emotions are no longer passively recorded but actively **shaped by technology
 
 ===
 
+===
+
+# System Architecture & Data Flow
+Comprehensive framework showing how emotional data moves through **collection**, **processing**, **analysis**, and **feedback loops** while maintaining **ethical safeguards** and **user agency**.
+
+**Key Components:**
+- **Data Collection**: Multi-modal input from facial expressions, voice patterns, and physiological signals
+- **Processing Pipeline**: Real-time analysis with bias detection and cultural sensitivity filters
+- **Analysis Engine**: Machine learning models trained on diverse, ethically-sourced datasets
+- **Feedback Loops**: Continuous learning while preserving user privacy and consent
+- **Ethical Safeguards**: Built-in protections against misuse and discrimination
+- **User Agency**: Full control over personal emotional data and system interactions
+
+===
+
+![flowchart](flowchart.png)
+
+===
+
 [iframe:../public/movie.html]
 
 ===
@@ -144,7 +156,7 @@ Creating **bridges between emotional language and embodied experience**, challen
 ===
 
 # Project Impact & Vision
-[background:emo.png]
+
 **This Semester**: Reveal reductive violence of emotional datafication through **experiential critique**
 
 **Long-term**: Develop critical emotional technology design frameworks that **facilitate collective emotional experiences** and **community resonance**
@@ -152,7 +164,7 @@ Creating **bridges between emotional language and embodied experience**, challen
 ===
 
 # Technical Implementation
-[background:cleansingemotionaldata.png]
+
 **Machine Learning Models**: Emotion recognition through facial analysis, voice pattern detection, and physiological monitoring
 
 **Data Processing Pipeline**: Real-time emotional state classification with **bias detection algorithms**
@@ -162,7 +174,7 @@ Creating **bridges between emotional language and embodied experience**, challen
 ===
 
 # Research Methodology
-[background:ben.png]
+
 **Mixed Methods Approach**: Combining quantitative emotion detection with qualitative user experience research
 
 **Participatory Design**: Community-centered development process involving **diverse stakeholder groups**
@@ -172,7 +184,7 @@ Creating **bridges between emotional language and embodied experience**, challen
 ===
 
 # Ethical Considerations
-[background:flowchart.png]
+
 **Consent & Agency**: Users maintain **full control** over their emotional data
 
 **Cultural Sensitivity**: Recognition of **diverse emotional expressions** across communities
@@ -182,7 +194,7 @@ Creating **bridges between emotional language and embodied experience**, challen
 ===
 
 # Community Impact
-[background:community.png]
+
 **Local Partnerships**: Collaboration with **community organizations** and **mental health advocates**
 
 **Educational Outreach**: Workshops on **emotional literacy** and **technology awareness**
@@ -192,7 +204,7 @@ Creating **bridges between emotional language and embodied experience**, challen
 ===
 
 # Next Steps
-[background:emo.png]
+
 **Phase 1**: Prototype development and **community testing**
 
 **Phase 2**: **Iterative design** based on user feedback
@@ -202,7 +214,7 @@ Creating **bridges between emotional language and embodied experience**, challen
 ===
 
 # Acknowledgments
-[background:ben.png]
+
 **Special Thanks**: Community partners, research participants, and **critical design mentors**
 
 **Funding Support**: [Institution/Grant Information]
@@ -212,7 +224,7 @@ Creating **bridges between emotional language and embodied experience**, challen
 ===
 
 # Questions & Discussion
-[background:community.png]
+
 **Let's explore together**: How can we build **emotionally intelligent technology** that **serves humanity** rather than exploiting it?
 
 **Contact**: [Your contact information]
