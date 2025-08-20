@@ -4,17 +4,45 @@
     <title>3D Movie Emotion Universe</title>
     <meta charset="utf-8">
     <style>
+        * {
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        html {
+            width: 100vw !important;
+            height: 100vh !important;
+            overflow: hidden !important;
+        }
+
         body {
+            width: 100vw !important;
+            height: 100vh !important;
             font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: radial-gradient(ellipse at center, #0f0f23 0%, #000000 100%);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: #000000 !important;
             color: white;
-            overflow: hidden;
+            overflow: hidden !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+        }
+
+        canvas {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100vw !important;
+            max-height: 100vh !important;
+            display: block !important;
+            z-index: 1 !important;
+            object-fit: cover !important;
         }
         
         .ui-panel {
@@ -105,52 +133,53 @@
         }
 
         .container {
-            max-width: 1400px;
-            width: 95%;
-            height: 90vh;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             overflow: hidden;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="ui-panel">
+    <div class="ui-panel">
         <h2>🌌 3D Movie Emotion Universe</h2>
+        <p><strong>2000 Movies with 30 Emotion Layers</strong></p>
         <p><strong>Navigation:</strong></p>
         <p>🖱️ Drag: Look around</p>
         <p>🎵 Click: Play emotion sound</p>
         <p>🎯 Double-click: Zoom to movie</p>
         <p>🎡 Wheel: Zoom in/out</p>
         <p><strong>3D Mapping:</strong></p>
-        <p>X: Warmth | Y: Weight | Z: Darkness</p>
+        <p>X: Warmth-Coldness | Y: Heavy-Light | Z: Bright-Dark</p>
     </div>
-    
+
     <div class="controls">
         <button onclick="resetCamera()">🎯 Reset View</button>
         <button onclick="randomFocus()">🚀 Random Movie</button>
         <button onclick="toggleAnimation()">⏸️ Animation</button>
         <button onclick="toggleAutoRotate()">🔄 Auto Rotate</button>
     </div>
-    
+
     <div class="movie-info" id="movieInfo">
         <h3 id="movieTitle"></h3>
         <p id="movieDetails"></p>
         <p id="movieMessage"></p>
         <div id="emotionProfile"></div>
     </div>
-    
+
     <div class="speed-control">
         <label>Speed: </label>
-        <input type="range" class="speed-slider" min="0" max="20" value="5" 
+        <input type="range" class="speed-slider" min="0" max="20" value="5"
                oninput="updateSpeed(this.value)">
         <span id="speedValue">5</span>
     </div>
-    
+
     <div class="legend">
         <h4>Color Coding</h4>
         <div style="color: #ff6b35;">🔥 Warm Movies</div>
@@ -228,40 +257,33 @@
             }
         ];
 
-        // API를 사용한 실시간 영화 데이터 로드
+        // 2000개 영화 데이터 로드
         async function loadMovieData() {
             try {
-                console.log('🌐 Loading movie data from TMDB API...');
+                console.log('🌐 Loading 2000 movie data from local JSON...');
 
-                // TMDB API에서 인기 영화 가져오기
-                const TMDB_API_KEY = '6d6d6694980c6cdc8d74626d8237b0b5';
-                const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=1`);
+                // public 폴더의 2000개 영화 데이터 로드
+                const response = await fetch('../public/message_based_emotion_data_2025-08-04.json');
 
-                if (!response.ok) throw new Error(`TMDB API error! status: ${response.status}`);
+                if (!response.ok) throw new Error(`JSON load error! status: ${response.status}`);
 
                 const data = await response.json();
-                const processedData = data.results.slice(0, 50).map(movie => ({
-                    title: movie.title,
-                    country: 'Various',
-                    year: movie.release_date ? movie.release_date.split('-')[0] : '2024',
-                    director: 'Various Directors',
-                    genres: movie.genre_ids || [],
-                    core_message: movie.overview || 'No description available',
-                    textures: {
-                        // 영화 데이터를 기반으로 감정적 텍스처 생성
-                        warmth: Math.min(movie.vote_average / 10, 1), // 평점 기반 따뜻함
-                        weight: Math.min(movie.popularity / 1000, 1), // 인기도 기반 무게감
-                        luminosity: Math.random() * 0.5 + 0.3, // 랜덤 밝기
-                        sharpness: movie.vote_count > 1000 ? 0.8 : 0.4, // 투표수 기반 선명도
-                        stickiness: Math.random() * 0.6 + 0.2 // 랜덤 끈적함
-                    }
+                const processedData = data.map(movie => ({
+                    title: movie.basic_info.title,
+                    country: movie.basic_info.country,
+                    year: movie.basic_info.year,
+                    director: movie.basic_info.director,
+                    genres: movie.basic_info.genres,
+                    core_message: movie.basic_info.core_message,
+                    vote_average: movie.basic_info.vote_average,
+                    textures: movie.emotion_layers.layer1_message_based // 30개 감정 텍스처 사용
                 }));
 
-                console.log(`✅ Loaded ${processedData.length} movies from TMDB API`);
+                console.log(`✅ Loaded ${processedData.length} movies from local JSON`);
                 return processedData;
 
             } catch (error) {
-                console.error('❌ Failed to load API data:', error);
+                console.error('❌ Failed to load local JSON data:', error);
                 console.log('📝 Using sample data instead');
                 return movieData;
             }
@@ -396,11 +418,51 @@
             scene = new THREE.Scene();
             scene.fog = new THREE.Fog(0x000000, 1, 10000);
 
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            const container = document.querySelector('.container');
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setClearColor(0x000000);
-            container.appendChild(renderer.domElement);
+            renderer = new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: false,
+                powerPreference: "high-performance"
+            });
+
+            // 완전한 풀스크린 설정
+            const canvas = renderer.domElement;
+            canvas.style.cssText = `
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                max-width: 100vw !important;
+                max-height: 100vh !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+                outline: none !important;
+                display: block !important;
+                z-index: 1 !important;
+                object-fit: cover !important;
+            `;
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setClearColor(0x000000, 1);
+
+            document.body.appendChild(canvas);
+
+            // body도 강제로 풀스크린
+            document.body.style.cssText = `
+                width: 100vw !important;
+                height: 100vh !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: hidden !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                background: #000000 !important;
+            `;
 
             const loadedMovieData = await loadMovieData();
             movieData.length = 0;
@@ -496,58 +558,102 @@
             scene.add(stars);
         }
 
-        // 영화 파티클 생성 (API 데이터 기반)
+        // 영화 파티클 클러스터 생성 (2000개 영화 데이터 기반)
         function createMovieParticles() {
             movieData.forEach((movie, index) => {
                 const t = movie.textures;
-                const x = (t.warmth - 0.5) * 3000;
-                const y = (t.weight - 0.5) * 3000;
-                const z = (t.luminosity - 0.5) * 3000;
+
+                // 3D 공간 매핑: X=따뜻함, Y=무게감, Z=밝기
+                const centerX = (t.warmth - t.coldness) * 2000;
+                const centerY = (t.heaviness - t.lightness) * 2000;
+                const centerZ = (t.luminosity - t.darkness) * 2000;
 
                 const color = getMovieColor(t);
-                const size = 12 + (t.sharpness || 0.5) * 25; // 더 큰 파티클
 
-                const geometry = new THREE.SphereGeometry(size, 12, 8); // 더 세밀한 구체
-                const material = new THREE.MeshBasicMaterial({
-                    color: color,
-                    transparent: true,
-                    opacity: 0.8 + t.luminosity * 0.2,
-                    wireframe: false
-                });
+                // 각 영화마다 파티클 클러스터 생성
+                const clusterSize = Math.floor(20 + (t.density || 0.5) * 80); // 20-100개 파티클
+                const clusterRadius = 50 + (t.chaos || 0.5) * 150; // 클러스터 반경
 
-                const particle = new THREE.Mesh(geometry, material);
-                particle.position.set(x, y, z);
-                
-                particle.userData = {
+                const movieCluster = new THREE.Group();
+                movieCluster.position.set(centerX, centerY, centerZ);
+
+                // 클러스터 내 개별 파티클들 생성
+                for (let i = 0; i < clusterSize; i++) {
+                    // 구형 분포로 파티클 배치
+                    const phi = Math.acos(2 * Math.random() - 1);
+                    const theta = 2 * Math.PI * Math.random();
+                    const radius = Math.pow(Math.random(), 0.5) * clusterRadius;
+
+                    const x = radius * Math.sin(phi) * Math.cos(theta);
+                    const y = radius * Math.sin(phi) * Math.sin(theta);
+                    const z = radius * Math.cos(phi);
+
+                    // 파티클 크기와 투명도 변화
+                    const particleSize = 1 + Math.random() * 4;
+                    const opacity = 0.3 + Math.random() * 0.7;
+
+                    const geometry = new THREE.SphereGeometry(particleSize, 8, 6);
+                    const material = new THREE.MeshBasicMaterial({
+                        color: color.clone().multiplyScalar(0.8 + Math.random() * 0.4),
+                        transparent: true,
+                        opacity: opacity * (t.opacity || 0.7),
+                        wireframe: false
+                    });
+
+                    const particle = new THREE.Mesh(geometry, material);
+                    particle.position.set(x, y, z);
+
+                    // 개별 파티클 애니메이션 데이터
+                    particle.userData = {
+                        rotationSpeed: {
+                            x: (Math.random() - 0.5) * 0.02,
+                            y: (Math.random() - 0.5) * 0.02,
+                            z: (Math.random() - 0.5) * 0.02
+                        },
+                        floatOffset: Math.random() * Math.PI * 2,
+                        floatSpeed: 0.5 + Math.random() * 1.5
+                    };
+
+                    movieCluster.add(particle);
+                }
+
+                // 클러스터 전체 데이터
+                movieCluster.userData = {
                     movie: movie,
                     rotationSpeed: {
-                        x: (Math.random() - 0.5) * 0.02,
-                        y: (Math.random() - 0.5) * 0.02,
-                        z: (Math.random() - 0.5) * 0.02
+                        x: (t.pulsing - 0.5) * 0.01,
+                        y: (t.flowing - 0.5) * 0.01,
+                        z: (t.rhythm - 0.5) * 0.01
                     },
                     floatOffset: Math.random() * Math.PI * 2,
-                    originalPosition: { x, y, z }
+                    originalPosition: { x: centerX, y: centerY, z: centerZ },
+                    isCluster: true
                 };
 
-                scene.add(particle);
-                movieParticles.push(particle);
+                scene.add(movieCluster);
+                movieParticles.push(movieCluster);
             });
+
+            console.log(`✅ Created ${movieParticles.length} movie particle clusters in 3D space`);
         }
 
-        // 감정 기반 색상 결정 (API 데이터 기반)
+        // 감정 기반 색상 결정 (30개 텍스처 기반)
         function getMovieColor(textures) {
-            const { warmth, weight, luminosity, sharpness } = textures;
+            const { warmth, coldness, luminosity, darkness, burning, freezing } = textures;
 
-            // 평점이 높은 영화는 따뜻한 색상
-            if (warmth > 0.8) return new THREE.Color(0xff6b35); // 주황색
-            else if (warmth > 0.6) return new THREE.Color(0xf1c40f); // 노란색
-            // 인기도가 높은 영화는 밝은 색상
-            else if (weight > 0.7) return new THREE.Color(0x4ecdc4); // 청록색
-            else if (weight > 0.5) return new THREE.Color(0x4a90e2); // 파란색
-            // 밝기에 따른 색상
-            else if (luminosity > 0.7) return new THREE.Color(0xe74c3c); // 빨간색
-            else if (luminosity > 0.4) return new THREE.Color(0x9b59b6); // 보라색
-            else return new THREE.Color(0x95a5a6); // 회색
+            // 따뜻함과 차가움의 균형
+            if (warmth > 0.7 && burning > 0.6) return new THREE.Color(0xff6b35); // 뜨거운 주황색
+            else if (warmth > 0.6) return new THREE.Color(0xf1c40f); // 따뜻한 노란색
+            else if (coldness > 0.7 && freezing > 0.6) return new THREE.Color(0x3498db); // 차가운 파란색
+            else if (coldness > 0.6) return new THREE.Color(0x4a90e2); // 시원한 파란색
+
+            // 밝기와 어둠의 균형
+            else if (luminosity > 0.7) return new THREE.Color(0xe74c3c); // 밝은 빨간색
+            else if (darkness > 0.7) return new THREE.Color(0x2c3e50); // 어두운 회색
+            else if (luminosity > 0.5) return new THREE.Color(0x9b59b6); // 보라색
+            else if (darkness > 0.5) return new THREE.Color(0x34495e); // 진한 회색
+
+            else return new THREE.Color(0x95a5a6); // 중성 회색
         }
 
         // 클릭 핸들러
@@ -559,42 +665,60 @@
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             
             raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(movieParticles);
-            
+
+            // 클러스터의 모든 자식 파티클들을 대상으로 레이캐스팅
+            const allParticles = [];
+            movieParticles.forEach(cluster => {
+                cluster.children.forEach(particle => {
+                    particle.parentCluster = cluster; // 부모 클러스터 참조 저장
+                    allParticles.push(particle);
+                });
+            });
+
+            const intersects = raycaster.intersectObjects(allParticles);
+
             if (intersects.length > 0) {
-                const particle = intersects[0].object;
+                const intersectedParticle = intersects[0].object;
+                const parentCluster = intersectedParticle.parentCluster;
                 clickCount++;
                 
                 if (clickTimeout) clearTimeout(clickTimeout);
                 
                 clickTimeout = setTimeout(() => {
                     if (clickCount === 1) {
-                        handleSingleClick(particle);
+                        handleSingleClick(parentCluster);
                     } else if (clickCount === 2) {
-                        handleDoubleClick(particle);
+                        handleDoubleClick(parentCluster);
                     }
                     clickCount = 0;
                 }, 300);
             }
         }
 
-        function handleSingleClick(particle) {
-            const movie = particle.userData.movie;
-            playMovieEmotion(movie);
-            highlightParticle(particle);
+        async function handleSingleClick(cluster) {
+            const movie = cluster.userData.movie;
+
+            // 첫 클릭 시 오디오 초기화
+            if (!audioInitialized) {
+                console.log('🎵 Initializing audio on first click...');
+                await initAudio();
+            }
+
+            await playMovieEmotion(movie);
+            highlightCluster(cluster);
             console.log(`🎵 Playing: ${movie.title}`);
         }
 
-        function handleDoubleClick(particle) {
-            const movie = particle.userData.movie;
+        function handleDoubleClick(cluster) {
+            const movie = cluster.userData.movie;
             showMovieInfo(movie);
-            zoomToParticle(particle);
+            zoomToCluster(cluster);
             console.log(`🎯 Focusing on: ${movie.title}`);
         }
 
-        function zoomToParticle(particle) {
-            const pos = particle.position;
-            const distance = 200;
+        function zoomToCluster(cluster) {
+            const pos = cluster.position;
+            const distance = 300; // 클러스터는 더 큰 거리에서 보기
             const direction = new THREE.Vector3().subVectors(camera.position, pos).normalize();
             const targetPosition = new THREE.Vector3().copy(pos).add(direction.multiplyScalar(distance));
             animateCamera(targetPosition, pos);
@@ -621,29 +745,43 @@
         function showMovieInfo(movie) {
             const info = document.getElementById("movieInfo");
             document.getElementById("movieTitle").textContent = movie.title;
-            document.getElementById("movieDetails").textContent = 
-                `${movie.director} | ${movie.country} ${movie.year} | ${movie.genres.join(", ")}`;
+            document.getElementById("movieDetails").textContent =
+                `${movie.director} | ${movie.country} ${movie.year} | ${movie.genres.join(", ")} | ⭐ ${movie.vote_average}`;
             document.getElementById("movieMessage").textContent = movie.core_message;
-            
+
             const t = movie.textures;
             document.getElementById("emotionProfile").innerHTML = `
                 <div style="margin-top: 10px; font-size: 11px;">
-                    <div>🌡️ Warmth: ${(t.warmth * 100).toFixed(0)}% | ⚖️ Weight: ${(t.heaviness * 100).toFixed(0)}%</div>
-                    <div>🌀 Chaos: ${(t.chaos * 100).toFixed(0)}% | 🌑 Darkness: ${(t.darkness * 100).toFixed(0)}%</div>
+                    <div>🌡️ Warmth: ${(t.warmth * 100).toFixed(0)}% | ❄️ Coldness: ${(t.coldness * 100).toFixed(0)}%</div>
+                    <div>⚖️ Heaviness: ${(t.heaviness * 100).toFixed(0)}% | 🪶 Lightness: ${(t.lightness * 100).toFixed(0)}%</div>
+                    <div>💡 Luminosity: ${(t.luminosity * 100).toFixed(0)}% | 🌑 Darkness: ${(t.darkness * 100).toFixed(0)}%</div>
+                    <div>🌀 Chaos: ${(t.chaos * 100).toFixed(0)}% | 🎵 Rhythm: ${(t.rhythm * 100).toFixed(0)}%</div>
                 </div>
             `;
-            
+
             info.classList.add("visible");
-            setTimeout(() => info.classList.remove("visible"), 8000);
+            setTimeout(() => info.classList.remove("visible"), 10000);
         }
 
-        function highlightParticle(particle) {
-            if (currentlyPlaying) currentlyPlaying.material.emissive.setHex(0x000000);
-            particle.material.emissive.setHex(0x444444);
-            currentlyPlaying = particle;
+        function highlightCluster(cluster) {
+            // 이전 클러스터 하이라이트 제거
+            if (currentlyPlaying) {
+                currentlyPlaying.children.forEach(particle => {
+                    particle.material.emissive.setHex(0x000000);
+                });
+            }
+
+            // 새 클러스터 하이라이트
+            cluster.children.forEach(particle => {
+                particle.material.emissive.setHex(0x444444);
+            });
+
+            currentlyPlaying = cluster;
             setTimeout(() => {
-                particle.material.emissive.setHex(0x000000);
-                if (currentlyPlaying === particle) currentlyPlaying = null;
+                cluster.children.forEach(particle => {
+                    particle.material.emissive.setHex(0x000000);
+                });
+                if (currentlyPlaying === cluster) currentlyPlaying = null;
             }, 3000);
         }
 
@@ -659,14 +797,34 @@
                     camera.lookAt(new THREE.Vector3(0, 0, 0));
                 }
                 
-                movieParticles.forEach(particle => {
-                    const userData = particle.userData;
-                    particle.rotation.x += userData.rotationSpeed.x;
-                    particle.rotation.y += userData.rotationSpeed.y;
-                    particle.rotation.z += userData.rotationSpeed.z;
-                    
-                    const floatY = Math.sin(time + userData.floatOffset) * 20;
-                    particle.position.y = userData.originalPosition.y + floatY;
+                movieParticles.forEach(cluster => {
+                    const userData = cluster.userData;
+
+                    // 클러스터 전체 회전
+                    cluster.rotation.x += userData.rotationSpeed.x;
+                    cluster.rotation.y += userData.rotationSpeed.y;
+                    cluster.rotation.z += userData.rotationSpeed.z;
+
+                    // 클러스터 전체 부유 움직임
+                    const floatY = Math.sin(time + userData.floatOffset) * 30;
+                    const floatX = Math.cos(time * 0.7 + userData.floatOffset) * 15;
+                    const floatZ = Math.sin(time * 0.5 + userData.floatOffset) * 20;
+
+                    cluster.position.x = userData.originalPosition.x + floatX;
+                    cluster.position.y = userData.originalPosition.y + floatY;
+                    cluster.position.z = userData.originalPosition.z + floatZ;
+
+                    // 클러스터 내 개별 파티클 애니메이션
+                    cluster.children.forEach(particle => {
+                        const particleData = particle.userData;
+                        particle.rotation.x += particleData.rotationSpeed.x;
+                        particle.rotation.y += particleData.rotationSpeed.y;
+                        particle.rotation.z += particleData.rotationSpeed.z;
+
+                        // 개별 파티클의 미세한 움직임
+                        const microFloat = Math.sin(time * particleData.floatSpeed + particleData.floatOffset) * 2;
+                        particle.position.y += microFloat * 0.1;
+                    });
                 });
             }
             
@@ -680,11 +838,11 @@
         }
 
         function randomFocus() {
-            const randomParticle = movieParticles[Math.floor(Math.random() * movieParticles.length)];
-            const pos = randomParticle.position;
+            const randomCluster = movieParticles[Math.floor(Math.random() * movieParticles.length)];
+            const pos = randomCluster.position;
             camera.position.set(pos.x + 500, pos.y + 300, pos.z + 500);
             camera.lookAt(pos);
-            showMovieInfo(randomParticle.userData.movie);
+            showMovieInfo(randomCluster.userData.movie);
         }
 
         function toggleAnimation() {
@@ -705,15 +863,18 @@
         }
 
         function onWindowResize() {
-            const container = document.querySelector('.container');
-            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // 캔버스 스타일도 다시 설정
+            renderer.domElement.style.width = '100vw';
+            renderer.domElement.style.height = '100vh';
         }
 
         // 시작!
         init();
     </script>
-    </div>
 </body>
 </html>

@@ -10,7 +10,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
+            background-color: #000000;
             height: 100vh;
             display: flex;
             align-items: center;
@@ -19,35 +19,35 @@
         .container {
             max-width: 1200px;
             width: 90%;
-            background: white;
+            background: #000000;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(255,255,255,0.1);
         }
         .title {
             text-align: center;
             margin-bottom: 30px;
-            color: #2c3e50;
+            color: #ffffff;
         }
         .tooltip {
             position: absolute;
-            padding: 12px;
+            padding: 15px;
             background: rgba(0, 0, 0, 0.9);
             color: white;
             border-radius: 8px;
             pointer-events: none;
-            font-size: 12px;
-            max-width: 350px;
+            font-size: 14px;
+            max-width: 500px;
             line-height: 1.4;
             z-index: 1000;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .tooltip img {
             width: 100%;
-            max-width: 200px;
+            max-width: 400px;
             height: auto;
-            border-radius: 4px;
-            margin-top: 8px;
+            border-radius: 6px;
+            margin-top: 10px;
             display: block;
         }
         .tooltip-title {
@@ -71,6 +71,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            color: #ffffff;
         }
         .legend-color {
             width: 16px;
@@ -112,41 +113,41 @@
         const data = [
             // 1970s-1980s: Theoretical Foundations
             {date: new Date(1972, 0, 1), value: 1, category: "theory", title: "Ekman's Cross-Cultural Research", description: "Paul Ekman began cross-cultural emotion expression research", image: "ekman Medium.jpeg"},
-            {date: new Date(1978, 0, 1), value: 2, category: "theory", title: "FACS Published", description: "Ekman & Friesen published Facial Action Coding System with 46 Action Units", image: "ekman Medium.jpeg"},
+            {date: new Date(1978, 0, 1), value: 2, category: "theory", title: "FACS Published", description: "Ekman & Friesen published Facial Action Coding System with 46 Action Units", image: "facs.png"},
             {date: new Date(1980, 0, 1), value: 2, category: "theory", title: "Russell's Circumplex Model", description: "James Russell's 2D emotion model with valence and arousal dimensions", image: "russell  Medium.jpeg"},
-            {date: new Date(1984, 0, 1), value: 1, category: "theory", title: "Early Speech Emotion Research", description: "Van Bezooijen's acoustic feature-based emotion recognition study", image: "berlin emo db emotional speech.png"},
+            {date: new Date(1984, 0, 1), value: 1, category: "theory", title: "Early Speech Emotion Research", description: "Van Bezooijen's acoustic feature-based emotion recognition study", image: "german_emodb.jpg"},
             {date: new Date(1988, 0, 1), value: 3, category: "theory", title: "OCC Model", description: "Ortony, Clore & Collins' 22 emotion types cognitive appraisal model", image: "occ_model"},
-            
+
             // 1990s: Birth of Affective Computing
-            {date: new Date(1995, 0, 1), value: 4, category: "theory", title: "Affective Computing Paper", description: "Rosalind Picard pioneered affective computing field at MIT", image: "ekman Medium.jpeg"},
+            {date: new Date(1995, 0, 1), value: 4, category: "theory", title: "Affective Computing Paper", description: "Rosalind Picard pioneered affective computing field at MIT", image: "affectivecomputing.png"},
             {date: new Date(1991, 0, 1), value: 2, category: "tech", title: "Eigenfaces & Optical Flow", description: "MIT Turk & Pentland's real-time face recognition, Mase's optical flow expression", image: "eigenface & optical flow.png"},
-            {date: new Date(1993, 0, 1), value: 2, category: "dataset", title: "FERET Program", description: "DARPA & NIST's Face Recognition Technology program launched", image: "eigenface & optical flow.png"},
-            {date: new Date(1997, 0, 1), value: 3, category: "theory", title: "Affective Computing Book", description: "Picard's seminal book officially established the field", image: "russell  Medium.jpeg"},
+            {date: new Date(1993, 0, 1), value: 2, category: "dataset", title: "FERET Program", description: "DARPA & NIST's Face Recognition Technology program launched", image: "feret.png"},
+            {date: new Date(1997, 0, 1), value: 3, category: "theory", title: "Affective Computing Book", description: "Picard's seminal book officially established the field", image: "affectivecomputing.png"},
             
             // 2000s: Machine Learning & Datasets Era
             {date: new Date(2000, 0, 1), value: 2, category: "dataset", title: "JAFFE Dataset", description: "Japanese Female Facial Expressions - 213 images", image: "eigenface & optical flow.png"},
-            {date: new Date(2000, 0, 1), value: 2, category: "dataset", title: "CK Dataset", description: "Carnegie Mellon's Cohn-Kanade facial expression dataset", image: "eigenface & optical flow.png"},
-            {date: new Date(2005, 0, 1), value: 3, category: "dataset", title: "Berlin EMO-DB", description: "535 German emotional speech recordings by 10 professional actors", image: "berlin emo db emotional speech.png"},
-            {date: new Date(2008, 0, 1), value: 3, category: "dataset", title: "IEMOCAP Dataset", description: "10,039 utterances of dyadic interaction multimodal data", image: "berlin emo db emotional speech.png"},
-            {date: new Date(2009, 0, 1), value: 3, category: "commercial", title: "Affectiva Founded", description: "MIT Media Lab spinoff by Rana el Kaliouby & Rosalind Picard", image: "russell  Medium.jpeg"},
+            {date: new Date(2000, 0, 1), value: 2, category: "dataset", title: "CK Dataset", description: "Carnegie Mellon's Cohn-Kanade facial expression dataset", image: "ck.png"},
+            {date: new Date(2005, 0, 1), value: 3, category: "dataset", title: "Berlin EMO-DB", description: "535 German emotional speech recordings by 10 professional actors", image: "german_emodb.jpg"},
+            {date: new Date(2008, 0, 1), value: 3, category: "dataset", title: "IEMOCAP Dataset", description: "10,039 utterances of dyadic interaction multimodal data", image: "iemocap.png"},
+            {date: new Date(2009, 0, 1), value: 3, category: "commercial", title: "Affectiva Founded", description: "MIT Media Lab spinoff by Rana el Kaliouby & Rosalind Picard", image: "affectiva.jpeg"},
             
             // 2010s: Deep Learning Revolution
-            {date: new Date(2012, 0, 1), value: 4, category: "tech", title: "AlexNet & CNN Revolution", description: "ImageNet breakthrough revolutionizes emotion recognition", image: "eigenface & optical flow.png"},
-            {date: new Date(2012, 0, 1), value: 3, category: "commercial", title: "Emotient Founded", description: "Real-time facial expression analysis (acquired by Apple 2016)", image: "ekman Medium.jpeg"},
-            {date: new Date(2012, 0, 1), value: 3, category: "dataset", title: "DEAP & MAHNOB-HCI", description: "First major multimodal emotion datasets", image: "russell  Medium.jpeg"},
+            {date: new Date(2012, 0, 1), value: 4, category: "tech", title: "AlexNet & CNN Revolution", description: "ImageNet breakthrough revolutionizes emotion recognition", image: "alexnet.jpeg"},
+            {date: new Date(2012, 0, 1), value: 3, category: "commercial", title: "Emotient Founded", description: "Real-time facial expression analysis (acquired by Apple 2016)", image: "moblie.jpeg"},
+            {date: new Date(2012, 0, 1), value: 3, category: "dataset", title: "DEAP & MAHNOB-HCI", description: "First major multimodal emotion datasets", image: "deep&mahnob.png"},
             {date: new Date(2013, 0, 1), value: 3, category: "dataset", title: "FER2013", description: "~30,000 facial images in real-world conditions", image: "FER2013.png"},
-            {date: new Date(2014, 0, 1), value: 4, category: "tech", title: "Facebook DeepFace", description: "97% accuracy in face recognition approaching human-level", image: "eigenface & optical flow.png"},
-            {date: new Date(2014, 0, 1), value: 3, category: "tech", title: "LSTM Emotion Recognition", description: "RNN and time-series modeling applied to emotion recognition", image: "berlin emo db emotional speech.png"},
+            {date: new Date(2014, 0, 1), value: 4, category: "tech", title: "Facebook DeepFace", description: "97% accuracy in face recognition approaching human-level", image: "facebook.jpg"},
+            {date: new Date(2014, 0, 1), value: 3, category: "tech", title: "LSTM Emotion Recognition", description: "RNN and time-series modeling applied to emotion recognition", image: "lstm.png"},
             {date: new Date(2017, 0, 1), value: 4, category: "dataset", title: "AffectNet", description: "400,000+ images collected from 90 countries", image: "FER2013.png"},
             
             // 2020s: Transformers & LLM Era
-            {date: new Date(2018, 0, 1), value: 4, category: "tech", title: "BERT", description: "Fine-tuning for emotion tasks achieves 90-95%+ accuracy", image: "russell  Medium.jpeg"},
-            {date: new Date(2020, 0, 1), value: 4, category: "tech", title: "Wav2vec 2.0", description: "Self-supervised pretraining revolutionizes speech emotion recognition", image: "berlin emo db emotional speech.png"},
-            {date: new Date(2020, 0, 1), value: 3, category: "dataset", title: "XED Dataset", description: "Finnish (25k) and English (30k) sentences, projected to 30+ languages", image: "FER2013.png"},
-            {date: new Date(2021, 0, 1), value: 4, category: "tech", title: "Vision Transformers", description: "ViT models achieve 95%+ accuracy in facial expression recognition", image: "vision_transformers"},
-            {date: new Date(2023, 0, 1), value: 4, category: "tech", title: "GPT-4", description: "Achieves human-level performance in emotion understanding tasks", image: "gpt4_model"},
-            {date: new Date(2024, 0, 1), value: 4, category: "tech", title: "GPT-4o", description: "Multimodal capabilities including audio emotion detection", image: "gpt4o_model"},
-            {date: new Date(2025, 0, 1), value: 3, category: "dataset", title: "INTERSPEECH Challenge", description: "Speech emotion recognition challenge in naturalistic conditions", image: "interspeech_challenge"}
+            {date: new Date(2018, 0, 1), value: 4, category: "tech", title: "BERT", description: "Fine-tuning for emotion tasks achieves 90-95%+ accuracy", image: "bert.jpeg"},
+            {date: new Date(2020, 0, 1), value: 4, category: "tech", title: "Wav2vec 2.0", description: "Self-supervised pretraining revolutionizes speech emotion recognition", image: "wav2vec.png"},
+            {date: new Date(2020, 0, 1), value: 3, category: "dataset", title: "XED Dataset", description: "Finnish (25k) and English (30k) sentences, projected to 30+ languages", image: "xed.jpeg"},
+            {date: new Date(2021, 0, 1), value: 4, category: "tech", title: "Vision Transformers", description: "ViT models achieve 95%+ accuracy in facial expression recognition", image: "vit.png"},
+            {date: new Date(2023, 0, 1), value: 4, category: "tech", title: "GPT-4", description: "Achieves human-level performance in emotion understanding tasks", image: "gpt.png"},
+            {date: new Date(2024, 0, 1), value: 4, category: "tech", title: "GPT-4o", description: "Multimodal capabilities including audio emotion detection", image: "gpt.png"},
+            {date: new Date(2025, 0, 1), value: 3, category: "dataset", title: "INTERSPEECH Challenge", description: "Speech emotion recognition challenge in naturalistic conditions", image: "interspeech.jpeg"}
         ];
 
         // Category color mapping
@@ -186,19 +187,23 @@
                 .call(d3.axisBottom(x)
                     .ticks(d3.timeYear.every(5))
                     .tickFormat(d3.timeFormat("%Y")))
-                .call(g => g.select(".domain").remove());
+                .call(g => g.select(".domain").remove())
+                .call(g => g.selectAll(".tick text").attr("fill", "#ffffff"))
+                .call(g => g.selectAll(".tick line").attr("stroke", "#ffffff"));
 
             // Y-axis (Importance)
             svg.append("g")
                 .attr("transform", `translate(${marginLeft},0)`)
                 .call(d3.axisLeft(y).ticks(5))
                 .call(g => g.select(".domain").remove())
+                .call(g => g.selectAll(".tick text").attr("fill", "#ffffff"))
                 .call(g => g.selectAll(".tick line")
+                    .attr("stroke", "#ffffff")
                     .clone()
                     .attr("x2", width - marginRight - marginLeft)
                     .attr("stroke-opacity", 0.1))
                 .call(g => g.append("text")
-                    .attr("fill", "#000")
+                    .attr("fill", "#ffffff")
                     .attr("x", 5)
                     .attr("y", marginTop)
                     .attr("dy", "0.32em")
@@ -220,7 +225,7 @@
                 .attr("cy", d => y(d.value))
                 .attr("r", 6)
                 .attr("fill", d => categoryColors[d.category])
-                .attr("stroke", "#fff")
+                .attr("stroke", "#ffffff")
                 .attr("stroke-width", 2)
                 .style("cursor", "pointer")
                 .on("mouseover", function(event, d) {
@@ -268,10 +273,10 @@
                             .attr("y1", y(events[i].value))
                             .attr("x2", x(events[i + 1].date))
                             .attr("y2", y(events[i + 1].value))
-                            .attr("stroke", "#bdc3c7")
+                            .attr("stroke", "#ffffff")
                             .attr("stroke-width", 1)
                             .attr("stroke-dasharray", "3,3")
-                            .attr("opacity", 0.5);
+                            .attr("opacity", 0.3);
                     }
                 }
             });

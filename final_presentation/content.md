@@ -130,15 +130,15 @@ If emotions are no longer passively recorded but actively **shaped by technology
 ===
 
 # System Architecture & Data Flow
-Comprehensive framework showing how emotional data moves through **collection**, **processing**, **analysis**, and **feedback loops** while maintaining **ethical safeguards** and **user agency**.
+Framework showing how emotional data moves through **collection**, **processing**, **analysis**, and **feedback loops** while maintaining **ethical safeguards**.
 
 **Key Components:**
-- **Data Collection**: Multi-modal input from facial expressions, voice patterns, and physiological signals
-- **Processing Pipeline**: Real-time analysis with bias detection and cultural sensitivity filters
-- **Analysis Engine**: Machine learning models trained on diverse, ethically-sourced datasets
-- **Feedback Loops**: Continuous learning while preserving user privacy and consent
-- **Ethical Safeguards**: Built-in protections against misuse and discrimination
-- **User Agency**: Full control over personal emotional data and system interactions
+- **Data Collection**: Multi-modal input (facial, vocal, physiological)
+- **Processing Pipeline**: Real-time analysis with bias detection
+- **Analysis Engine**: ML models on diverse, ethical datasets
+- **Feedback Loops**: Continuous learning with privacy protection
+- **Ethical Safeguards**: Built-in protections against misuse
+- **User Agency**: Full control over personal emotional data
 
 ===
 
@@ -146,7 +146,7 @@ Comprehensive framework showing how emotional data moves through **collection**,
 
 ===
 
-[iframe:../public/movie.html]
+<iframe src="../public/movie.html" style="width: 100vw; height: 100vh; border: none; position: fixed; top: 0; left: 0; z-index: 1000;"></iframe>
 
 ===
 

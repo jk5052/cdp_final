@@ -164,8 +164,8 @@ body {
     text-align: center !important;
 }
 
-/* 섹션 9, 10, 20, 26 풀프레임 iframe */
-.section-9, .section-10, .section-20, .section-26 {
+/* 섹션 9, 10, 26 풀프레임 iframe */
+.section-9, .section-10, .section-26 {
     padding: 0 !important;
     margin: 0 !important;
     width: 100vw !important;
@@ -190,7 +190,7 @@ body {
     padding: 60px !important;
 }
 
-.section-9 .section-content, .section-10 .section-content, .section-20 .section-content, .section-26 .section-content {
+.section-9 .section-content, .section-10 .section-content, .section-26 .section-content {
     padding: 0 !important;
     margin: 0 !important;
     width: 100vw !important;
@@ -214,7 +214,7 @@ body {
     color: #ffffff !important;
 }
 
-.section-9 .section-content .content, .section-10 .section-content .content, .section-20 .section-content .content, .section-26 .section-content .content {
+.section-9 .section-content .content, .section-10 .section-content .content, .section-26 .section-content .content {
     width: 100% !important;
     height: 100% !important;
     margin: 0 !important;
@@ -222,7 +222,7 @@ body {
     max-width: none !important;
 }
 
-.section-9 .section-content iframe, .section-10 .section-content iframe, .section-20 .section-content iframe, .section-26 .section-content iframe {
+.section-9 .section-content iframe, .section-10 .section-content iframe, .section-26 .section-content iframe {
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;

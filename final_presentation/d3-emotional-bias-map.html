@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Emotion AI Bias Map</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-geo-projection@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson@3"></script>
     <style>
         body {
             margin: 0;
@@ -28,7 +30,7 @@
         svg {
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.05);
+            background: black;
         }
         
         .emotion-point {
@@ -40,24 +42,24 @@
             position: absolute;
             background: rgba(0, 0, 0, 0.9);
             color: white;
-            padding: 20px;
-            border-radius: 8px;
-            border: 2px solid #f97316;
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #cccccc;
             pointer-events: none;
             z-index: 1000;
-            max-width: 550px;
-            font-size: 13px;
-            line-height: 1.4;
+            max-width: 700px;
+            font-size: 15px;
+            line-height: 1.5;
             display: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .tooltip img {
-            width: 400px;
-            height: 280px;
+            width: 600px;
+            height: 400px;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
             display: block;
         }
         
@@ -93,15 +95,22 @@
         <label for="projection-select">Select Projection:</label>
         <select id="projection-select">
             <option value="Natural Earth">Natural Earth</option>
+            <option value="Equal Earth">Equal Earth</option>
+            <option value="Orthographic">Orthographic</option>
+            <option value="Stereographic">Stereographic</option>
             <option value="Mercator">Mercator</option>
             <option value="Robinson">Robinson</option>
             <option value="Mollweide">Mollweide</option>
-            <option value="Orthographic">Orthographic</option>
-            <option value="Stereographic">Stereographic</option>
             <option value="Eckert IV">Eckert IV</option>
-            <option value="Equal Earth">Equal Earth</option>
             <option value="Hammer">Hammer</option>
             <option value="Winkel tripel">Winkel tripel</option>
+            <option value="American polyconic">American polyconic</option>
+            <option value="Azimuthal equal-area">Azimuthal equal-area</option>
+            <option value="Azimuthal equidistant">Azimuthal equidistant</option>
+            <option value="Conic equal-area">Conic equal-area</option>
+            <option value="Conic equidistant">Conic equidistant</option>
+            <option value="Equirectangular">Equirectangular</option>
+            <option value="Gnomonic">Gnomonic</option>
         </select>
     </div>
 
@@ -116,119 +125,100 @@
         const emotionBiasData = [
             {
                 region: "North America",
-                country: "United States",
-                coordinates: [-95, 37],
+                coordinates: [-100, 45],
                 biasLevel: 2,
-                cases: 180,
-                issues: ["Western-centric facial recognition", "Cultural context ignored", "Lack of diversity"],
-                description: "Despite being home to major AI companies, Western-centric bias is most severe here"
-            },
-            {
-                region: "North America",
-                country: "Canada",
-                coordinates: [-106, 56],
-                biasLevel: 1,
-                cases: 75,
-                issues: ["Indigenous culture overlooked", "Bilingual context challenges"],
-                description: "Better diversity policies but still struggles with indigenous emotional expressions"
+                cases: 255,
+                issues: ["Western-centric facial recognition", "Cultural context ignored", "Lack of diversity", "Indigenous culture overlooked"],
+                description: "Despite being home to major AI companies, Western-centric bias is most severe here. Both US and Canadian systems struggle with indigenous emotional expressions and cultural diversity."
             },
             {
                 region: "Europe",
-                country: "Germany",
-                coordinates: [10, 51],
+                coordinates: [10, 54],
                 biasLevel: 1,
                 cases: 95,
-                issues: ["GDPR data restrictions", "Cultural expression differences"],
-                description: "Relatively less bias due to GDPR regulations but cultural differences still exist"
+                issues: ["GDPR data restrictions", "Cultural expression differences", "Multilingual context"],
+                description: "Relatively less bias due to GDPR regulations but cultural differences still exist across diverse European nations"
             },
             {
                 region: "East Asia",
-                country: "China",
-                coordinates: [104, 35],
+                coordinates: [120, 35],
                 biasLevel: 3,
-                cases: 220,
-                issues: ["Collectivist vs individualist expressions", "Contextual emotional meaning", "Language barriers"],
-                description: "Most populous region but extreme bias due to Western-trained AI systems"
-            },
-            {
-                region: "East Asia",
-                country: "Japan",
-                coordinates: [138, 36],
-                biasLevel: 3,
-                cases: 165,
-                issues: ["Honne-Tatemae cultural context", "Subtle emotional expressions", "Collectivist culture"],
-                description: "Japanese unique emotional expression often misunderstood by Western AI systems"
+                cases: 385,
+                issues: ["Collectivist vs individualist expressions", "Contextual emotional meaning", "Language barriers", "Honne-Tatemae cultural context", "Subtle emotional expressions"],
+                description: "Most populous region with extreme bias due to Western-trained AI systems. Unique cultural emotional expressions often misunderstood, especially Japanese subtlety and Chinese contextual meanings"
             },
             {
                 region: "South Asia",
-                country: "India",
                 coordinates: [77, 20],
                 biasLevel: 3,
                 cases: 200,
-                issues: ["Multilingual emotional expression", "Caste system influence", "Religious context"],
-                description: "Diverse languages and cultures coexist but processed by single model causing bias"
+                issues: ["Multilingual emotional expression", "Caste system influence", "Religious context", "Cultural diversity"],
+                description: "Diverse languages and cultures coexist but processed by single model causing significant bias across the subcontinent"
             },
             {
                 region: "Middle East",
-                country: "Saudi Arabia",
                 coordinates: [45, 24],
                 biasLevel: 3,
                 cases: 160,
-                issues: ["Religious emotional expressions", "Gender-separated culture", "Arabic cultural context"],
-                description: "Islamic cultural emotional expressions frequently misinterpreted negatively by Western AI"
+                issues: ["Religious emotional expressions", "Gender-separated culture", "Arabic cultural context", "Political tensions"],
+                description: "Islamic cultural emotional expressions frequently misinterpreted negatively by Western AI systems across the region"
             },
             {
                 region: "Africa",
-                country: "Nigeria",
                 coordinates: [8, 10],
                 biasLevel: 2,
                 cases: 85,
-                issues: ["Tribal emotional expression differences", "Data scarcity", "Economic accessibility"],
-                description: "Africa's most populous country but significantly underrepresented in AI training data"
+                issues: ["Tribal emotional expression differences", "Data scarcity", "Economic accessibility", "Colonial legacy"],
+                description: "Significantly underrepresented in AI training data despite rich emotional expression diversity across the continent"
             },
             {
                 region: "South America",
-                country: "Brazil",
                 coordinates: [-55, -10],
                 biasLevel: 2,
                 cases: 110,
-                issues: ["Expressive Latin culture emotions", "Portuguese context", "Socioeconomic diversity"],
-                description: "Expressive Latin cultural emotions often exaggerated in AI interpretation bias"
+                issues: ["Expressive Latin culture emotions", "Portuguese/Spanish context", "Socioeconomic diversity", "Indigenous cultures"],
+                description: "Expressive Latin cultural emotions often exaggerated in AI interpretation bias across the region"
             },
             {
                 region: "Oceania",
-                country: "Australia",
                 coordinates: [133, -27],
                 biasLevel: 0,
                 cases: 45,
-                issues: ["Indigenous culture consideration lacking"],
-                description: "Western culture but Aboriginal indigenous culture still marginalized in AI"
+                issues: ["Indigenous culture consideration lacking", "Pacific Islander representation", "Remote accessibility"],
+                description: "Western-aligned culture but Aboriginal and Pacific Islander indigenous cultures still marginalized in AI systems"
             }
         ];
 
-        // Projection definitions
-        const projections = {
-            "Natural Earth": d3.geoNaturalEarth1,
-            "Mercator": d3.geoMercator,
-            "Robinson": d3.geoRobinson,
-            "Mollweide": d3.geoMollweide,
-            "Orthographic": d3.geoOrthographic,
-            "Stereographic": d3.geoStereographic,
-            "Eckert IV": d3.geoEckert4,
-            "Equal Earth": d3.geoEqualEarth,
-            "Hammer": d3.geoHammer,
-            "Winkel tripel": d3.geoWinkel3
-        };
+        // Projection definitions (Observable 스타일)
+        const projections = [
+            {name: "Natural Earth", value: d3.geoNaturalEarth1},
+            {name: "Equal Earth", value: d3.geoEqualEarth},
+            {name: "Orthographic", value: d3.geoOrthographic},
+            {name: "Stereographic", value: d3.geoStereographic},
+            {name: "Mercator", value: d3.geoMercator},
+            {name: "Robinson", value: d3.geoRobinson},
+            {name: "Mollweide", value: d3.geoMollweide},
+            {name: "Eckert IV", value: d3.geoEckert4},
+            {name: "Hammer", value: d3.geoHammer},
+            {name: "Winkel tripel", value: d3.geoWinkel3},
+            {name: "American polyconic", value: d3.geoPolyconic},
+            {name: "Azimuthal equal-area", value: d3.geoAzimuthalEqualArea},
+            {name: "Azimuthal equidistant", value: d3.geoAzimuthalEquidistant},
+            {name: "Conic equal-area", value: d3.geoConicEqualArea},
+            {name: "Conic equidistant", value: d3.geoConicEquidistant},
+            {name: "Equirectangular", value: d3.geoEquirectangular},
+            {name: "Gnomonic", value: d3.geoGnomonic}
+        ];
 
-        // Color and size scales
+        // Color and size scales - white to gray aesthetic
         const colorScale = d3.scaleOrdinal()
             .domain([0, 1, 2, 3])
-            .range(["#38a169", "#d69e2e", "#dd6b20", "#c53030"]);
+            .range(["#ffffff", "#cccccc", "#888888", "#444444"]);
 
         // Size scale
         const sizeScale = d3.scaleLinear()
-            .domain([0, 250])
-            .range([8, 35]);
+            .domain([0, 400])
+            .range([15, 50]);
 
         let currentProjection = 'Natural Earth';
         
@@ -236,7 +226,7 @@
         const svg = d3.select("#world-map");
         const tooltip = d3.select("#tooltip");
 
-        function drawMap() {
+        async function drawMap() {
             const width = window.innerWidth;
             const height = window.innerHeight;
 
@@ -244,7 +234,8 @@
             svg.selectAll("*").remove();
 
             // Projection setup
-            const ProjectionConstructor = projections[currentProjection];
+            const projectionObj = projections.find(p => p.name === currentProjection);
+            const ProjectionConstructor = projectionObj ? projectionObj.value : d3.geoNaturalEarth1;
             let projection = ProjectionConstructor()
                 .scale(Math.min(width, height) * 0.15)
                 .translate([width/2, height/2]);
@@ -256,26 +247,80 @@
 
             const path = d3.geoPath().projection(projection);
 
-            // 배경 원 (구체)
-            svg.append("circle")
-                .attr("cx", width/2)
-                .attr("cy", height/2)
-                .attr("r", projection.scale())
-                .attr("fill", "rgba(255,255,255,0.05)")
-                .attr("stroke", "rgba(255,255,255,0.2)")
-                .attr("stroke-width", 1);
+            // 배경 원 (구형 투영법에만 적용)
+            if (currentProjection === "Orthographic" || currentProjection === "Stereographic") {
+                svg.append("circle")
+                    .attr("cx", width/2)
+                    .attr("cy", height/2)
+                    .attr("r", projection.scale())
+                    .attr("fill", "rgba(255,255,255,0.05)")
+                    .attr("stroke", "rgba(255,255,255,0.2)")
+                    .attr("stroke-width", 1);
+            }
 
-            // 그리드 라인
-            const graticule = d3.geoGraticule();
-            svg.append("path")
-                .datum(graticule())
-                .attr("d", path)
-                .attr("fill", "none")
-                .attr("stroke", "rgba(255,255,255,0.1)")
-                .attr("stroke-width", 0.5);
+            // 그리드 라인 (구형 투영법에만 적용)
+            if (currentProjection === "Orthographic" || currentProjection === "Stereographic") {
+                const graticule = d3.geoGraticule();
+                svg.append("path")
+                    .datum(graticule())
+                    .attr("d", path)
+                    .attr("fill", "none")
+                    .attr("stroke", "rgba(255,255,255,0.1)")
+                    .attr("stroke-width", 0.5);
+            }
+
+            // 세계 지도 데이터 로드 및 그리기
+            try {
+                // Natural Earth 데이터 사용
+                const world = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+                const countries = topojson.feature(world, world.objects.countries);
+
+                // 국가 경계선 그리기
+                svg.append("g")
+                    .selectAll("path")
+                    .data(countries.features)
+                    .enter()
+                    .append("path")
+                    .attr("d", path)
+                    .attr("fill", "rgba(167, 212, 167, 0.2)")
+                    .attr("stroke", "rgba(127, 176, 105, 0.4)")
+                    .attr("stroke-width", 0.5);
+            } catch (error) {
+                console.log("World atlas not available, trying alternative...");
+                try {
+                    // 대안 데이터 소스
+                    const world = await d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson");
+
+                    svg.append("g")
+                        .selectAll("path")
+                        .data(world.features)
+                        .enter()
+                        .append("path")
+                        .attr("d", path)
+                        .attr("fill", "rgba(255,255,255,0.1)")
+                        .attr("stroke", "rgba(255,255,255,0.3)")
+                        .attr("stroke-width", 0.5);
+                } catch (error2) {
+                    console.log("No world map data available, using simple background");
+                    // 간단한 대륙 모양 추가
+                    const continents = [
+                        {type: "Feature", geometry: {type: "Polygon", coordinates: [[[-180, -60], [180, -60], [180, 80], [-180, 80], [-180, -60]]]}},
+                    ];
+
+                    svg.append("g")
+                        .selectAll("path")
+                        .data(continents)
+                        .enter()
+                        .append("path")
+                        .attr("d", path)
+                        .attr("fill", "rgba(255,255,255,0.05)")
+                        .attr("stroke", "rgba(255,255,255,0.2)")
+                        .attr("stroke-width", 1);
+                }
+            }
 
             // 감정 편향 데이터 포인트
-            svg.selectAll(".emotion-point")
+            const circles = svg.selectAll(".emotion-point")
                 .data(emotionBiasData)
                 .enter()
                 .append("circle")
@@ -288,32 +333,32 @@
                     const coords = projection(d.coordinates);
                     return coords ? coords[1] : 0;
                 })
-                .attr("r", d => sizeScale(d.cases))
+                .attr("r", 0)
                 .attr("fill", d => colorScale(d.biasLevel))
                 .attr("fill-opacity", 0.8)
                 .attr("stroke", "white")
                 .attr("stroke-width", 1)
                 .style("cursor", "pointer")
                 .on("mouseover", function(event, d) {
-                    // Image file mapping
+                    // Image file mapping by region
                     let imagePath = "";
-                    if (d.country === "United States") imagePath = "America.jpeg";
-                    else if (d.country === "Canada") imagePath = "America2.jpeg";
-                    else if (d.country === "Germany") imagePath = "europe.jpg";
-                    else if (d.country === "China") imagePath = "eastasia.jpg";
-                    else if (d.country === "Japan") imagePath = "eastasia2.jpeg";
-                    else if (d.country === "India") imagePath = "eastasia2.jpeg";
-                    
-                    // Tooltip with image (in English)
+                    if (d.region === "North America") imagePath = "America.jpeg";
+                    else if (d.region === "Europe") imagePath = "europe.jpg";
+                    else if (d.region === "East Asia") imagePath = "eastasia.jpg";
+                    // 이미지 제거: South Asia, Middle East, Africa, South America, Oceania
+
+                    // Tooltip with conditional image (in English)
                     const biasLabels = ["Good", "Moderate", "Severe", "Extreme"];
                     tooltip.style("display", "block")
                         .style("left", (event.pageX + 10) + "px")
                         .style("top", (event.pageY - 10) + "px")
                         .html(`
-                            <div style="text-align: center; margin-bottom: 10px;">
-                                <img src="${imagePath}" style="width: 120px; height: 90px; object-fit: cover; border-radius: 8px; border: 2px solid #f97316;" onerror="this.style.display='none'">
-                            </div>
-                            <strong>${d.region} - ${d.country}</strong><br>
+                            ${imagePath ? `<div style="text-align: center; margin-bottom: 15px;">
+                                <img src="${imagePath}" style="width: 800px; height: 500px; object-fit: cover; border-radius: 10px; border: 2px solid #7fb069;"
+                                     onerror="console.log('Image failed to load:', '${imagePath}'); this.parentElement.style.display='none';"
+                                     onload="console.log('Image loaded successfully:', '${imagePath}')">
+                            </div>` : ''}
+                            <strong>${d.region}</strong><br>
                             Bias Level: ${biasLabels[d.biasLevel]}<br>
                             Key Issues: ${d.issues.join(", ")}<br>
                             <br>
@@ -335,14 +380,60 @@
                         .attr("r", sizeScale(d.cases));
                 })
                 .on("click", function(event, d) {
-                    alert(`${d.region} - ${d.country}\n\nDetails:\n${d.description}\n\nKey Issues:\n• ${d.issues.join("\n• ")}`);
+                    alert(`${d.region}\n\nDetails:\n${d.description}\n\nKey Issues:\n• ${d.issues.join("\n• ")}`);
                 });
+
+            // Animate circles after event handlers are set
+            circles.transition()
+                .duration(1000)
+                .delay((d, i) => i * 200)
+                .attr("r", d => sizeScale(d.cases));
+
+            // 범례 추가
+            const legend = svg.append("g")
+                .attr("class", "legend")
+                .attr("transform", `translate(${width - 200}, 50)`);
+
+            const biasLabels = ["Good", "Moderate", "Severe", "Extreme"];
+            const legendData = [0, 1, 2, 3];
+
+            legend.selectAll(".legend-item")
+                .data(legendData)
+                .enter()
+                .append("g")
+                .attr("class", "legend-item")
+                .attr("transform", (d, i) => `translate(0, ${i * 25})`)
+                .each(function(d) {
+                    const g = d3.select(this);
+
+                    g.append("circle")
+                        .attr("r", 8)
+                        .attr("fill", colorScale(d))
+                        .attr("stroke", "white")
+                        .attr("stroke-width", 1);
+
+                    g.append("text")
+                        .attr("x", 15)
+                        .attr("y", 5)
+                        .attr("fill", "white")
+                        .attr("font-size", "12px")
+                        .text(biasLabels[d]);
+                });
+
+            // 범례 제목
+            legend.append("text")
+                .attr("x", 0)
+                .attr("y", -10)
+                .attr("fill", "white")
+                .attr("font-size", "14px")
+                .attr("font-weight", "bold")
+                .text("Bias Level");
         }
 
         // Projection change event
-        document.getElementById('projection-select').addEventListener('change', function(e) {
+        document.getElementById('projection-select').addEventListener('change', async function(e) {
             currentProjection = e.target.value;
-            drawMap();
+            await drawMap();
         });
 
         // 초기 지도 그리기
