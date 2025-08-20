@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotional Landscapes - CDP Final</title>
+    <title>Workflow - Emotional Landscapes</title>
     <style>
         * {
             margin: 0;
@@ -21,42 +21,37 @@
 
         .container {
             position: relative;
-            width: 100vw;
+            width: 100%;
             height: 100vh;
-            overflow: hidden;
         }
 
-        .title {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 4rem;
-            font-weight: bold;
-            text-align: center;
-            z-index: 10;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 70%, transparent 100%);
+            border-radius: 50%;
             pointer-events: none;
-            opacity: 0.9;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
         }
 
-        .subtitle {
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.2rem;
-            text-align: center;
-            z-index: 10;
-            pointer-events: none;
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(2deg); }
+            50% { transform: translateY(-10px) rotate(-1deg); }
+            75% { transform: translateY(-15px) rotate(1deg); }
         }
 
         .eye {
             position: absolute;
-            width: 450px;
-            height: 450px;
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -67,16 +62,6 @@
 
         .eye:hover {
             transform: scale(1.05);
-        }
-
-        .eye.opened {
-            animation: eyeOpen 0.5s ease-in-out;
-        }
-
-        @keyframes eyeOpen {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1.1); }
         }
 
         .eye-label {
@@ -99,55 +84,59 @@
             opacity: 0;
         }
 
-        .floating {
-            animation: float 6s ease-in-out infinite;
+        .back-button {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: white;
+            font-size: 1rem;
+            text-decoration: none;
+            z-index: 100;
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            transition: all 0.3s ease;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-20px) rotate(2deg); }
-            50% { transform: translateY(-10px) rotate(-1deg); }
-            75% { transform: translateY(-15px) rotate(1deg); }
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.6);
         }
-
-        .custom-cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 70%, transparent 100%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
-            transition: transform 0.1s ease;
-        }
-
-
-
-
     </style>
 </head>
 <body>
     <div class="container">
         <div class="custom-cursor" id="cursor"></div>
         
-
+        <a href="index.html" class="back-button">← Back to Main</a>
         
-
-        
-        <div class="eye floating" id="eye1" style="top: 10%; left: 5%;">
-            <div class="eye-label">Precedent Study</div>
-        </div>
-
-        <div class="eye floating" id="eye2" style="top: 15%; right: 5%; animation-delay: -2s;">
-            <div class="eye-label">Final Project</div>
-        </div>
-
-        <div class="eye floating" id="eye3" style="bottom: 10%; left: 50%; transform: translateX(-50%); animation-delay: -4s;">
-            <div class="eye-label">Workflow</div>
+        <div class="eye floating" id="eye1" style="top: 5%; left: 10%;">
+            <div class="eye-label">2D-Explore</div>
         </div>
         
-
+        <div class="eye floating" id="eye2" style="top: 5%; right: 10%; animation-delay: -1s;">
+            <div class="eye-label">3D-Explore</div>
+        </div>
+        
+        <div class="eye floating" id="eye3" style="top: 35%; left: 5%; animation-delay: -2s;">
+            <div class="eye-label">Temporal-Explore</div>
+        </div>
+        
+        <div class="eye floating" id="eye4" style="top: 35%; right: 5%; animation-delay: -3s;">
+            <div class="eye-label">Relational-Structures</div>
+        </div>
+        
+        <div class="eye floating" id="eye5" style="bottom: 15%; left: 15%; animation-delay: -4s;">
+            <div class="eye-label">Geospatial Structures</div>
+        </div>
+        
+        <div class="eye floating" id="eye6" style="bottom: 15%; right: 15%; animation-delay: -5s;">
+            <div class="eye-label">Engagement Components</div>
+        </div>
+        
+        <div class="eye floating" id="eye7" style="bottom: 5%; left: 50%; transform: translateX(-50%); animation-delay: -6s;">
+            <div class="eye-label">Engagement Component</div>
+        </div>
     </div>
 
     <script>
@@ -164,19 +153,43 @@
                 id: 'eye1',
                 closedImage: 'assets/images/Untitled-1.png',
                 openedImage: 'assets/images/untitled-7.png',
-                link: 'cleansing-emotional-data.html'
+                link: '2d-explore.html'
             },
             {
-                id: 'eye2',
+                id: 'eye2', 
                 closedImage: 'assets/images/Untitled-3.png',
-                openedImage: 'assets/images/untitled-9.png',
-                link: 'public/movie.html'
+                openedImage: 'assets/images/untitled-8.png',
+                link: '3d-explore.html'
             },
             {
                 id: 'eye3',
-                closedImage: 'assets/images/Untitled-5.png',
+                closedImage: 'assets/images/Untitled-5.png', 
+                openedImage: 'assets/images/untitled-9.png',
+                link: 'Temporal-explore.html'
+            },
+            {
+                id: 'eye4',
+                closedImage: 'assets/images/Untitled-2.png', 
+                openedImage: 'assets/images/untitled.png',
+                link: 'Relational-stuctures.html'
+            },
+            {
+                id: 'eye5',
+                closedImage: 'assets/images/Untitled-4.jpg', 
+                openedImage: 'assets/images/untitled-7.png',
+                link: '#'
+            },
+            {
+                id: 'eye6',
+                closedImage: 'assets/images/Untitled-6.png', 
                 openedImage: 'assets/images/untitled-8.png',
-                link: 'workflow.html'
+                link: '#'
+            },
+            {
+                id: 'eye7',
+                closedImage: 'assets/images/Untitled-1.png', 
+                openedImage: 'assets/images/untitled-9.png',
+                link: '#'
             }
         ];
 
@@ -184,16 +197,16 @@
         eyes.forEach(eyeData => {
             const eye = document.getElementById(eyeData.id);
             eye.style.backgroundImage = `url(${eyeData.closedImage})`;
-
+            
             // 호버 이벤트 추가
             eye.addEventListener('mouseenter', () => {
                 eye.style.backgroundImage = `url(${eyeData.openedImage})`;
             });
-
+            
             eye.addEventListener('mouseleave', () => {
                 eye.style.backgroundImage = `url(${eyeData.closedImage})`;
             });
-
+            
             let isDragging = false;
             let startX, startY, initialX, initialY;
 
@@ -221,30 +234,21 @@
                 }
             });
 
-            // Mouse up - stop dragging or click
+            // Mouse up - stop dragging and navigate
             document.addEventListener('mouseup', (e) => {
-                if (isDragging) {
+                if (isDragging && e.target === eye) {
                     isDragging = false;
                     eye.style.cursor = 'pointer';
                     
-                    // If it was just a click (minimal movement), open eye and navigate
+                    // Navigate to link if not dragged much
                     const deltaX = Math.abs(e.clientX - startX);
                     const deltaY = Math.abs(e.clientY - startY);
-                    
-                    if (deltaX < 5 && deltaY < 5) {
-                        // Eye opening animation
-                        eye.style.backgroundImage = `url(${eyeData.openedImage})`;
-                        eye.classList.add('opened');
-                        
-                        setTimeout(() => {
-                            window.location.href = eyeData.link;
-                        }, 500);
+                    if (deltaX < 10 && deltaY < 10 && eyeData.link !== '#') {
+                        window.location.href = eyeData.link;
                     }
                 }
             });
         });
-
-
 
         // Add some random movement to eyes
         setInterval(() => {
