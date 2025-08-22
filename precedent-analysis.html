@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Defines Emotions? - Precedent Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: url('assets/images/background.jpg') center center/cover no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: white;
+            font-family: 'Special Elite', 'Courier New', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-family: 'Special Elite', 'Courier New', monospace;
+        }
+
+        .back-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .content-section {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .content-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .content-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .image-caption {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .stage-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .stage-item {
+            background: rgba(255, 255, 255, 0.05);
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stage-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .stage-content {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .poster-section {
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+
+        .poster-button {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 15px;
+            padding: 20px 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-family: 'Special Elite', 'Courier New', monospace;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .poster-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.7);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 80px 20px 20px;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .content-section {
+                padding: 25px;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .back-button {
+                top: 20px;
+                left: 20px;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .poster-button {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="cleansing-emotional-data.html" class="back-button">← Back</a>
+    
+    <div class="container">
+        <h1 class="main-title">Who Defines Emotions?</h1>
+
+        <div class="image-container">
+            <img src="assets/images/precedent_01.png" alt="Precedent Study 01" class="content-image">
+        </div>
+
+        <p class="subtitle">Being a little less arrogant, possessing some critical awareness of oneself and one's convictions. We all live believing in something. What we are granted is merely the right to choose what we believe and worship.</p>
+
+        <div class="content-section">
+            <h2 class="section-title">Who Defines Emotions?</h2>
+            
+            <div class="image-container">
+                <img src="assets/images/precedent_02.jpeg" alt="Precedent Study 02" class="content-image">
+            </div>
+
+            <div class="image-container">
+                <img src="assets/images/precedent_03.jpeg" alt="Precedent Study 03" class="content-image">
+            </div>
+
+            <div class="image-container">
+                <img src="assets/images/precedent_04.jpeg" alt="Precedent Study 04" class="content-image">
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Elisa Giardina Papa's "Cleaning Emotional Data" (2020)</h2>
+            
+            <p class="content-text">Through screens, textile works, and installation elements in the gallery space, the work visualizes the process of emotional data labeling. It juxtaposes the abstract lines of facial expressions extracted by algorithms with untranslatable emotional expressions from Sicilian and American dialects. Waste materials are transformed into a new canvas for "unruly and incomputable" emotions.</p>
+            
+            <p class="content-text">This anthropological study explores the linguistic gaps and differences in interpretative parameters between human-machine relationships. As the final work in a trilogy following "Technologies of Care" (2016) and "Labor of Sleep" (2017), it analyzes the separation between material places and virtual labor spaces in the platform economy.</p>
+            
+            <div class="highlight-box">
+                <p class="content-text">The work serves as a record of microwork that the artist herself actually performed remotely for American companies—evidence of labeling, categorizing, annotating, and validating data for training emotion recognition algorithms. It stands as first-person testimony to new forms of precarious labor.</p>
+            </div>
+            
+            <p class="content-text">Tasks performed included: systematizing emotions, annotating facial expressions, and recording her own image for 3D character animation. Some of her emotional expression videos were rejected because her facial expressions did not fully match "standardized" emotional categories.</p>
+            
+            <p class="content-text"><strong>Critical perspective:</strong> AI systems based on flawed understandings that view human emotions as universal, authentic, and transparent. Tech companies and government agencies leverage this prescribed transparency to develop software that identifies both consumers' moods and potentially dangerous citizens who pose threats to the state.</p>
+            
+            <div class="image-container">
+                <img src="assets/images/precedent_05.jpg" alt="Precedent Study 05" class="content-image">
+            </div>
+
+            <div class="image-container">
+                <img src="assets/images/precedent_06.jpeg" alt="Precedent Study 06" class="content-image">
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Artist's First-Person Experience: Autoethnographic Methodology</h2>
+            
+            <p class="content-text">Through autoethnographic methodology, the artist:</p>
+            
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-content">Documents the linguistic and cultural gaps experienced while residing in Sicily and collaborating with American companies</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Exposes the hidden labor structures of the AI industry through actual microworker experiences</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Analyzes power relations in the global platform economy through personal experience</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Western-Centricity of Six "Universal" Basic Emotions</h2>
+            
+            <p class="content-text">The work reveals the limitations of Western-centric emotional classification systems through the contrast between "abstract facial expression lines" extracted by algorithms and "untranslatable Sicilian/American dialect expressions." This suggests that the concept of emotional "universality" itself is a construct based on specific cultural contexts.</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">History of Emotional Data</h2>
+
+            <div class="image-container">
+                <img src="assets/images/precedent_07.png" alt="Precedent Study 07" class="content-image">
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Colonial Genealogy of Emotion AI</h2>
+
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-title">Stage 1: Colonial Origins (1872-1960s)</div>
+                    <div class="stage-content">
+                        <p>Darwin (1872): Evolutionary justification of "universal emotions" concept</p>
+                        <p>Ekman (1960s-70s): Research on Papua New Guinea's Fore people as "isolated culture"</p>
+                        <p><strong>Core:</strong> Western scholars extracting "pure" emotional data from "primitive" societies</p>
+                    </div>
+                </li>
+
+                <li class="stage-item">
+                    <div class="stage-title">Stage 2: Technical Translation (1980s-2000s)</div>
+                    <div class="stage-content">
+                        <p>FACS (1980): Systematizing Ekman's six basic emotions into coding systems</p>
+                        <p>Affective Computing (1997): MIT's transformation of emotions into computable data</p>
+                        <p><strong>Core:</strong> Western academic institutions translating "universality" into algorithms</p>
+                    </div>
+                </li>
+
+                <li class="stage-item">
+                    <div class="stage-title">Stage 3: Global Exploitation (2000s-Present)</div>
+                    <div class="stage-content">
+                        <p>Affectiva (2009): Commercializing MIT technology, utilizing Cairo crowdworkers</p>
+                        <p>Big Tech Expansion: Amazon, Microsoft, Google commercializing emotion AI</p>
+                        <p><strong>Core:</strong> Global South labor creating Western corporate profits</p>
+                    </div>
+                </li>
+
+                <li class="stage-item">
+                    <div class="stage-title">Stage 4: Scientific Refutation (2019-Present)</div>
+                    <div class="stage-content">
+                        <p>Barrett et al. (2019): Scientific proof that "emotions cannot be predicted from faces"</p>
+                        <p>Racial bias studies: AI interpreting Black faces more negatively</p>
+                        <p><strong>Core:</strong> Dismantling 150 years of "universality" myth, yet industry continues</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Continuity</h2>
+
+            <div class="highlight-box">
+                <p class="content-text"><strong>"From Papua New Guinea to Cairo" = Same extractive structure</strong></p>
+
+                <p class="content-text">1960s: Western researchers collecting emotional data from "primitive" societies</p>
+                <p class="content-text">2010s: Western companies outsourcing emotional labeling to Global South</p>
+                <p class="content-text"><strong>Common elements:</strong> Western-centric knowledge production, peripheral labor exploitation, ignoring cultural diversity</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Examples</h2>
+
+            <div class="image-container">
+                <img src="assets/images/precedent_08.png" alt="Precedent Study 08" class="content-image">
+            </div>
+
+            <p class="content-text">Fox News: Higher frequency of 'anger' and 'joy' emotions</p>
+            <p class="content-text">New York Times: More frequent 'sadness' and 'fear'</p>
+            <p class="content-text">→ This shows that emotion AI is not simply 'neutral technology' but a tool that reproduces political/ideological bias</p>
+
+            <div class="highlight-box">
+                <p class="content-text"><strong>Three-Stage Exploitation Structure:</strong></p>
+                <p class="content-text">Western Academic Institutions (MIT/Stanford) → Global South Data/Labor → Western Corporate Profits</p>
+                <p class="content-text">Affectiva Case Study: 10 million facial expression data labeled by Cairo crowdworkers at $2-5/hour</p>
+            </div>
+
+            <div class="image-container">
+                <img src="assets/images/precedent_09.png" alt="Precedent Study 09" class="content-image">
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Evidence of Racial Bias: AI Systems Interpreting Black Faces More Negatively</h2>
+
+            <p class="content-text">Lauren Rhue's analysis of 400 NBA players' official photos found that Face++ rated Black faces as twice as angry as white faces on average, while Microsoft Face API scored Black faces as three times more contemptuous than white faces.</p>
+
+            <div class="highlight-box">
+                <p class="content-text"><strong>Specific case:</strong> Both Darren Collison and Gordon Hayward were smiling with similar smile scores (48.7 and 48.1), but Hayward was rated 59.7% happy/0.13% angry while Collison was rated 39.2% happy/27% angry.</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Hybrid Media Ecology - Multiple Videos + Large-Scale Textile Works</h2>
+
+            <p class="content-text"><strong>Installation Components:</strong></p>
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-content">Multiple screen installation: Monitors at different heights and angles occupying space</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Textile work "Amiss Motifs": Fabric work created in collaboration with Michael Graham</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Juxtaposition of abstract lines of facial micro-expressions detected by algorithms with untranslatable emotional vernacular from Sicilian dialect and American English</div>
+                </li>
+            </ul>
+
+            <p class="content-text"><strong>They form a hybrid media ecology:</strong></p>
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-content">Digital-analog intersection: Coexistence of digital data on screens and tactile physicality of textiles</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Layered temporality: Real-time algorithmic processing vs. slow time of handicraft</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Spatial reconfiguration: Non-linear narrative experienced as viewers move between screens and textiles</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Visual Language: Triple Function of the Artist's Face</h2>
+
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-title">Face as Worker:</div>
+                    <div class="stage-content">
+                        <p>Actual work scenes filmed during microwork performance</p>
+                        <p>Subject of emotional labeling while simultaneously being labeled object</p>
+                    </div>
+                </li>
+
+                <li class="stage-item">
+                    <div class="stage-title">Face as Data:</div>
+                    <div class="stage-content">
+                        <p>Expressions reduced to "abstract lines" by algorithms</p>
+                        <p>Humanity converted into computable information</p>
+                    </div>
+                </li>
+
+                <li class="stage-item">
+                    <div class="stage-title">Face as Subject of Resistance:</div>
+                    <div class="stage-content">
+                        <p>Medium expressing untranslatable emotions</p>
+                        <p>Existence that disrupts the system's classification schemes</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Preserving Emotions That Failed Digital Classification Through Physical Embroidery</h2>
+
+            <p class="content-text"><strong>Meaning of "Amiss Motifs" work:</strong></p>
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-content">"Amiss" (wrong, inappropriate): Emotions that algorithms failed to classify</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">"Motifs": Reconfiguring these into new patterns</div>
+                </li>
+            </ul>
+
+            <p class="content-text"><strong>Function as Archive:</strong></p>
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-content">Limitations of digital memory: Non-standardized elements deleted as "errors"</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Possibilities of textile memory: Tactile, material recording medium</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Collective memory: Process of individual emotions accumulating into patterns</div>
+                </li>
+            </ul>
+
+            <p class="content-text">Textiles sampled from remnants of commercially sold bolts—typically discarded because patterns became distorted, uneven, or broken.</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Recording What Machines Cannot Read Through Human Touch</h2>
+
+            <div class="highlight-box">
+                <p class="content-text"><strong>"Waste Material" Utilization</strong></p>
+                <p class="content-text">Industrial waste textiles = Things that "failed" in the system > Rediscovering the value of failure</p>
+            </div>
+
+            <p class="content-text"><strong>Ontological status of waste:</strong></p>
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-content">Surplus excluded from capitalist efficiency</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">"Abnormal" elements eliminated from standardization processes</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Ontological solidarity with emotions algorithms cannot classify</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Sicilian Dialect + American English = Coexistence of Untranslatable Emotional Expressions</h2>
+
+            <p class="content-text"><strong>Linguistic Politics:</strong></p>
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-content">Power relations between dominant language (American English) vs. peripheral language (Sicilian dialect)</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Impossibility of translation: Preserving cultural specificity of emotions</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Algorithmic linguistic limitations: Single-language models ignoring multicultural reality</div>
+                </li>
+            </ul>
+
+            <p class="content-text"><strong>Possibility of Multiple Standards Rather Than One Standard</strong></p>
+            <p class="content-text"><strong>Politics of Multiplicity:</strong></p>
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-content">Dismantling the single standard of "universal" emotions</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Recognizing equal value of regional and cultural emotional expressions</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Reinterpreting untranslatability as richness rather than deficiency</div>
+                </li>
+            </ul>
+
+            <p class="content-text"><strong>Artist's Positionality:</strong></p>
+            <ul class="stage-list">
+                <li class="stage-item">
+                    <div class="stage-content">Sicily residence + American company collaboration: Working at the boundary of two linguistic systems</div>
+                </li>
+                <li class="stage-item">
+                    <div class="stage-content">Microworker experience: Intersection of global capital and local identity</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Examples of Cultural Diversity of Emotions and Possibilities of Resistance</h2>
+
+            <div class="image-container">
+                <img src="assets/images/precedent_10.png" alt="Precedent Study 10" class="content-image">
+            </div>
+
+            <p class="content-text"><strong>Cultural Specificity of Emotional Vocabulary:</strong></p>
+            <p class="content-text">German 'Schadenfreude', Korean '정(jeong)', Tahitian 'Pe'ape'a'</p>
+            <p class="content-text">"Affective Niche": Healing effects when emotions are conceptualized</p>
+            <p class="content-text">Beyond English-centric Thinking: Importance of recognizing global emotional diversity</p>
+            <p class="content-text">Design/Art Practice: Possibilities for interactive work reflecting multicultural emotional expressions</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">AI as a Question of Power</h2>
+
+            <div class="highlight-box">
+                <p class="content-text">From "AI Ethics" to "AI Power": Who operates and manipulates AI?</p>
+                <p class="content-text">Significance of the Work: Visualization of emotional labor + material record of cultural resistance</p>
+                <p class="content-text">Future Tasks: Possibilities for multiple standards against Western-centric emotional standardization</p>
+            </div>
+        </div>
+
+        <div class="poster-section">
+            <a href="assets/images/jk5052_precedentstudy_poster.pdf" target="_blank" class="poster-button">
+                📄 View Poster
+            </a>
+        </div>
+    </div>
+</body>
+</html>

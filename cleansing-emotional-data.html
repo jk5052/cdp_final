@@ -144,6 +144,32 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
+        .next-button {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-family: 'Special Elite', 'Courier New', monospace;
+        }
+
+        .next-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             25% { transform: translateY(-20px) rotate(1deg); }
@@ -157,6 +183,17 @@
         .floating-link:nth-of-type(4) { top: 70%; right: 25%; left: auto; animation-delay: 3s; z-index: 50; }
         .floating-link:nth-of-type(5) { top: 40%; left: 60%; animation-delay: 4s; z-index: 50; }
         .floating-link:nth-of-type(6) { top: 80%; left: 45%; animation-delay: 5s; z-index: 50; }
+        .floating-link:nth-of-type(7) { top: 10%; left: 70%; animation-delay: 6s; z-index: 50; }
+        .floating-link:nth-of-type(8) { top: 35%; right: 10%; left: auto; animation-delay: 7s; z-index: 50; }
+        .floating-link:nth-of-type(9) { top: 85%; right: 40%; left: auto; animation-delay: 8s; z-index: 50; }
+        .floating-link:nth-of-type(10) { top: 50%; left: 5%; animation-delay: 9s; z-index: 50; }
+        .floating-link:nth-of-type(11) { top: 20%; left: 40%; animation-delay: 10s; z-index: 50; }
+        .floating-link:nth-of-type(12) { top: 65%; right: 5%; left: auto; animation-delay: 11s; z-index: 50; }
+        .floating-link:nth-of-type(13) { top: 45%; right: 35%; left: auto; animation-delay: 12s; z-index: 50; }
+        .floating-link:nth-of-type(14) { top: 75%; left: 65%; animation-delay: 13s; z-index: 50; }
+        .floating-link:nth-of-type(15) { top: 30%; left: 25%; animation-delay: 14s; z-index: 50; }
+        .floating-link:nth-of-type(16) { top: 55%; right: 20%; left: auto; animation-delay: 15s; z-index: 50; }
+        .floating-link:nth-of-type(17) { top: 90%; left: 30%; animation-delay: 16s; z-index: 50; }
 
         @media (max-width: 768px) {
             .main-title {
@@ -184,6 +221,7 @@
 </head>
 <body>
     <a href="index.html" class="back-button">← Back to Eyes</a>
+    <a href="precedent-analysis.html" class="next-button">Next Page →</a>
     
     <div class="container">
         <div class="header">
@@ -226,6 +264,66 @@
         <h3>Academic Research</h3>
         <p>Academic documentation and analysis</p>
         <p class="source">Source: ResearchGate</p>
+    </a>
+
+    <a href="https://data.niaid.nih.gov/resources?id=zenodo_3451523" target="_blank" class="floating-link">
+        <h3>NIAID Data Resources</h3>
+        <p>National Institute of Allergy and Infectious Diseases data repository</p>
+        <p class="source">Source: NIAID</p>
+    </a>
+
+    <a href="https://excavating.ai/" target="_blank" class="floating-link">
+        <h3>Excavating AI</h3>
+        <p>The Politics of Images in Machine Learning Training Sets</p>
+        <p class="source">Source: Excavating AI</p>
+    </a>
+
+    <a href="https://www.theguardian.com/technology/article/2024/jun/23/emotional-artificial-intelligence-chatgpt-4o-hume-algorithmic-bias" target="_blank" class="floating-link">
+        <h3>Guardian: Emotional AI</h3>
+        <p>Article on emotional AI and algorithmic bias</p>
+        <p class="source">Source: The Guardian</p>
+    </a>
+
+    <a href="https://www.cnn.com/2021/02/16/tech/emotion-recognition-ai-education-spc-intl-hnk" target="_blank" class="floating-link">
+        <h3>CNN: Emotion Recognition in Education</h3>
+        <p>AI emotion recognition technology in educational settings</p>
+        <p class="source">Source: CNN</p>
+    </a>
+
+    <a href="https://www.kbvresearch.com/emotion-ai-market/" target="_blank" class="floating-link">
+        <h3>Emotion AI Market Research</h3>
+        <p>Market analysis and trends in emotion AI</p>
+        <p class="source">Source: KBV Research</p>
+    </a>
+
+    <a href="https://paperswithcode.com/dataset/jaffe" target="_blank" class="floating-link">
+        <h3>JAFFE Dataset</h3>
+        <p>Japanese Female Facial Expression database</p>
+        <p class="source">Source: Papers with Code</p>
+    </a>
+
+    <a href="https://www.paulekman.com/about/paul-ekman/" target="_blank" class="floating-link">
+        <h3>Paul Ekman</h3>
+        <p>Pioneer in emotion and facial expression research</p>
+        <p class="source">Source: Paul Ekman Group</p>
+    </a>
+
+    <a href="https://www.researchgate.net/figure/Evolution-of-emotion-detection-A-brief-history-of-emotion-detection_fig1_360462407" target="_blank" class="floating-link">
+        <h3>Evolution of Emotion Detection</h3>
+        <p>Historical overview of emotion detection technology</p>
+        <p class="source">Source: ResearchGate</p>
+    </a>
+
+    <a href="https://www.interaction-design.org/literature/topics/affective-computing?srsltid=AfmBOopbv6U2Xd5Peti90DmpLRY_elVKQrf9JgiOBY4BXvM9YRaIxdG_" target="_blank" class="floating-link">
+        <h3>Affective Computing</h3>
+        <p>Comprehensive guide to affective computing principles</p>
+        <p class="source">Source: Interaction Design Foundation</p>
+    </a>
+
+    <a href="https://daniellashafaiblog.wordpress.com/2016/02/09/how-to-translate-emotions-into-an-idea/" target="_blank" class="floating-link">
+        <h3>Translating Emotions into Ideas</h3>
+        <p>Design methodology for emotional expression</p>
+        <p class="source">Source: Daniella Shafai Blog</p>
     </a>
 
     <script>
