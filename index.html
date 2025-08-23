@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotional Landscapes - CDP Final</title>
+    <title>CDP Final</title>
     <style>
         * {
             margin: 0;
@@ -26,73 +26,19 @@
             overflow: hidden;
         }
 
-        .title {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 4rem;
-            font-weight: bold;
-            text-align: center;
-            z-index: 10;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            pointer-events: none;
-            opacity: 0.9;
-        }
-
-        .subtitle {
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.2rem;
-            text-align: center;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .enter-button {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            z-index: 10;
-        }
-
-        .enter-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateX(-50%) scale(1.05);
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
         .floating-eye {
             position: absolute;
-            width: 60px;
-            height: 60px;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 30%, rgba(255,255,255,0.3) 70%);
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 30%, rgba(255,255,255,0.4) 70%);
             border-radius: 50%;
-            pointer-events: none;
+            cursor: pointer;
             animation: float 6s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .floating-eye:hover {
+            transform: scale(1.1);
         }
 
         @keyframes float {
@@ -104,68 +50,45 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 20px;
-            height: 20px;
+            width: 40px;
+            height: 40px;
             background: #000;
             border-radius: 50%;
             transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+        }
+
+        .eye-label {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            text-align: center;
+            pointer-events: none;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="title">Emotional Landscapes</div>
-        <div class="subtitle">Interactive Data Visualization Experience</div>
-        <button class="enter-button" onclick="window.location.href='workflow.html'">Enter Experience</button>
-
-        <!-- Floating eyes -->
-        <div class="floating-eye" style="top: 20%; left: 15%; animation-delay: 0s;">
+        <!-- Three floating eyes with labels -->
+        <div class="floating-eye" style="top: 25%; left: 20%; animation-delay: 0s;" onclick="window.location.href='precedent-study.html'">
+            <div class="eye-label">precedent_study</div>
             <div class="eye-pupil"></div>
         </div>
-        <div class="floating-eye" style="top: 30%; right: 20%; animation-delay: -2s;">
+        <div class="floating-eye" style="top: 25%; right: 20%; animation-delay: -2s;" onclick="window.location.href='final-project.html'">
+            <div class="eye-label">final_project</div>
             <div class="eye-pupil"></div>
         </div>
-        <div class="floating-eye" style="bottom: 25%; left: 25%; animation-delay: -4s;">
-            <div class="eye-pupil"></div>
-        </div>
-        <div class="floating-eye" style="bottom: 35%; right: 15%; animation-delay: -1s;">
+        <div class="floating-eye" style="bottom: 30%; left: 50%; transform: translateX(-50%); animation-delay: -4s;" onclick="window.location.href='workflow.html'">
+            <div class="eye-label">workflow</div>
             <div class="eye-pupil"></div>
         </div>
     </div>
 
     <script>
-        // Create floating particles
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.top = Math.random() * 100 + 'vh';
-            particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            particle.style.opacity = Math.random() * 0.5 + 0.2;
-
-            document.body.appendChild(particle);
-
-            // Animate particle
-            let posY = parseFloat(particle.style.top);
-            const speed = Math.random() * 0.5 + 0.2;
-
-            function animateParticle() {
-                posY -= speed;
-                particle.style.top = posY + 'vh';
-
-                if (posY < -5) {
-                    particle.remove();
-                } else {
-                    requestAnimationFrame(animateParticle);
-                }
-            }
-
-            animateParticle();
-        }
-
-        // Create particles periodically
-        setInterval(createParticle, 200);
-
         // Eye tracking mouse movement
         document.addEventListener('mousemove', (e) => {
             const eyes = document.querySelectorAll('.eye-pupil');
@@ -175,7 +98,7 @@
                 const eyeCenterY = eyeRect.top + eyeRect.height / 2;
 
                 const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
-                const distance = Math.min(8, Math.sqrt(Math.pow(e.clientX - eyeCenterX, 2) + Math.pow(e.clientY - eyeCenterY, 2)) / 10);
+                const distance = Math.min(15, Math.sqrt(Math.pow(e.clientX - eyeCenterX, 2) + Math.pow(e.clientY - eyeCenterY, 2)) / 8);
 
                 const pupilX = Math.cos(angle) * distance;
                 const pupilY = Math.sin(angle) * distance;
@@ -188,8 +111,8 @@
         const cursor = document.createElement('div');
         cursor.style.cssText = `
             position: fixed;
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             background: rgba(255,255,255,0.8);
             border-radius: 50%;
             pointer-events: none;
@@ -200,8 +123,8 @@
         document.body.appendChild(cursor);
 
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX - 10 + 'px';
-            cursor.style.top = e.clientY - 10 + 'px';
+            cursor.style.left = e.clientX - 15 + 'px';
+            cursor.style.top = e.clientY - 15 + 'px';
         });
     </script>
 </body>
