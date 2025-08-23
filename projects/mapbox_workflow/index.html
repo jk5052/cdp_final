@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapbox Tutorial + Constellation Project</title>
+    
+    <!-- Mapbox GL JS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>🗺️ ⭐ Mapbox Tutorial + NYC Constellation Map</h1>
+        <p>Complete tutorial following README requirements with creative constellation extension</p>
+    </div>
+    
+    <!-- Tutorial Section -->
+    <div class="section">
+        <div class="tutorial-info">
+            <h3>📚 Tutorial Requirements</h3>
+            <p>Following README.md specifications: basic maps, controls, markers, GeoJSON data</p>
+        </div>
+        
+        <h3>Map 1: Basic NYC Map with Navigation Controls</h3>
+        <div id="mapbox-container-1"></div>
+        
+        <h3>Map 2: Interactive NYC Landmarks</h3>
+        <div id="mapbox-container-2"></div>
+    </div>
+    
+    <!-- Creative Project Section -->
+    <div class="section">
+        <div class="constellation-info">
+            <h3>⭐ Creative Extension: Manhattan Constellation Map</h3>
+            <p>Astronomical data visualization using GeoJSON Points and LineStrings</p>
+        </div>
+        
+        <div class="controls">
+            <button class="constellation-btn" onclick="toggleAllConstellations(true)">Show All</button>
+            <button class="constellation-btn" onclick="toggleAllConstellations(false)">Hide All</button>
+            <button class="add-star-btn" onclick="addRandomStar()">Add Random Star</button>
+        </div>
+        
+        <h3>Map 3: Manhattan Constellations (GeoJSON Implementation)</h3>
+        <div id="mapbox-container-3"></div>
+        
+        <div class="legend">
+            <strong>Constellation Legend:</strong>
+            <span class="legend-item" style="color: #FFD700;">● Big Dipper</span>
+            <span class="legend-item" style="color: #87CEEB;">● Cassiopeia</span>
+            <span class="legend-item" style="color: #98FB98;">● Orion</span>
+            <span class="legend-item" style="color: #DDA0DD;">● Leo</span>
+            <span class="legend-item" style="color: #F0E68C;">● Draco</span>
+        </div>
+    </div>
+    
+    <!-- Completion Checklist -->
+    <div class="section">
+        <div class="checklist">
+            <h3>✅ Assignment Completion Status</h3>
+            <div class="checklist-grid">
+                <div>
+                    <h4>Tutorial Requirements</h4>
+                    <ul class="no-bullets">
+                        <li>✅ Basic map initialization</li>
+                        <li>✅ Navigation controls</li>
+                        <li>✅ Custom markers & popups</li>
+                        <li>✅ GeoJSON data loading</li>
+                        <li>✅ Event handling</li>
+                        <li>✅ Multiple map styles</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Creative Extensions</h4>
+                    <ul class="no-bullets">
+                        <li>🌟 Constellation visualization</li>
+                        <li>🎨 Color-coded data layers</li>
+                        <li>🎛️ Interactive controls</li>
+                        <li>✨ Dynamic content creation</li>
+                        <li>🗺️ Advanced GeoJSON usage</li>
+                        <li>📱 Responsive design</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load JavaScript Files -->
+    <script src="mapBox_Sketch_01.js"></script>
+    <script src="mapBox_Sketch_02.js"></script>
+    <script src="mapBox_Sketch_03.js"></script>
+</body>
+</html>

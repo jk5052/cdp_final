@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Global Constellation Map</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background: #000011;
+            overflow: hidden;
+        }
+        
+        #map { 
+            width: 100vw; 
+            height: 100vh; 
+            background: radial-gradient(circle at center, #001122 0%, #000011 70%, #000000 100%);
+        }
+        
+        /* Space background effect */
+        #map::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: sparkle 20s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes sparkle {
+            from { transform: translateX(0); }
+            to { transform: translateX(200px); }
+        }
+        
+        .info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 17, 0.9);
+            color: #FFD700;
+            padding: 20px;
+            border-radius: 15px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .info p {
+            margin: 5px 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .info small {
+            color: rgba(255, 215, 0, 0.8);
+            font-style: italic;
+        }
+        
+        /* Earth glow effect */
+        .mapboxgl-canvas {
+            filter: drop-shadow(0 0 50px rgba(100, 200, 255, 0.3));
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="info">
+        <h3>🌍✨ Global Constellation Map</h3>
+        <p>Explore 20 major constellations around the world!</p>
+        <small>🖱️ Click on stars to see constellation details</small>
+        <br><small>🔍 Zoom in/out to observe closely</small>
+    </div>
+
+    <script>
+        // ⭐ Insert your Mapbox token here!
+        mapboxgl.accessToken = 'pk.eyJ1IjoiamF5Y2VrIiwiYSI6ImNtYzB0N2RsdzA2MXgya3IzbGM1OTg0bTMifQ.2iyCIDuQTc7gkqtgG6f3Ew'
+        
+        // Create space-themed flat map
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/dark-v11', // Dark theme
+            center: [0, 20], // World center
+            zoom: 2 // Global view
+        });
+        
+        // Real constellation data (more constellations)
+        const constellations = {
+            // Northern hemisphere constellations
+            bigDipper: [
+                [-100, 50], [-98, 52], [-96, 54], [-94, 52], [-92, 50], [-90, 48], [-88, 46]
+            ],
+            cassiopeia: [
+                [10, 60], [12, 62], [14, 61], [16, 63], [18, 61]
+            ],
+            orion: [
+                [30, 5], [32, 7], [34, 9], [33, 6], [31, 4], [29, 6], [30, 5]
+            ],
+            draco: [
+                [60, 70], [62, 68], [64, 66], [66, 68], [68, 70], [70, 68], [72, 66]
+            ],
+            lyra: [
+                [80, 40], [82, 42], [84, 40], [82, 38]
+            ],
+            cygnus: [
+                [90, 45], [92, 47], [94, 49], [92, 51], [90, 49], [88, 47], [90, 45]
+            ],
+            
+            // Southern hemisphere constellations
+            southernCross: [
+                [120, -60], [122, -58], [124, -60], [122, -62]
+            ],
+            centaurus: [
+                [130, -50], [132, -48], [134, -46], [136, -48], [138, -50]
+            ],
+            scorpius: [
+                [-60, -25], [-58, -23], [-56, -21], [-54, -23], [-52, -25], [-50, -27], [-48, -25]
+            ],
+            sagittarius: [
+                [-45, -30], [-43, -28], [-41, -26], [-39, -28], [-37, -30], [-35, -32]
+            ],
+            
+            // Equatorial constellations
+            leo: [
+                [40, 15], [42, 17], [44, 19], [46, 17], [48, 15], [46, 13], [44, 11]
+            ],
+            virgo: [
+                [50, 0], [52, 2], [54, 4], [56, 2], [58, 0], [56, -2], [54, -4]
+            ],
+            gemini: [
+                [20, 25], [22, 27], [24, 29], [26, 27], [28, 25]
+            ],
+            cancer: [
+                [15, 20], [17, 22], [19, 20], [17, 18]
+            ],
+            
+            // American continent constellations
+            ursa_major: [
+                [-120, 55], [-118, 57], [-116, 59], [-114, 57], [-112, 55], [-110, 53], [-108, 51]
+            ],
+            perseus: [
+                [-80, 45], [-78, 47], [-76, 49], [-74, 47], [-72, 45]
+            ],
+            andromeda: [
+                [-70, 40], [-68, 42], [-66, 44], [-64, 42], [-62, 40]
+            ],
+            
+            // Asian/Pacific constellations
+            aquila: [
+                [140, 10], [142, 12], [144, 14], [146, 12], [148, 10]
+            ],
+            capricornus: [
+                [150, -20], [152, -18], [154, -16], [156, -18], [158, -20]
+            ],
+            piscis: [
+                [160, 15], [162, 17], [164, 19], [166, 17], [168, 15]
+            ]
+        };
+
+        // Map loaded event
+        map.on('load', function() {
+            
+            // Process each constellation
+            Object.keys(constellations).forEach(function(constellationName, constellationIndex) {
+                const coords = constellations[constellationName];
+                
+                // 1️⃣ Draw constellation lines
+                map.addSource('constellation-line-' + constellationName, {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'properties': {
+                            'name': constellationName
+                        },
+                        'geometry': {
+                            'type': 'LineString',
+                            'coordinates': coords
+                        }
+                    }
+                });
+                
+                map.addLayer({
+                    'id': 'constellation-' + constellationName,
+                    'type': 'line',
+                    'source': 'constellation-line-' + constellationName,
+                    'paint': {
+                        'line-color': '#FFD700', // Gold color
+                        'line-width': 4,
+                        'line-opacity': 0.9,
+                        'line-blur': 1 // Glowing effect
+                    }
+                });
+                
+                // 2️⃣ Draw stars
+                coords.forEach(function(coord, starIndex) {
+                    const starId = constellationName + '-star-' + starIndex;
+                    
+                    map.addSource(starId, {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'Feature',
+                            'properties': {
+                                'constellation': constellationName,
+                                'starNumber': starIndex + 1
+                            },
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': coord
+                            }
+                        }
+                    });
+                    
+                    map.addLayer({
+                        'id': starId,
+                        'type': 'circle',
+                        'source': starId,
+                        'paint': {
+                            'circle-radius': [
+                                'interpolate',
+                                ['linear'],
+                                ['zoom'],
+                                1, 4,  // Radius 4 at zoom level 1
+                                5, 12  // Radius 12 at zoom level 5
+                            ],
+                            'circle-color': '#FFFFFF', // White stars
+                            'circle-stroke-color': '#FFD700', // Gold border
+                            'circle-stroke-width': 3,
+                            'circle-opacity': 1,
+                            'circle-blur': 0.5 // Star glow effect
+                        }
+                    });
+                    
+                    // Add star glow effect
+                    map.addLayer({
+                        'id': starId + '-glow',
+                        'type': 'circle',
+                        'source': starId,
+                        'paint': {
+                            'circle-radius': [
+                                'interpolate',
+                                ['linear'],
+                                ['zoom'],
+                                1, 8,  // Radius 8 at zoom level 1
+                                5, 20  // Radius 20 at zoom level 5
+                            ],
+                            'circle-color': '#FFD700',
+                            'circle-opacity': 0.3,
+                            'circle-blur': 2
+                        }
+                    }, starId); // Place glow below star
+                });
+            });
+            
+            console.log('✅ Total of ' + Object.keys(constellations).length + ' constellations added to the map!');
+        });
+
+        // Star click event to show information
+        map.on('click', function(e) {
+            const features = map.queryRenderedFeatures(e.point);
+            if (features.length > 0) {
+                const feature = features[0];
+                if (feature.layer.id.includes('-star-')) {
+                    const constellation = feature.properties.constellation;
+                    const starNumber = feature.properties.starNumber;
+                    
+                    // Convert constellation names to English
+                    const constellationNames = {
+                        'bigDipper': 'Big Dipper',
+                        'cassiopeia': 'Cassiopeia',
+                        'orion': 'Orion',
+                        'draco': 'Draco',
+                        'lyra': 'Lyra',
+                        'cygnus': 'Cygnus',
+                        'southernCross': 'Southern Cross',
+                        'centaurus': 'Centaurus',
+                        'scorpius': 'Scorpius',
+                        'sagittarius': 'Sagittarius',
+                        'leo': 'Leo',
+                        'virgo': 'Virgo',
+                        'gemini': 'Gemini',
+                        'cancer': 'Cancer',
+                        'ursa_major': 'Ursa Major',
+                        'perseus': 'Perseus',
+                        'andromeda': 'Andromeda',
+                        'aquila': 'Aquila',
+                        'capricornus': 'Capricornus',
+                        'piscis': 'Pisces'
+                    };
+                    
+                    const displayName = constellationNames[constellation] || constellation;
+                    alert(`Star ${starNumber} of ${displayName}! ⭐\n\nCoordinates: ${feature.geometry.coordinates[1].toFixed(2)}, ${feature.geometry.coordinates[0].toFixed(2)}`);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

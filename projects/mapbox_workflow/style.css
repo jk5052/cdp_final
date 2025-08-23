@@ -1,0 +1,263 @@
+/* style.css - Main stylesheet for Mapbox Tutorial */
+
+/* Basic Reset and Body */
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background: #f5f5f5;
+    line-height: 1.6;
+}
+
+/* Header Styling */
+.header {
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    margin: 0 0 10px 0;
+    font-size: 2.2em;
+    font-weight: 300;
+}
+
+.header p {
+    margin: 0;
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+/* Section Containers */
+.section {
+    background: white;
+    margin: 30px 0;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    border: 1px solid #e0e0e0;
+}
+
+/* Map Containers - Required by README */
+#mapbox-container-1, 
+#mapbox-container-2, 
+#mapbox-container-3 {
+    width: 100%;
+    height: 400px;
+    margin: 20px 0;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Info Boxes */
+.tutorial-info {
+    background: #e8f4f8;
+    padding: 20px;
+    border-left: 4px solid #2196F3;
+    margin-bottom: 25px;
+    border-radius: 0 5px 5px 0;
+}
+
+.constellation-info {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    padding: 20px;
+    border-left: 4px solid #FFD700;
+    margin-bottom: 25px;
+    border-radius: 0 5px 5px 0;
+}
+
+.tutorial-info h3,
+.constellation-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.4em;
+}
+
+.tutorial-info p,
+.constellation-info p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+/* Control Buttons */
+.controls {
+    text-align: center;
+    margin: 25px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.constellation-btn {
+    background: linear-gradient(135deg, #FFD700 0%, #ffed4a 100%);
+    color: #1a1a2e;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+
+.constellation-btn:hover {
+    background: linear-gradient(135deg, #ffed4a 0%, #fff3cd 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.add-star-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.add-star-btn:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4c93 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Legend Styling */
+.legend {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.legend-item {
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+/* Checklist Section */
+.checklist {
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #b3d9ff;
+}
+
+.checklist h3 {
+    text-align: center;
+    margin: 0 0 20px 0;
+    color: #2c3e50;
+    font-size: 1.5em;
+}
+
+.checklist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.checklist-grid h4 {
+    color: #34495e;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.no-bullets {
+    list-style: none;
+    padding-left: 0;
+}
+
+.no-bullets li {
+    padding: 5px 0;
+    font-size: 15px;
+    color: #2c3e50;
+}
+
+/* Section Headers */
+.section h3 {
+    color: #2c3e50;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    font-weight: 400;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .header {
+        padding: 20px;
+    }
+    
+    .header h1 {
+        font-size: 1.8em;
+    }
+    
+    .section {
+        padding: 20px;
+    }
+    
+    .checklist-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .constellation-btn,
+    .add-star-btn {
+        padding: 10px 15px;
+        margin: 5px;
+        font-size: 13px;
+    }
+    
+    #mapbox-container-1, 
+    #mapbox-container-2, 
+    #mapbox-container-3 {
+        height: 300px;
+    }
+}
+
+/* Loading States */
+.mapboxgl-map {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Custom Mapbox Control Styling */
+.mapboxgl-ctrl-group {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.mapboxgl-popup-content {
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

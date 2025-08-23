@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celestial Mapbox - 별자리 지도</title>
+    
+    <!-- Mapbox GL JS -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    
+    <!-- D3.js for data processing -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="celestial-mapbox.css">
+</head>
+<body>
+    <!-- Map Container -->
+    <div id="map"></div>
+    
+    <!-- Control Panel -->
+    <div class="control-panel">
+        <div class="panel-header">
+            <h2>🌟 Celestial Map</h2>
+            <p>별자리와 지도의 만남</p>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label>별자리 표시</label>
+                <div class="toggle-group">
+                    <button id="toggle-constellations" class="toggle-btn active">별자리 선</button>
+                    <button id="toggle-stars" class="toggle-btn active">별</button>
+                    <button id="toggle-names" class="toggle-btn">이름</button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label>지도 스타일</label>
+                <select id="map-style">
+                    <option value="mapbox://styles/mapbox/dark-v10">Dark</option>
+                    <option value="mapbox://styles/mapbox/light-v10">Light</option>
+                    <option value="mapbox://styles/mapbox/satellite-v9">Satellite</option>
+                    <option value="mapbox://styles/mapbox/streets-v11">Streets</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>투명도</label>
+                <input type="range" id="opacity-slider" min="0" max="1" step="0.1" value="0.8">
+                <span id="opacity-value">80%</span>
+            </div>
+            
+            <div class="control-group">
+                <label>별자리 크기</label>
+                <input type="range" id="scale-slider" min="0.5" max="3" step="0.1" value="1">
+                <span id="scale-value">100%</span>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <div id="constellation-info" class="info-box">
+                <h3>별자리 정보</h3>
+                <p>별자리를 클릭하면 정보가 표시됩니다.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Indicator -->
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>별자리 데이터를 불러오는 중...</p>
+    </div>
+    
+    <!-- Custom JavaScript -->
+    <script src="celestial-mapbox.js"></script>
+</body>
+</html>

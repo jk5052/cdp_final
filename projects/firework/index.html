@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  
+  <!-- MediaPipe Hands for gesture recognition -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🍕 The Great Pineapple Pizza Debate</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="left">Columbia GSAPP</div>
+      <div class="center">
+        Computational Design Workflows<br>
+        <span>Gesture-Based Pizza Poll</span>
+      </div>
+      <div class="right">About</div>
+    </header>
+    
+    <main>
+      <div class="project-meta">2025</div>
+      <div class="project-title">The Great Pineapple Pizza Debate</div>
+      <div class="project-subtitle">Gesture-Based Real-time Voting</div>
+      <div class="advisor">Show your true pizza feelings with hand gestures!</div>
+      
+      <div class="section-title">What is This About?</div>
+      <p>
+        The eternal question that divides humanity: Does pineapple belong on pizza? 
+        Use hand gestures to cast your vote in this heated culinary debate! 
+        This app uses MediaPipe for real-time gesture recognition and Firebase for live vote counting.
+      </p>
+
+      <!-- Camera and Gesture Detection Section -->
+      <div class="section-title">Gesture Camera</div>
+      <div class="camera-section">
+        <div class="camera-container">
+          <video id="videoElement" autoplay muted playsinline></video>
+          <canvas id="canvasElement"></canvas>
+          <div class="gesture-status" id="gestureStatus">
+            📷 Click "Allow Camera Access" to start voting...
+          </div>
+          <div class="confidence-meter">
+            <div class="confidence-bar" id="confidenceBar"></div>
+          </div>
+          <button id="enableCameraBtn" class="camera-enable-btn">
+            📷 Allow Camera Access
+          </button>
+        </div>
+      </div>
+      
+      <!-- Voting Results Section -->
+      <div class="section-title">Live Battle Results</div>
+      <div class="voting-section">
+        <div class="teams">
+          <div class="team pineapple">
+            <span class="team-icon">🍍</span>
+            <div class="team-name">Team Pineapple</div>
+            <div class="team-subtitle">"Sweet & Savory Forever!"</div>
+            <div class="team-count" id="pineappleCount">0</div>
+          </div>
+          
+          <div class="vs-divider">VS</div>
+          
+          <div class="team traditional">
+            <span class="team-icon">🍅</span>
+            <div class="team-name">Team Traditional</div>
+            <div class="team-subtitle">"Keep It Classic!"</div>
+            <div class="team-count" id="traditionalCount">0</div>
+          </div>
+        </div>
+        
+        <div class="total-votes">
+          <p>Total Pizza Opinions Counted: <span id="totalVotes">0</span></p>
+          <div class="vote-percentage">
+            <div class="percentage-bar">
+              <div class="pineapple-bar" id="pineappleBar"></div>
+              <div class="traditional-bar" id="traditionalBar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions Section -->
+      <div class="section-title">How to Cast Your Vote</div>
+      <div class="instructions">
+        <p>Position your hand clearly in front of the camera and show your gesture!</p>
+        <div class="gesture-demo">
+          <div class="gesture-item">
+            <span class="emoji">👍</span>
+            <p><strong>Thumbs Up</strong><br>I LOVE pineapple on pizza!<br><em>Team Pineapple</em></p>
+          </div>
+          <div class="gesture-item">
+            <span class="emoji">👎</span>
+            <p><strong>Thumbs Down</strong><br>Keep pineapple OFF my pizza!<br><em>Team Traditional</em></p>
+          </div>
+        </div>
+        <div class="tips">
+          <h4>💡 Tips for Better Recognition:</h4>
+          <ul>
+            <li>Make sure your hand is well-lit and clearly visible</li>
+            <li>Hold the gesture steady for 1-2 seconds</li>
+            <li>Keep other fingers closed for thumbs up/down</li>
+            <li>You can only vote once every 2 seconds to prevent spam</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tech Info Section -->
+      <div class="section-title">How It Works</div>
+      <div class="tutorial-steps">
+        <div class="step">
+          <h4>1. MediaPipe Gesture Recognition</h4>
+          <p>We use Google's MediaPipe to track hand landmarks and recognize thumbs up/down gestures in real-time.</p>
+        </div>
+        
+        <div class="step">
+          <h4>2. Firebase Real-time Database</h4>
+          <p>Your vote is instantly saved to Firebase and synchronized across all connected users worldwide.</p>
+        </div>
+        
+        <div class="step">
+          <h4>3. Particle Visual Effects</h4>
+          <p>When you vote, pineapple 🍍 or tomato 🍅 particles burst from your gesture to celebrate your choice!</p>
+        </div>
+      </div>
+
+      <!-- Connection Status -->
+      <div class="section-title">System Status</div>
+      <div id="connection-status" class="status-display">
+        <p>🔄 Initializing Firebase connection...</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Load JavaScript file -->
+  <script src="poll.js"></script>
+</body>
+</html>
