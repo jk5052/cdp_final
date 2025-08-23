@@ -32,12 +32,21 @@
             height: 120px;
             background: radial-gradient(circle, rgba(255,255,255,0.9) 30%, rgba(255,255,255,0.4) 70%);
             border-radius: 50%;
-            cursor: pointer;
+            cursor: grab;
             animation: float 6s ease-in-out infinite;
             transition: transform 0.3s ease;
+            user-select: none;
+            z-index: 100;
         }
 
         .floating-eye:hover {
+            transform: scale(1.1);
+        }
+
+        .floating-eye.dragging {
+            cursor: grabbing;
+            animation: none;
+            z-index: 1000;
             transform: scale(1.1);
         }
 
@@ -89,8 +98,14 @@
     </div>
 
     <script>
+        let isDragging = false;
+        let dragElement = null;
+        let dragOffset = { x: 0, y: 0 };
+
         // Eye tracking mouse movement
-        document.addEventListener('mousemove', (e) => {
+        function updateEyePupils(e) {
+            if (isDragging) return; // Don't update pupils while dragging
+
             const eyes = document.querySelectorAll('.eye-pupil');
             eyes.forEach(eye => {
                 const eyeRect = eye.getBoundingClientRect();
@@ -105,6 +120,58 @@
 
                 eye.style.transform = `translate(calc(-50% + ${pupilX}px), calc(-50% + ${pupilY}px))`;
             });
+        }
+
+        // Drag functionality
+        document.addEventListener('mousedown', (e) => {
+            const eye = e.target.closest('.floating-eye');
+            if (eye) {
+                e.preventDefault();
+                isDragging = true;
+                dragElement = eye;
+                eye.classList.add('dragging');
+
+                const rect = eye.getBoundingClientRect();
+                dragOffset.x = e.clientX - rect.left - rect.width / 2;
+                dragOffset.y = e.clientY - rect.top - rect.height / 2;
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            updateEyePupils(e);
+
+            if (isDragging && dragElement) {
+                const x = e.clientX - dragOffset.x - 60; // 60 is half of eye width
+                const y = e.clientY - dragOffset.y - 60; // 60 is half of eye height
+
+                // Keep within viewport bounds
+                const maxX = window.innerWidth - 120;
+                const maxY = window.innerHeight - 120;
+
+                dragElement.style.left = Math.max(0, Math.min(maxX, x)) + 'px';
+                dragElement.style.top = Math.max(0, Math.min(maxY, y)) + 'px';
+                dragElement.style.right = 'auto';
+                dragElement.style.bottom = 'auto';
+            }
+        });
+
+        document.addEventListener('mouseup', (e) => {
+            if (isDragging && dragElement) {
+                dragElement.classList.remove('dragging');
+
+                // Check if it's a click (not a drag)
+                const rect = dragElement.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const distance = Math.sqrt(Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2));
+
+                if (distance < 10) { // If mouse didn't move much, treat as click
+                    dragElement.click();
+                }
+
+                isDragging = false;
+                dragElement = null;
+            }
         });
 
         // Custom cursor
