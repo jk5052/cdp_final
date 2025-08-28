@@ -196,6 +196,13 @@
             eye.addEventListener('mouseleave', () => {
                 eye.style.backgroundImage = `url(${eyeData.closedImage})`;
             });
+
+            // 클릭 이벤트 추가 (드래그와 별도)
+            eye.addEventListener('click', (e) => {
+                if (!isDragging && eyeData.link !== '#') {
+                    window.location.href = eyeData.link;
+                }
+            });
             
             let isDragging = false;
             let startX, startY, initialX, initialY;
@@ -214,7 +221,7 @@
 
             // Mouse move - drag
             document.addEventListener('mousemove', (e) => {
-                if (isDragging && e.target === eye) {
+                if (isDragging) {
                     const deltaX = e.clientX - startX;
                     const deltaY = e.clientY - startY;
                     eye.style.left = (initialX + deltaX) + 'px';
@@ -226,10 +233,10 @@
 
             // Mouse up - stop dragging and navigate
             document.addEventListener('mouseup', (e) => {
-                if (isDragging && e.target === eye) {
+                if (isDragging) {
                     isDragging = false;
                     eye.style.cursor = 'pointer';
-                    
+
                     // Navigate to link if not dragged much
                     const deltaX = Math.abs(e.clientX - startX);
                     const deltaY = Math.abs(e.clientY - startY);
